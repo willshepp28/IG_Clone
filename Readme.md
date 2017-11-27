@@ -1,4 +1,4 @@
-# Instgram Clone
+# Instagram Clone
 
 This is my version of instagram
 
