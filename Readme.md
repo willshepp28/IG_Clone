@@ -23,8 +23,11 @@ This is my own version of instagram.
 
 ## Features
 
-  * Posting Media Content
+  * Upload/ Delete Media (photos)
   * Registration
-  * Messaging
+  * Send Direct Messages
   * Search
   * News Feed
+  * Ability to Follow/ Unfollow
+  * Like Content
+  * Search & Iterate for Location, Users, Hashtags

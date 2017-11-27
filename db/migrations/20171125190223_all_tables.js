@@ -8,31 +8,42 @@ exports.up = function(knex, Promise) {
             table.string('email').notNullable();
             table.integer('age');
             table.integer('number');
-            table.boolean('privacy_level').defaultTo(false)
+            table.boolean('privacy_level').defaultTo(false);
+            table.timestamp('date_joined').defaultTo(knex.fn.now());
         })
         .createTable('followers', (table) => {
             table.increments();
+            table.integer('following_id').unsigned().references('id').inTable('users').onDelete('cascade');
+            table.integer('rejectOrDeny').notNullable().defaultTo(0);
+            table.timestamp('follow_date').defaultTo(knex.fn.now());
         })
         .createTable('following', (table) => {
             table.increments();
+            table.integer('following_id').unsigned().references('id').inTable('users').onDelete('cascade');
+            table.integer('rejectOrDeny').notNullable().defaultTo(0);
             table.integer('status').defaultTo(0);
+            table.timestamp('follow_date').defaultTo(knex.fn.now());
         })
         .createTable('posts', (table) => {
             table.increments();
+            table.string('photo').notNullable();
+            table.text('caption');
+            table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade');
         })
         .createTable('likes', (table) => {
             table.increments();
+            table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade');
+            table.integer('post_id').unsigned().references('id').inTable('posts').onDelete('cascade');
 
         })
         .createTable('comments', (table) =>{
             table.increments();
-        })
-        .createTable('messages', (table) => {
-            table.increments();
+            table.integer('post_id').unsigned().references('id').inTable('posts').onDelete('cascade');
+            table.text('user_comment').notNullable();
         })
 
 };
 
 exports.down = function(knex, Promise) {
-  
+   return knex.schema.dropTable('comments').dropTable('likes').dropTable('posts').dropTable('following').dropTable('followers').dropTable('users');
 };
