@@ -1,6 +1,13 @@
 # Instagram Clone
 
-This is my version of instagram
+
+----
+
+**What is this?** 
+
+This is my own version of instagram.
+
+---
 
 
 ## Technologies Used
@@ -12,3 +19,12 @@ This is my version of instagram
  Knex/ PostgreSQL
  
 ```
+
+
+## Features
+
+  * Posting Media Content
+  * Registration
+  * Messaging
+  * Search
+  * News Feed
