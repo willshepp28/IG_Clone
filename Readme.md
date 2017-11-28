@@ -21,6 +21,14 @@ This is my own version of instagram.
 ```
 
 
+## Site Layout
+
+![](public/img/wireframe/Home.png)
+
+![](public/img/wireframe/Profile_Page.png)
+
+![](public/img/wireframe/Tags.png)
+
 ## Features
 
   * Upload/ Delete Media (photos)
