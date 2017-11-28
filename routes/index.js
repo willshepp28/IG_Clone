@@ -6,15 +6,21 @@ const router = require('express').Router(),
 
 
 
-
+// home page
 router
     .route('/')
     .get(async(request, response) => {
-        response.render('home');
+
+        var posts = await knex.select()
+            .from('posts')
+            .then((post) => {
+                response.render('home', { post });
+            })
     });
 
 
 
+// signup page
 router
     .route('/signup')
     .get(async(request, response) => {
@@ -26,7 +32,22 @@ router
 
 
 
+// login page
+router
+    .route('/login')
+    .get(async(request, response) => {
+
+    })
+    .post((request, response) => {
+
+    });
 
 
-    
+
+
+
+
+
+
+
 module.exports = router;
