@@ -1,0 +1,15 @@
+.baby-blue {
+    color: #3897f0 !important;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.navbar-nav {
+    float: none;
+    text-align: center;
+}
+
+.navbar-nav li {
+    display: inline-block;
+    float: none;
+}

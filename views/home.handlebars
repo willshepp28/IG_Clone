@@ -1,5 +1,25 @@
 
-{{#each post}}
+{{!-- {{#each post}}
     <h4>{{caption}}</h4>
     <img  src="{{photo}}" alt="Card image cap">
+{{/each}} --}}
+
+{{#each post}}
+<div class="container">
+<div class="row">
+
+  <div class="col-md-5 col-md-offset-3">
+    <div class="thumbnail">
+      <img src="{{photo}}" alt="...">
+      <div class="caption">
+        <h3>Thumbnail label</h3>
+        <p>...</p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>
 {{/each}}
