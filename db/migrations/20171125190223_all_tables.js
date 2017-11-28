@@ -6,9 +6,9 @@ exports.up = function(knex, Promise) {
             table.string('username').notNullable();
             table.string('profilePic').notNullable().defaultTo('http://cas.nyu.edu/content/nyu-as/cas/newstudents/college-cohort-program/freshman-year/2016-2017-college-leaders/_jcr_content/par/columncontrol_379702044/parcol1/image.img.png/1488560657847.png');
             table.string('email').notNullable();
-            table.integer('age');
-            table.integer('number');
-            table.boolean('privacy_level').defaultTo(false);
+            table.text('password').notNullable();
+            table.text('number');
+            table.boolean('profile_private').defaultTo(true);
             table.timestamp('date_joined').defaultTo(knex.fn.now());
         })
         .createTable('followers', (table) => {
