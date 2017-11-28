@@ -13,7 +13,7 @@ exports.up = function(knex, Promise) {
         })
         .createTable('followers', (table) => {
             table.increments();
-            table.integer('following_id').unsigned().references('id').inTable('users').onDelete('cascade');
+            table.integer('follower_id').unsigned().references('id').inTable('users').onDelete('cascade');
             table.integer('rejectOrDeny').notNullable().defaultTo(0);
             table.timestamp('follow_date').defaultTo(knex.fn.now());
         })

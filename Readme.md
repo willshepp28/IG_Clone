@@ -31,3 +31,9 @@ This is my own version of instagram.
   * Ability to Follow/ Unfollow
   * Like Content
   * Search & Iterate for Location, Users, Hashtags
+
+
+  ## Challenges
+
+  * Setting relations for friends following other friends
+  * Setting it up so user only sees people they are following

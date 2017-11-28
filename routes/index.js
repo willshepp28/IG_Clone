@@ -16,6 +16,9 @@ router
             .then((post) => {
                 response.render('home', { post });
             })
+            .catch((err) => {
+                response.send(err);
+            })
     });
 
 
