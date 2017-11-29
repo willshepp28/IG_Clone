@@ -1,3 +1,11 @@
+
+body {
+    background-color: #fafafa;
+}
+
+nav {
+    background-color: #fff !important;
+}
 .baby-blue {
     color: #3897f0 !important;
     font-weight: 600;
@@ -12,4 +20,8 @@
 .navbar-nav li {
     display: inline-block;
     float: none;
+}
+
+input[type="submit"] {
+    font-family: FontAwesome;
 }
