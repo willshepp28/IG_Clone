@@ -27,5 +27,16 @@ input[type="submit"] {
 }
 
 .card {
+    
+    margin: 0 auto;
     margin-top: 50px;
+}
+
+
+.zero-auto {
+    margin: 0 auto !important;
+}
+
+.move-5px {
+    margin-right: 5px;
 }

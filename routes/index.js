@@ -29,7 +29,7 @@ router
 router
     .route('/signup')
     .get(async(request, response) => {
-
+        response.render("signup");
     })
     .post((request, response) => {
         
@@ -41,7 +41,7 @@ router
 router
     .route('/login')
     .get(async(request, response) => {
-
+        response.render("login");
     })
     .post((request, response) => {
 

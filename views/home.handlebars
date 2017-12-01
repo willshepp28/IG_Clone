@@ -1,31 +1,38 @@
 {{#each post}}
-<div class="container">
 
-  <div class="row">
-    <div class="card col-md-5 col-md-offset-3">
-      <p class="card-header">
-        <img src="{{profilePic}}" alt="user profile picture" style="height: 25px;">
-        <strong>{{username}}</strong>
-      </p>
-      <img class="card-img-top" src="{{photo}}" alt="Card image cap">
-      <div class="card-block">
 
-        <div class="col-md-4">
-          <i class="fa fa-heart-o" aria-hidden="true"></i>
-        </div>
-        <div class="col-md-4">
-          <i class="fa fa-comment-o" aria-hidden="true"></i>
-        </div>
-        <div class="col-md-4">
-          <i class="fa fa-bookmark-o" aria-hidden="true"></i>
-        </div>
+<d-flex class="d-flex align-items-center p-2">
+
+  <div class="card ">
+    <p class="card-header">
+      <img src="{{profilePic}}" alt="user profile picture" style="height: 25px;">
+      <strong>{{username}}</strong>
+    </p>
+    <img class="card-img-top" src="{{photo}}" alt="Card image cap">
+    <div class="card-block">
+
+
+{{!-- Comment, Like , and Save Buttons --}}
+      <div class="d-flex flex-row my-flex-container">
+      
+          <i class="fa fa-heart-o p-2 order-1" aria-hidden="true"></i>
      
-          <p>{{username}} - {{caption}}</p>
+        
+          <i class="fa fa-comment-o p-2 order-2" aria-hidden="true"></i>
+       
+       
+          <i class="fa fa-bookmark-o p-2 order-3 ml-auto" aria-hidden="true"></i>
        
       </div>
+
+    <p>19 Likes</p>
+
+      <p>{{username}} - {{caption}}</p>
+
     </div>
   </div>
+</d-flex>
 
-</div>
+
 
 {{/each}}

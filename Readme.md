@@ -67,5 +67,7 @@ This is my own version of instagram.
   * Users should be able to comment on posts
 
 
+   ## Problems/Challenges/Solutions
 
-
+   * Switched from Bootstrap 3 to 4, for the ability to utilize flexbox.
+   * Maybe using regex so when user uses a hashtag on caption we put it in that category
