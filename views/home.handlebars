@@ -1,33 +1,31 @@
-
-{{!-- {{#each post}}
-    <h4>{{caption}}</h4>
-    <img  src="{{photo}}" alt="Card image cap">
-{{/each}} --}}
-
 {{#each post}}
 <div class="container">
-<div class="row">
 
-  <div class="col-md-5 col-md-offset-3">
-    <div class="thumbnail">
-        <div class="page-header">
-            <p><strong>Abriel12</strong></p>
+  <div class="row">
+    <div class="card col-md-5 col-md-offset-3">
+      <p class="card-header">
+        <img src="{{profilePic}}" alt="user profile picture" style="height: 25px;">
+        <strong>{{username}}</strong>
+      </p>
+      <img class="card-img-top" src="{{photo}}" alt="Card image cap">
+      <div class="card-block">
+
+        <div class="col-md-4">
+          <i class="fa fa-heart-o" aria-hidden="true"></i>
         </div>
-      <img src="{{photo}}" alt="...">
-      <div class="caption text-center">
-        
-                <div class="col-md-4"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                 <div class="col-md-4"><i class="fa fa-comment-o" aria-hidden="true"></i></div>
-                  <div class="col-md-4"><i class="fa fa-bookmark-o" aria-hidden="true"></i></div>
-          
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <div class="col-md-4">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+        </div>
+     
+          <p>{{username}} - {{caption}}</p>
+       
       </div>
     </div>
   </div>
 
+</div>
 
-</div>
-</div>
 {{/each}}

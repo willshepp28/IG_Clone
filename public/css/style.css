@@ -25,3 +25,7 @@ nav {
 input[type="submit"] {
     font-family: FontAwesome;
 }
+
+.card {
+    margin-top: 50px;
+}

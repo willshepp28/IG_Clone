@@ -13,7 +13,9 @@ router
 
         var posts = await knex.select()
             .from('posts')
+            .innerJoin('users', 'user_id', 'users.id')
             .then((post) => {
+            
                 response.render('home', { post });
             })
             .catch((err) => {
@@ -42,6 +44,24 @@ router
 
     })
     .post((request, response) => {
+
+    });
+
+
+
+// profile:id
+router 
+    .route('/profile:id')
+    .get(async(request, response) => {
+
+    });
+
+
+
+// tags:hastag
+router 
+    .route('/tags:hastag')
+    .get(async(request, response) => {
 
     });
 
