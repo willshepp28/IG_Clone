@@ -12,6 +12,7 @@ router
     .route('/')
     .get(async (request, response) => {
 
+
         var posts = await knex.select()
             .from('posts')
             .innerJoin('users', 'user_id', 'users.id')
@@ -70,6 +71,28 @@ router
     })
     .post((request, response) => {
 
+        var decrypt = crypto.pbkdf2Sync(request.body.password, 'salt', 10, 512, 'sha512').toString('base64');
+
+    
+        // when user logs in decrypt password, set username and isAuthenticated in session, then redirect to /
+        var user = knex.select()
+            .from('users')
+            .where({
+                username: request.body.username,
+                password: decrypt
+            })
+            .then((user) => {
+
+                request.session.isAuthenticated = true;
+                request.session.user_id = user[0].id;
+                request.session.username = user[0].username;
+
+                response.redirect('/');
+            })
+            .catch((error) => {
+                console.log(error);
+                response.redirect('/login');
+            })
     });
 
 

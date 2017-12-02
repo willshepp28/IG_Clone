@@ -76,6 +76,7 @@ This is my own version of instagram.
 
    ## Gotchas to learn from
 
-   * order your tables in your drop function based on relation. Delete tables that rely on other tables first.
+   * order your tables in your drop function inside the db/migration file, based on relation. Delete tables that rely on other tables first.
    * when seeding database in knex js , dont add id values manually. If you do it will mess up that auto incrementing procress
+   * Use bootstrap 4 for its ability to use flexbox
    
