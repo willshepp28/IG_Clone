@@ -18,7 +18,7 @@ router
             .innerJoin('users', 'user_id', 'users.id')
             .then((post) => {
 
-                response.render('home', { post });
+                response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
             })
             .catch((err) => {
                 response.send(err);
@@ -84,6 +84,8 @@ router
             .then((user) => {
 
                 request.session.isAuthenticated = true;
+
+                
                 request.session.user_id = user[0].id;
                 request.session.username = user[0].username;
 

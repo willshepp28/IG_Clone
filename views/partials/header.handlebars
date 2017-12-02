@@ -7,7 +7,7 @@
 
   {{!-- flex container --}}
   <div class="d-flex flex-row  my-flex-container" style="width: 100%;">
-    <i class="fa fa-instagram fa-2x move-5px" aria-hidden="true"></i>
+    <i class="fa fa-instagram fa-3x move-5px" aria-hidden="true"></i>
 
     <a class="navbar-brand" href="/"> | Instagram</a>
 
@@ -18,11 +18,36 @@
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
- 
-   
+
+
 
       {{#if isAuthenticated}}
-      <h1>You are authenticated</h1>
+      
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/signup">
+            <i class="fa fa-compass fa-2x" aria-hidden="true"></i>
+
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/login">
+            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+          </a>
+        </li>
+
+{{!-- go to profile page --}}
+        <li class="nav-item">
+          <a class="nav-link" href="/profile/:id">
+            <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
+
+          </a>
+        </li>
+
+      </ul>
       {{else}}
 
 
@@ -32,7 +57,7 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
-       
+
         <li class="nav-item">
           <a class="nav-link baby-blue" href="/login">Log In</a>
         </li>
