@@ -71,3 +71,11 @@ This is my own version of instagram.
 
    * Switched from Bootstrap 3 to 4, for the ability to utilize flexbox.
    * Maybe using regex so when user uses a hashtag on caption we put it in that category
+
+
+
+   ## Gotchas to learn from
+
+   * order your tables in your drop function based on relation. Delete tables that rely on other tables first.
+   * when seeding database in knex js , dont add id values manually. If you do it will mess up that auto incrementing procress
+   

@@ -1,18 +1,27 @@
-<h1>Register</h1>
+<h1>Sign Up</h1>
 
 
-<form action="/register" method="post">
-    <label for="username">Username: </label>
-    <input type="text" name="username" placeholder="please enter your username"><br>
+<form action="/signup" method="post">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="username">Username</label>
+      <input type="text" name="username"class="form-control" id="inputEmail4" placeholder="Please Enter Your Username">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="email">Email</label>
+      <input type="email" name="email" class="form-control" id="inputPassword4" placeholder="Please Enter Your Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="Number">Phone Number</label>
+    <input type="text" name="number" class="form-control" id="inputAddress" placeholder="Please Enter Your Phone Number">
+  </div>
+  <div class="form-group">
+    <label for="Password">Password</label>
+    <input type="text" name="password" class="form-control" id="inputAddress2" placeholder="Please Enter Your Password">
+  </div>
+  
 
-    <label for="password">Password: </label>
-    <input type="password" name="password" placeholder="please enter your password"><br>
 
-    <label for="confirm">Confirm Password: </label>
-    <input type="password" name="confirm" placeholder="please confirm your password"><br>
-
-
-    <button type="submit">Submit</button>
-
-
+  <button type="submit" class="btn btn-primary">Create Account</button>
 </form>
