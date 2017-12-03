@@ -4,7 +4,7 @@ const router = require('express').Router(),
 
 
 
-var hashtag = '\S*#(?:\[[^\]]+\]|\S+)';
+// var hashtag = '\S*#(?:\[[^\]]+\]|\S+)';
 
 
 // home page
@@ -101,9 +101,23 @@ router
 
 // profile:id
 router
-    .route('/profile:id')
+    .route('/profile')
     .get(async (request, response) => {
 
+        
+
+        var user = await knex.select()
+            .from('users')
+            .where('id', request.session.user_id)
+            .leftJoin('posts', request.session.user_id, 'user_id')
+            .then((user) => {
+                response.render('profile', { user ,isAuthenticated: request.session.username })
+            })
+            .catch((error) => {
+                console.log(error);
+                response.redirect('/');
+            });
+        
     });
 
 
