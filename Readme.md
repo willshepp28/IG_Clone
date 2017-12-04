@@ -31,6 +31,11 @@ This is my own version of instagram.
 
 ![](public/img/wireframe/Tags.png)
 
+
+## IG_Clone Database Diagram
+
+![](public/img/db_diagram/IG_databasediagram.jpg)
+
 ## Features
 
   * Upload/ Delete Media (photos)
