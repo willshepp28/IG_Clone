@@ -3,15 +3,22 @@
 
 
 {{#each user}}
-<p>Welcome {{ username }}</p>
 
-<img src="{{profilePic}}" alt=""> {{/each}}
+
+<img src="{{profilePic}}" alt="" class="rounded-circle"> {{/each}}
 
 
 <!-- Button trigger modal -->
+
+{{#if follower}}
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+    Follow
+</button>
+{{else}}
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
     Create a Post
 </button>
+{{/if}}
 
 <div class="container">
     <div class="row">
@@ -37,21 +44,21 @@
                 <h4 class="modal-title" id="myModalLabel">Create Post</h4>
             </div>
             <form action="/addPost" method="post">
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Link to image</label>
-                    <input type="text" name="photo" class="form-control" placeholder="Upload a Image">
-                </div>
-                <div class="form-group">
-                    <label>Add a Caption</label>
-                    <textarea class="form-control" name="caption" placeholder="Page Body"></textarea>
-                </div>
-               
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Link to image</label>
+                        <input type="text" name="photo" class="form-control" placeholder="Upload a Image">
+                    </div>
+                    <div class="form-group">
+                        <label>Add a Caption</label>
+                        <textarea class="form-control" name="caption" placeholder="Page Body"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
             </form>
+            </div>
         </div>
     </div>
-</div>

@@ -1,3 +1,5 @@
+
+
 const router = require('express').Router(),
     crypto = require('crypto'),
     knex = require('../db/knex');
@@ -51,9 +53,6 @@ router
                 response.redirect('/')
             })
             .catch((error) => {
-                console.log("________________");
-                console.log(request.body);
-                console.log("________________")
                 console.log(error);
                 response.redirect('/signup');
             });
@@ -99,12 +98,12 @@ router
 
 
 
-// profile:id
+// profile
 router
     .route('/profile')
     .get(async (request, response) => {
 
-        console.log(typeof request.session.user_id);
+        
 
         var user = await knex.select()
             .from('users')
@@ -115,7 +114,45 @@ router
                     .from('posts')
                     .where('user_id', request.session.user_id)
                     .then((user_posts) => {
-                        response.render('profile', { user , user_posts,isAuthenticated: request.session.username })
+                        response.render('profile', { user , user_posts, isAuthenticated: request.session.user_id, myid: request.session.user_id })
+                    })
+                
+            })
+            .catch((error) => {
+                console.log(error);
+                response.redirect('/');
+            });
+        
+    });
+
+
+// follower profile
+    router
+    .route('/profile/:id')
+    .get(async (request, response) => {
+
+   
+
+        var user = await knex.select()
+            .from('users')
+            .where('id', request.params.id)
+            .then((user) => {
+
+                knex.select()
+                    .from('posts')
+                    .where('user_id', request.params.id)
+                    .then((user_posts) => {
+
+                        if(request.session.user_id === parseInt(request.params.id)){
+                            console.log("____________");
+                            console.log(request.session.user_id === request.params.id);
+                            response.render('profile', {user, user_posts, isAuthenticated: request.session.user_id, follower: false });
+                        } else {
+                            console.log("____________");
+                            console.log(false);
+                            response.render('profile', { user , user_posts, isAuthenticated: request.session.user_id, follower: true })
+                        }
+                        
                     })
                 
             })
