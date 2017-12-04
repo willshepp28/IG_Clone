@@ -104,14 +104,20 @@ router
     .route('/profile')
     .get(async (request, response) => {
 
-        
+        console.log(typeof request.session.user_id);
 
         var user = await knex.select()
             .from('users')
             .where('id', request.session.user_id)
-            .leftJoin('posts', request.session.user_id, 'user_id')
             .then((user) => {
-                response.render('profile', { user ,isAuthenticated: request.session.username })
+
+                knex.select()
+                    .from('posts')
+                    .where('user_id', request.session.user_id)
+                    .then((user_posts) => {
+                        response.render('profile', { user , user_posts,isAuthenticated: request.session.username })
+                    })
+                
             })
             .catch((error) => {
                 console.log(error);
@@ -119,6 +125,29 @@ router
             });
         
     });
+
+
+
+router.post('/addPost',async(request, response) => {
+
+    console.log("____________");
+    console.log(request.body);
+
+    var addPost = knex('posts')
+        .insert({
+            photo: request.body.photo,
+            caption: request.body.caption,
+            user_id: request.session.user_id
+        })
+        .then(() => {
+            response.redirect('/profile');
+        })
+        .catch((error) => {
+            console.log(error);
+            response.redirect('/');
+        })
+
+})
 
 
 

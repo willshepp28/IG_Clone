@@ -43,6 +43,12 @@ This is my own version of instagram.
   * Search & Iterate for Location, Users, Hashtags
 
 
+
+## Advanced Features
+
+  * Ability for user to pick a certain filter for their pictures
+
+
   ## Challenges
 
   * Setting relations for friends following other friends
