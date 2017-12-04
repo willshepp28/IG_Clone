@@ -4,6 +4,7 @@
 
 {{#each user}}
 
+{{!-- <p>{{id}}</p> --}}
 
 <img src="{{profilePic}}" alt="" class="rounded-circle"> {{/each}}
 
@@ -11,9 +12,13 @@
 <!-- Button trigger modal -->
 
 {{#if follower}}
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-    Follow
-</button>
+
+<form action="/following/{{follower_id}}" method="post">
+    <button type="submit" class="btn btn-success">
+        Follow
+    </button>
+</form>
+
 {{else}}
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
     Create a Post

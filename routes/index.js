@@ -143,6 +143,9 @@ router
                     .where('user_id', request.params.id)
                     .then((user_posts) => {
 
+                        console.log("_____________");
+                        console.log(user[0].id);
+
                         if(request.session.user_id === parseInt(request.params.id)){
                             console.log("____________");
                             console.log(request.session.user_id === request.params.id);
@@ -150,7 +153,7 @@ router
                         } else {
                             console.log("____________");
                             console.log(false);
-                            response.render('profile', { user , user_posts, isAuthenticated: request.session.user_id, follower: true })
+                            response.render('profile', { user , user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follower: true })
                         }
                         
                     })
@@ -184,6 +187,25 @@ router.post('/addPost',async(request, response) => {
             response.redirect('/');
         })
 
+});
+
+
+// follow users
+router.post('/following/:id', (request, response) => {
+
+    var followUser = knex('following')
+        .insert({
+            following_id: request.params.id,
+            user_id: request.session.user_id
+        })
+        .then(() => {
+            console.log("Request to follow, successfully sent.");
+            response.redirect('/')
+        })
+        .catch((error) => {
+            console.log(error);
+            response.send(error);
+        })
 })
 
 
