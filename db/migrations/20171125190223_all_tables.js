@@ -30,6 +30,7 @@ exports.up = function(knex, Promise) {
             table.string('photo').notNullable();
             table.text('caption');
             table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade');
+            table.timestamp('date_created').defaultTo(knex.fn.now());
         })
         .createTable('likes', (table) => {
             table.increments();

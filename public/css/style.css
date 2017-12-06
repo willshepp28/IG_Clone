@@ -40,3 +40,17 @@ input[type="submit"] {
 .move-5px {
     margin-right: 5px;
 }
+
+.lightgrey {
+    color: #999;
+}
+
+.grey_borderTop {
+    border-top: 1px solid #efefef;
+}
+
+.mgTp-5px { margin-top: 5px;}
+
+.post_comments {
+    font-size: 10px;
+}

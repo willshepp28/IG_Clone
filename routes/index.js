@@ -17,14 +17,65 @@ router
 
         var posts = await knex.select()
             .from('posts')
-            .innerJoin('users', 'user_id', 'users.id')
+           
+            .leftJoin('users', 'users.id', 'user_id')
+            // .fullOuterJoin('comments', 'posts.id', 'post_id')
             .then((post) => {
 
-                response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
+              
+                
+                knex.select()
+                    .from('comments')
+                    .then((comment) => {
+
+
+                        // creating a for loop to 
+                        for(let i = 0; i < comment.length; i++) {
+                            
+
+                            // check to see if post.id is equal to the comment.post_id
+                            if (post[i].id === comment[i].post_id) {
+
+                                // create a myComments array on that post
+                                post[i].myComments = [];
+
+                                // create a for loop to run through comments[i].post_id,
+                                // and if its equal to post[i].id, we will push into myComments array
+                                for (let j = 0; j < comment.length; j++) {
+                                    console.log("inside for loop")
+                                    console.log(comment[j])
+                                    if (post[i].id === comment[j].post_id) {
+                                        post[i].myComments.push(comment[j].user_comment);
+                                        
+                                    }
+                                   
+                                }
+                         
+                                
+                            }
+                           
+                        }
+                        
+                        console.log("___________");
+                        console.log("___________");
+                        console.log(post);
+                        
+                        response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        response.send(error);
+                    })
+                        
+                  
+
             })
-            .catch((err) => {
-                response.send(err);
-            })
+            .catch((error) => {
+                response.send(error + 'this is a error');
+            });
+
+
+
     });
 
 
@@ -39,15 +90,15 @@ router
 
 
 
-        var encrypt = function (password) { return crypto.pbkdf2Sync(password, 'salt', 10, 512, 'sha512').toString('base64');};
+        var encrypt = function (password) { return crypto.pbkdf2Sync(password, 'salt', 10, 512, 'sha512').toString('base64'); };
 
-       var users = knex('users')
+        var users = knex('users')
             .insert({
                 username: request.body.username,
                 email: request.body.email,
                 number: request.body.number,
-                password:  encrypt(request.body.password)
-            
+                password: encrypt(request.body.password)
+
             })
             .then(() => {
                 response.redirect('/')
@@ -72,7 +123,7 @@ router
 
         var decrypt = crypto.pbkdf2Sync(request.body.password, 'salt', 10, 512, 'sha512').toString('base64');
 
-    
+
         // when user logs in decrypt password, set username and isAuthenticated in session, then redirect to /
         var user = knex.select()
             .from('users')
@@ -83,8 +134,6 @@ router
             .then((user) => {
 
                 request.session.isAuthenticated = true;
-
-                
                 request.session.user_id = user[0].id;
                 request.session.username = user[0].username;
 
@@ -103,7 +152,7 @@ router
     .route('/profile')
     .get(async (request, response) => {
 
-        
+
 
         var user = await knex.select()
             .from('users')
@@ -114,24 +163,24 @@ router
                     .from('posts')
                     .where('user_id', request.session.user_id)
                     .then((user_posts) => {
-                        response.render('profile', { user , user_posts, isAuthenticated: request.session.user_id, myid: request.session.user_id })
+                        response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, myid: request.session.user_id })
                     })
-                
+
             })
             .catch((error) => {
                 console.log(error);
                 response.redirect('/');
             });
-        
+
     });
 
 
 // follower profile
-    router
+router
     .route('/profile/:id')
     .get(async (request, response) => {
 
-   
+
 
         var user = await knex.select()
             .from('users')
@@ -143,32 +192,26 @@ router
                     .where('user_id', request.params.id)
                     .then((user_posts) => {
 
-                        console.log("_____________");
-                        console.log(user[0].id);
+                        if (request.session.user_id === parseInt(request.params.id)) {
 
-                        if(request.session.user_id === parseInt(request.params.id)){
-                            console.log("____________");
-                            console.log(request.session.user_id === request.params.id);
-                            response.render('profile', {user, user_posts, isAuthenticated: request.session.user_id, follower: false });
+                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id });
                         } else {
-                            console.log("____________");
-                            console.log(false);
-                            response.render('profile', { user , user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follower: true })
+                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follower: true })
                         }
-                        
+
                     })
-                
+
             })
             .catch((error) => {
                 console.log(error);
                 response.redirect('/');
             });
-        
+
     });
 
 
 
-router.post('/addPost',async(request, response) => {
+router.post('/addPost', async (request, response) => {
 
     console.log("____________");
     console.log(request.body);

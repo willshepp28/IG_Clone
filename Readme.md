@@ -90,4 +90,6 @@ This is my own version of instagram.
    * order your tables in your drop function inside the db/migration file, based on relation. Delete tables that rely on other tables first.
    * when seeding database in knex js , dont add id values manually. If you do it will mess up that auto incrementing procress
    * Use bootstrap 4 for its ability to use flexbox
-   
+   * You cant use #each inside of a #if statement in handlebars smh
+   * Order of seeding is important.
+

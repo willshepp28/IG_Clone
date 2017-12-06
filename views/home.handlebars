@@ -1,7 +1,7 @@
 {{#each post}}
 
 
-<d-flex class="d-flex align-items-center p-2">
+<d-flex class="d-flex align-items-center p-2 getme">
 
   <div class="card ">
     <p class="card-header">
@@ -28,6 +28,15 @@
     <p>19 Likes</p>
 
       <p><strong>{{username}}</strong> - {{caption}}</p>
+
+    <div class="grey_borderTop">
+      <p class="lightgrey mgTp-5px" style="font-size:12px">View Comments</p>
+
+      {{#each myComments}}
+         <p class="post_comments">{{this}}</p> 
+      {{/each}}
+    </div>
+      
 
     </div>
   </div>

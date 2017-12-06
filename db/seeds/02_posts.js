@@ -11,8 +11,7 @@ exports.seed = function(knex, Promise) {
         { photo: 'https://cdn.vox-cdn.com/thumbor/nqQlbcrkrxgFHHXcNCuc02oaJL4=/400x0/filters:no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/9276359/jbareham_170917_2000_0027_squ.jpg', caption: '#IphoneGang', user_id: 4},
         { photo: 'https://pbs.twimg.com/profile_images/662591353562492928/z--rRZLH.jpg', caption: 'That new Chris brown is fire', user_id: 5},
         { photo: 'https://i.pinimg.com/736x/86/26/57/8626574ec1a1f5fa87b64f8a2e1858a9--ron-swanson-meme-steaks.jpg', caption: 'Iam so hungry', user_id: 1},
-        { photo: 'https://www.trafalgar.com/~/media/images/website-refresh/hero-square/bestofturkey-hero-sq-468087725.jpg?w=400&h=400', caption: 'I want to travel so bad', user_id: 1},
-        { photo: 'https://i.pinimg.com/474x/90/ab/69/90ab6969975b77a4b0aa1b269804092f.jpg', caption: 'I want to stay at the four seasons hotel in bora,bora', user_id: 1}
+        { photo: 'https://www.trafalgar.com/~/media/images/website-refresh/hero-square/bestofturkey-hero-sq-468087725.jpg?w=400&h=400', caption: 'I want to travel so bad', user_id: 1}
       ]);
     });
 };
