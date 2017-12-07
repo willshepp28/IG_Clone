@@ -26,26 +26,30 @@ router
                 
                 knex.select()
                     .from('comments')
+                    .leftJoin('users', 'user_id', 'users.id')
                     .then((comment) => {
 
+                        
 
-                        // creating a for loop to 
+                        // creating a for loop to run throught the amount of comments in database
                         for(let i = 0; i < comment.length; i++) {
                             
 
-                            // check to see if post.id is equal to the comment.post_id
+                            // check to see if the currne post.id is equal to the current comment.post_id
                             if (post[i].id === comment[i].post_id) {
 
+                                // if so
                                 // create a myComments array on that post
                                 post[i].myComments = [];
 
-                                // create a for loop to run through comments[i].post_id,
-                                // and if its equal to post[i].id, we will push into myComments array
+                                // create another for loop to run through the amount of comments in database
+                                // and if the position in the new comment[j].post_id is equal to the current position of the post[i].id in the last for loop
+                                // add the user comment to the myComment array in the current post
                                 for (let j = 0; j < comment.length; j++) {
                                     console.log("inside for loop")
                                     console.log(comment[j])
                                     if (post[i].id === comment[j].post_id) {
-                                        post[i].myComments.push(comment[j].user_comment);
+                                        post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
                                         
                                     }
                                    
@@ -56,10 +60,9 @@ router
                            
                         }
                         
-                        console.log("___________");
-                        console.log("___________");
                         console.log(post);
-                        
+                    
+
                         response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
                     })
                     .catch((error) => {
