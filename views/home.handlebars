@@ -13,12 +13,14 @@
 
 
 {{!-- Comment, Like , and Save Buttons --}}
-      <div class="d-flex flex-row my-flex-container">
+      <div class="d-flex flex-row my-flex-container iconContainer">
       
           <i class="fa fa-heart-o p-2 order-1" aria-hidden="true"></i>
      
         
-          <i class="fa fa-comment-o p-2 order-2" aria-hidden="true"></i>
+        <i class="fa fa-comment-o p-2 order-2 commentBtn" aria-hidden="true"></i></button>
+      
+         
        
        
           <i class="fa fa-bookmark-o p-2 order-3 ml-auto" aria-hidden="true"></i>
@@ -29,7 +31,7 @@
 
       <p><strong>{{username}}</strong> - {{caption}}</p>
 
-    <div class="grey_borderTop">
+    <div >
      <a href="post/{{id}}"><p class="lightgrey mgTp-5px" style="font-size:12px">View Comments</p></a> 
 
       {{#each myComments}}
@@ -37,6 +39,13 @@
       {{/each}}
     </div>
       
+      <div class="addComment">
+          <hr>
+          <form action="/addComment/{{id}}" method="post">
+            <input type="text" name="user_comment" class="focusOn"  placeholder="Add a comment...">
+            <input type="submit" style="display:none;" />
+          </form>
+      </div>
 
     </div>
   </div>

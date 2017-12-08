@@ -58,3 +58,13 @@ input[type="submit"] {
 .post_comments {
     font-size: 10px;
 }
+
+
+
+.iconContainer i:hover {
+    cursor: pointer;
+}
+
+.addComment input {
+    border: none;
+}

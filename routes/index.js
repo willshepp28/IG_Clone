@@ -28,17 +28,16 @@ router
                     .leftJoin('users', 'user_id', 'users.id')
                     .then((comment) => {
 
-                        console.log(comment);
-
                         // creating a for loop to run throught the amount of posts in database
                         for (let i = 0; i < post.length; i++) {
 
 
+                            // We need to run a second for loop based on whatever is has entries posts or comments 
                          if (post.length > comment.length){ 
                             for (let j = 0; j < post.length; j++) {
                                 
                               
-                                   // check to see if there is even a comment a
+                                   // check to see if there is even a comment even exists
                                if (comment[j]) {
      
 
@@ -51,23 +50,14 @@ router
                                        }
 
                                      
-                                       // push username and comment into myComments on poticular post
-                                       (function(){
+                                       // push username and comment into myComments on poticular post        
                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
-                                       })();
-                                      
-                                       console.log("************ The Post ****************")
-                                       console.log(post[i]);
-                                       console.log("************ The Comment ****************")
-                                       console.log(comment[j]);
-                                       console.log("This is " + i );
-                                       for(let i = 0 ;i < 5; i++) {
-                                           console.log("________________");
-                                           
-                                       }
+    
                                    }
                            }
                        }
+
+
                          } else {
                             for (let j = 0; j < comment.length; j++) {
                                 
@@ -86,19 +76,11 @@ router
 
                                      
                                        // push username and comment into myComments on poticular post
-                                       (function(){
+                                    
                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
-                                       })();
+                                    
                                       
-                                       console.log("************ The Post ****************")
-                                       console.log(post[i]);
-                                       console.log("************ The Comment ****************")
-                                       console.log(comment[j]);
-                                       console.log("This is " + i );
-                                       for(let i = 0 ;i < 5; i++) {
-                                           console.log("________________");
-                                           
-                                       }
+                                
                                    }
                            }
                        }
@@ -331,7 +313,22 @@ router.get('/post/:id', async(request, response) => {
 })
 
 
-
+router.post('/addComment/:id', (request, response) => {
+    
+    var comment = knex('comments')
+        .insert({
+            post_id: request.params.id,
+            user_id: request.session.user_id,
+            user_comment: request.body.user_comment
+        })
+        .then(() =>{
+            console.log('post is successful')
+            response.redirect('/')
+        })
+        .catch(error => {
+            response.send(error + ' this is the error');
+        });
+})
 
 
 
