@@ -3,6 +3,10 @@ body {
     background-color: #fafafa;
 }
 
+a { text-decoration: none;
+    tex
+    }
+
 nav {
     background-color: #fff !important;
 }

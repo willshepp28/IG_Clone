@@ -22,80 +22,88 @@ router
             // .fullOuterJoin('comments', 'posts.id', 'post_id')
             .then((post) => {
 
-                console.log('up top');
-                post.forEach(i => {
-                    console.log(i)
-                    console.log("This is a post")
-                    console.log("___________");
-                    console.log("___________");
-                    console.log("___________");
-                })
 
-
-                knex.select()
+                knex.select('comments.id', 'user_comment', 'post_id', 'username')
                     .from('comments')
                     .leftJoin('users', 'user_id', 'users.id')
                     .then((comment) => {
 
-                        // comment.forEach(i => {
-                        //     console.log('This is a comment')
-                        //     console.log(i)
-                        //     console.log("___________");
-                        //     console.log("___________");
-                        //     console.log("___________");
-                        // })
-        
+                        console.log(comment);
 
-
-                        // creating a for loop to run throught the amount of comments in database
+                        // creating a for loop to run throught the amount of posts in database
                         for (let i = 0; i < post.length; i++) {
 
 
-                            // check to see if there is even a comment a
+                         if (post.length > comment.length){ 
+                            for (let j = 0; j < post.length; j++) {
+                                
+                              
+                                   // check to see if there is even a comment a
+                               if (comment[j]) {
+     
 
-                                for (let j = 0; j < post.length; j++) {
-                                     console.log('in it')
+                                   // check the specific post.id against all post_id in comments
+                                   if (post[i].id === comment[j].post_id) {
+                                 
+                                       // only creates a myComments array if none is created
+                                       if (!post[i].myComments) {
+                                           post[i].myComments = [];
+                                       }
 
-                                    if (comment[j]) {
+                                     
+                                       // push username and comment into myComments on poticular post
+                                       (function(){
+                                           post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
+                                       })();
+                                      
+                                       console.log("************ The Post ****************")
+                                       console.log(post[i]);
+                                       console.log("************ The Comment ****************")
+                                       console.log(comment[j]);
+                                       console.log("This is " + i );
+                                       for(let i = 0 ;i < 5; i++) {
+                                           console.log("________________");
+                                           
+                                       }
+                                   }
+                           }
+                       }
+                         } else {
+                            for (let j = 0; j < comment.length; j++) {
+                                
+                              
+                                   // check to see if there is even a comment a
+                               if (comment[j]) {
+     
 
-                                    
+                                   // check the specific post.id against all post_id in comments
+                                   if (post[i].id === comment[j].post_id) {
+                                 
+                                       // only creates a myComments array if none is created
+                                       if (!post[i].myComments) {
+                                           post[i].myComments = [];
+                                       }
 
-                                        // check the specific post.id against all post_id in comments
-                                        if (post[i].id === comment[j].post_id) {
-                                            
-                                            // console.log('outside')
-                                            // console.log("_______________");
-                                            // console.log("_______________");
-                                            // console.log(i + " this is i")
-                                            // console.log(j + " this is j");
-                                            // console.log("_______________");
-                                            // console.log("_______________");
-                                            // console.log('inside')
-
-                                            // only creates a myComments array if none is created
-                                            if (!post[i].myComments) {
-                                                post[i].myComments = [];
-                                            }
-
-                                            //    console.log(comment[j]);
-                                            //     console.log("pushed " + j)
-                                            //     console.log(j);
-                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
-                                            // post[i].myComments.push({  usercomments: comment[j].user_comment });
-                                            // comment[j];
-                                            // console.log("Post.id is " + post[i].id);
-                                            // console.log("The post id associated with Comments is " + comment[j].post_id);
-                                            // console.log(post[i].myComments);
-
-                                        }
-                                    
-
-
-                                }
-
-                            }
-
-                            // console.log('EEEEEEEENNNNNNNDDDDDDDDDDDDDD');
+                                     
+                                       // push username and comment into myComments on poticular post
+                                       (function(){
+                                           post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
+                                       })();
+                                      
+                                       console.log("************ The Post ****************")
+                                       console.log(post[i]);
+                                       console.log("************ The Comment ****************")
+                                       console.log(comment[j]);
+                                       console.log("This is " + i );
+                                       for(let i = 0 ;i < 5; i++) {
+                                           console.log("________________");
+                                           
+                                       }
+                                   }
+                           }
+                       }
+                         }
+ 
                           
                         }
 
@@ -300,6 +308,28 @@ router
     .get(async (request, response) => {
 
     });
+
+
+
+
+router.get('/post/:id', async(request, response) => {
+
+    var post = knex.select()
+        .from('posts')
+        .innerJoin('comments', 'post_id', 'posts.id')
+        .where('id', request.params.id)
+        
+        .then((post) => {
+
+            console.log(post);
+            response.render('comments', { post, isAuthenticated: request.session.user_id })
+        })
+        .catch((error) => {
+            console.log(error);
+            response.send(error + " is the reason")
+        })
+})
+
 
 
 
