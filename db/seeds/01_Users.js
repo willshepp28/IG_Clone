@@ -17,7 +17,7 @@ exports.seed = function(knex, Promise) {
         { username: 'danny_ballin1',profilePic: 'https://media.licdn.com/mpr/mpr/shrink_200_200/AAIA_wDGAAAAAQAAAAAAAAshAAAAJDJkMjVhNWZjLTZjOTktNGI3NC1iNTM4LWQ4MDAwNGE4YzIxNQ.jpg', email: 'dannyballin@gmail.com', number: '9996668888', password: encrypt('555')},
         { username: 'sarahlovin5', profilePic: 'https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/019/28f/1b46279.jpg', email: 'sarahzzzworld@yahoo.com', number: '5551238888', password: encrypt('666')},
         { username: 'tommy_rules', profilePic: 'https://www.mumsnet.com/uploads/talk/201610/large-898199-images.jpg', email: 'tombrown@gmail.com', number:'7776663333', password: encrypt('1234')},
-        { username: 'maryjohnson1', profilePic: 'http://rs223.pbsrc.com/albums/dd264/afrodite00/Random%20BW%20People/Cola.jpg~c200', email: 'maryjohnson@gmail.com', number:'2223334444',password: encrypt('1236')},
+        { username: 'maryjohnson1', profilePic: 'http://rs223.pbsrc.com/albums/dd264/afrodite00/Random%20BW%20People/Cola.jpg~c200', email: 'maryjohnson@gmail.com', number:'2223334444',password: encrypt('1236')}
       ]);
     });
 };

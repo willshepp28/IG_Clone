@@ -15,53 +15,91 @@ router
     .get(async (request, response) => {
 
 
-        var posts = await knex.select()
+        var posts = await knex.select('username', 'photo', 'caption', 'profilePic','posts.id')
             .from('posts')
-           
-            .leftJoin('users', 'users.id', 'user_id')
+
+            .join('users', 'user_id', 'users.id')
             // .fullOuterJoin('comments', 'posts.id', 'post_id')
             .then((post) => {
 
-              
-                
+                console.log('up top');
+                post.forEach(i => {
+                    console.log(i)
+                    console.log("This is a post")
+                    console.log("___________");
+                    console.log("___________");
+                    console.log("___________");
+                })
+
+
                 knex.select()
                     .from('comments')
                     .leftJoin('users', 'user_id', 'users.id')
                     .then((comment) => {
 
-                        
+                        // comment.forEach(i => {
+                        //     console.log('This is a comment')
+                        //     console.log(i)
+                        //     console.log("___________");
+                        //     console.log("___________");
+                        //     console.log("___________");
+                        // })
+        
+
 
                         // creating a for loop to run throught the amount of comments in database
-                        for(let i = 0; i < comment.length; i++) {
-                            
+                        for (let i = 0; i < post.length; i++) {
 
-                            // check to see if the currne post.id is equal to the current comment.post_id
-                            if (post[i].id === comment[i].post_id) {
 
-                                // if so
-                                // create a myComments array on that post
-                                post[i].myComments = [];
+                            // check to see if there is even a comment a
 
-                                // create another for loop to run through the amount of comments in database
-                                // and if the position in the new comment[j].post_id is equal to the current position of the post[i].id in the last for loop
-                                // add the user comment to the myComment array in the current post
-                                for (let j = 0; j < comment.length; j++) {
-                                    console.log("inside for loop")
-                                    console.log(comment[j])
-                                    if (post[i].id === comment[j].post_id) {
-                                        post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
-                                        
-                                    }
-                                   
+                                for (let j = 0; j < post.length; j++) {
+                                     console.log('in it')
+
+                                    if (comment[j]) {
+
+                                    
+
+                                        // check the specific post.id against all post_id in comments
+                                        if (post[i].id === comment[j].post_id) {
+                                            
+                                            // console.log('outside')
+                                            // console.log("_______________");
+                                            // console.log("_______________");
+                                            // console.log(i + " this is i")
+                                            // console.log(j + " this is j");
+                                            // console.log("_______________");
+                                            // console.log("_______________");
+                                            // console.log('inside')
+
+                                            // only creates a myComments array if none is created
+                                            if (!post[i].myComments) {
+                                                post[i].myComments = [];
+                                            }
+
+                                            //    console.log(comment[j]);
+                                            //     console.log("pushed " + j)
+                                            //     console.log(j);
+                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
+                                            // post[i].myComments.push({  usercomments: comment[j].user_comment });
+                                            // comment[j];
+                                            // console.log("Post.id is " + post[i].id);
+                                            // console.log("The post id associated with Comments is " + comment[j].post_id);
+                                            // console.log(post[i].myComments);
+
+                                        }
+                                    
+
+
                                 }
-                         
-                                
+
                             }
-                           
+
+                            // console.log('EEEEEEEENNNNNNNDDDDDDDDDDDDDD');
+                          
                         }
-                        
-                        console.log(post);
-                    
+
+                  
 
                         response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
                     })
@@ -69,8 +107,8 @@ router
                         console.log(error);
                         response.send(error);
                     })
-                        
-                  
+
+
 
             })
             .catch((error) => {
