@@ -15,7 +15,10 @@ router
     .get(async (request, response) => {
 
 
-        var posts = await knex.select('username', 'photo', 'caption', 'profilePic','posts.id')
+
+
+
+        var posts = await knex.select('username', 'photo', 'caption', 'profilePic', 'posts.id')
             .from('posts')
             .join('users', 'user_id', 'users.id')
             .then((post) => {
@@ -23,42 +26,76 @@ router
                 knex.select()
                     .from('likes')
                     .then((like) => {
-                        console.log("The damn likes")
+
                         console.log(like);
+                        for (let a = 0; a < post.length; a++) {
+
+                            if (post.length > like.length) {
+                                
+
+                                for (let b = 0; b < post.length; b++) {
 
 
-                        for(let a = 0; a < post.length; a++) {
+                                    if (like[b]) {
+                                        console.log(post[a]);
+                                        console.log("In the mix")
 
-                                                        for(let b = 0; b < post.length; b++) {
-                                                            
-                            
-                                                            if(like[b]) {
-                            
-                                                                
-                                                                if(post[a].id === like[b].post_id) {
-                                                                  
-                                                                       if(!post[a].postLikes) {
-                                                                            var nums = [];
-                                                                           
-                                                                       }
-                                                                        
-                                                                    
-                                                                       nums.push(b);
-                                                                     
-                                                                    // get the length of all likes in nums array and put it on postLikes
-                                                                      post[a].postLikes = nums.length;
-                                                               
-                                                                   
-                                                                }
-                                                            }
+                                        if (post[a].id === like[b].post_id) {
+
+                                            if (!post[a].postLikes) {
+                                                var nums = [];
+
+                                            }
 
 
-                                                        } // end of var j for loop
-                                                     
-                                                    } // end of var i for loop
+                                            nums.push(b);
+
+                                            // get the length of all likes in nums array and put it on postLikes
+                                            post[a].postLikes = nums.length;
+
+
+                                        }
+                                    }
+
+
+                                } // end of var j for loop
+
+                            } else {
+
+
+                                for (let b = 0; b < like.length; b++) {
+
+
+                                    if (like[b]) {
+                                     
+
+                                        if (post[a].id === like[b].post_id) {
+
+                                            if (!post[a].postLikes) {
+                                                var nums = [];
+
+                                            }
+
+
+                                            nums.push(b);
+
+                                            // get the length of all likes in nums array and put it on postLikes
+                                            post[a].postLikes = nums.length;
+
+
+                                        }
+                                    }
+
+
+                                } // end of var j for loop
+
+                            }
+
+                        }
+
                     })
                     .catch((error) => {
-                      response.send(error + " this is the error")
+                        response.send(error + " this is the error")
                     })
 
 
@@ -73,63 +110,75 @@ router
 
 
                             // We need to run a second for loop based on whatever is has entries posts or comments 
-                         if (post.length > comment.length){ 
-                            for (let j = 0; j < post.length; j++) {
-                                
-                              
-                                   // check to see if there is even a comment even exists
-                               if (comment[j]) {
-     
-
-                                   // check the specific post.id against all post_id in comments
-                                   if (post[i].id === comment[j].post_id) {
-                                 
-                                       // only creates a myComments array if none is created
-                                       if (!post[i].myComments) {
-                                           post[i].myComments = [];
-                                       }
-
-                                   
-                                       // push username and comment into myComments on poticular post        
-                                           post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
-    
-                                   }
-                           }
-                       }
+                            if (post.length > comment.length) {
+                                for (let j = 0; j < post.length; j++) {
 
 
-                         } else {
-                            for (let j = 0; j < comment.length; j++) {
-                                
-                              
-                                   // check to see if there is even a comment a
-                               if (comment[j]) {
-     
+                                    // check to see if there is even a comment even exists
+                                    if (comment[j]) {
 
-                                   // check the specific post.id against all post_id in comments
-                                   if (post[i].id === comment[j].post_id) {
-                                 
-                                       // only creates a myComments array if none is created
-                                       if (!post[i].myComments) {
-                                           post[i].myComments = [];
-                                       }
 
-                                     
-                                       // push username and comment into myComments on poticular post
+                                        // check the specific post.id against all post_id in comments
+                                        if (post[i].id === comment[j].post_id) {
 
-                                           post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
-                                    
-                                      
-                                
-                                   }
-                           }
-                       }
-                         }
- 
-                          
+                                            // only creates a myComments array if none is created
+                                            if (!post[i].myComments) {
+                                                post[i].myComments = [];
+                                            }
+
+
+                                            // push username and comment into myComments on poticular post        
+                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
+
+                                        }
+                                    }
+                                }
+
+
+                            } else {
+                                for (let j = 0; j < comment.length; j++) {
+
+
+                                    // check to see if there is even a comment a
+                                    if (comment[j]) {
+
+
+                                        // check the specific post.id against all post_id in comments
+                                        if (post[i].id === comment[j].post_id) {
+
+                                            // only creates a myComments array if none is created
+                                            if (!post[i].myComments) {
+                                                post[i].myComments = [];
+                                            }
+
+
+                                            // push username and comment into myComments on poticular post
+
+                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
+
+
+
+                                        }
+                                    }
+                                }
+                            }
+
+
                         }
 
                         // console.log(post);
+
+                        // if user is logged in let them comment on posts
+                        if (request.session.isAuthenticated) {
+                            post.forEach(i => {
+                                i.userComment = true;
+                            });
+                        }
+
+
+
+
+                        console.log(post);
 
                         response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
                     })
@@ -333,14 +382,14 @@ router
 
 
 
-
-router.get('/post/:id', async(request, response) => {
+// 
+router.get('/post/:id', async (request, response) => {
 
     var post = knex.select()
         .from('posts')
         .innerJoin('comments', 'post_id', 'posts.id')
         .where('id', request.params.id)
-        
+
         .then((post) => {
 
             console.log(post);
@@ -354,14 +403,14 @@ router.get('/post/:id', async(request, response) => {
 
 
 router.post('/addComment/:id', (request, response) => {
-    
+
     var comment = knex('comments')
         .insert({
             post_id: request.params.id,
             user_id: request.session.user_id,
             user_comment: request.body.user_comment
         })
-        .then(() =>{
+        .then(() => {
             console.log('post is successful')
             response.redirect('/')
         })
@@ -377,7 +426,7 @@ router.post('/likes/:id', (request, response) => {
             user_id: request.session.user_id,
             post_id: request.params.id
         })
-        .then(() =>{
+        .then(() => {
             console.log("You liked this post")
             response.redirect('/');
         })
