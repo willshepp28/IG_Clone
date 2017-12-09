@@ -59,7 +59,11 @@ input[type="submit"] {
     font-size: 10px;
 }
 
-
+.likePost {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
 
 .iconContainer i:hover {
     cursor: pointer;
@@ -68,3 +72,4 @@ input[type="submit"] {
 .addComment input {
     border: none;
 }
+

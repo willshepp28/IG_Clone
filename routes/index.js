@@ -17,10 +17,50 @@ router
 
         var posts = await knex.select('username', 'photo', 'caption', 'profilePic','posts.id')
             .from('posts')
-
             .join('users', 'user_id', 'users.id')
-            // .fullOuterJoin('comments', 'posts.id', 'post_id')
             .then((post) => {
+
+                knex.select()
+                    .from('likes')
+                    .then((like) => {
+                        console.log("The damn likes")
+                        console.log(like);
+
+
+                        for(let a = 0; a < post.length; a++) {
+
+                                                        for(let b = 0; b < post.length; b++) {
+                                                            
+                            
+                                                            if(like[b]) {
+                            
+                                                                
+                                                                if(post[a].id === like[b].post_id) {
+                                                                  
+                                                                       if(!post[a].postLikes) {
+                                                                            var nums = [];
+                                                                           
+                                                                       }
+                                                                        
+                                                                    
+                                                                       nums.push(b);
+                                                                     
+                                                                    // get the length of all likes in nums array and put it on postLikes
+                                                                      post[a].postLikes = nums.length;
+                                                               
+                                                                   
+                                                                }
+                                                            }
+
+
+                                                        } // end of var j for loop
+                                                     
+                                                    } // end of var i for loop
+                    })
+                    .catch((error) => {
+                      response.send(error + " this is the error")
+                    })
+
 
 
                 knex.select('comments.id', 'user_comment', 'post_id', 'username')
@@ -49,7 +89,7 @@ router
                                            post[i].myComments = [];
                                        }
 
-                                     
+                                   
                                        // push username and comment into myComments on poticular post        
                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
     
@@ -76,7 +116,7 @@ router
 
                                      
                                        // push username and comment into myComments on poticular post
-                                    
+
                                            post[i].myComments.push({ username: comment[j].username, usercomments: comment[j].user_comment });
                                     
                                       
@@ -89,7 +129,7 @@ router
                           
                         }
 
-                  
+                        // console.log(post);
 
                         response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
                     })
@@ -327,6 +367,22 @@ router.post('/addComment/:id', (request, response) => {
         })
         .catch(error => {
             response.send(error + ' this is the error');
+        });
+});
+
+router.post('/likes/:id', (request, response) => {
+
+    var likes = knex('likes')
+        .insert({
+            user_id: request.session.user_id,
+            post_id: request.params.id
+        })
+        .then(() =>{
+            console.log("You liked this post")
+            response.redirect('/');
+        })
+        .catch((error) => {
+            response.send(error + " this is the error");
         });
 })
 

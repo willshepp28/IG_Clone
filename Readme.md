@@ -93,3 +93,12 @@ This is my own version of instagram.
    * You cant use #each inside of a #if statement in handlebars smh
    * Order of seeding is important.
 
+
+   ## Lessons Learned
+
+   * to send a input when user presses enter without showing and having the submit button visible, set the submit button/input to display none or hidden
+   ```js
+<input type="submit" style="display: none" />
+ 
+```
+* Awesome knex js cheatsheet: https://devhints.io/knex
