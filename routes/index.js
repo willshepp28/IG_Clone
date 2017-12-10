@@ -27,6 +27,7 @@ router
         var posts = await knex.select('username', 'photo', 'caption', 'profilePic', 'posts.id')
             .from('posts')
             .join('users', 'user_id', 'users.id')
+            .orderBy('date_created', 'desc')
             .then((post) => {
 
                 knex.select()
@@ -524,9 +525,7 @@ router.post('/likes/:id', (request, response) => {
            */
 
 
-
-
-            /**
+               /**
              *  We have the likes back from the specific user
                  now we need to check if any of the likes.post_id match the post.id stored on the requeste.params.id object
  
