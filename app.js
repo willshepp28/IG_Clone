@@ -67,7 +67,7 @@ application.use(function(request,response, next){
 
 request.session.pageViews += 1;
 
-  console.log(request.session)
+  // console.log(request.session)
   next();
 });
 

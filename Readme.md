@@ -92,6 +92,7 @@ This is my own version of instagram.
    * Use bootstrap 4 for its ability to use flexbox
    * You cant use #each inside of a #if statement in handlebars smh
    * Order of seeding is important.
+   * If you are storing a number on the request.params object, realize that the data type is a string and not a number. You'll have to convert it to a number with parseInt() method.
 
 
    ## Lessons Learned
