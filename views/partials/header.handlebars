@@ -14,15 +14,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-      {{!-- <form class="form-inline my-2 my-lg-0 m-auto">
+      {{!--
+      <form class="form-inline my-2 my-lg-0 m-auto">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form> --}}
+      </form> --}} {{#if isAuthenticated}}
 
 
-
-      {{#if isAuthenticated}}
-      
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
@@ -33,13 +31,57 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="/login">
-            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
-          </a>
-        </li>
+        {{!-- --}}
 
-{{!-- go to profile page --}}
+        <div class="dropdown noBorder">
+          <button class="btn btn-default dropdown-toggle noBorder" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="true">
+            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+
+          </button>
+          <ul class="dropdown-menu width50per" aria-labelledby="dropdownMenu1">
+
+            <h4>Follow Requests</h4>
+            {{#if follow}}
+             {{#each follow}}
+            <div class="container width50per">
+
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="https://qph.ec.quoracdn.net/main-thumb-308578246-50-euhjbmhntbasoyeermvakcbfoqkuluyg.jpeg" alt="" style="height: 25px;"
+                    class="rounded-circle nocontent">
+                  <p>{{username}}</p>
+                </div>
+                <div class="col-md-4">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-4 mgRt-5px ">
+                        <form action="">
+                          <button type="button" class="btn btn-primary">Approve</button>
+                        </form>
+                      </div>
+
+                      <div class="col-md-4">
+                        <form action="">
+                          <button type="button" class="btn btn-default">Hide</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            {{/each}}
+             {{else}}
+            <p>Nothing yet!</p>
+
+            {{/if}}
+
+          </ul>
+        </div>
+
+        {{!-- --}} {{!-- go to profile page --}}
         <li class="nav-item">
           <a class="nav-link" href="/profile">
             <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>

@@ -24,8 +24,36 @@ router
     .route('/')
     .get(async (request, response) => {
 
+        // only run this is the user is logged in
+        if(request.session.isAuthenticated && request.session.follow < 2){
+
+                var followRequests = await knex.select('following.id','profilePic', 'username' )
+                .from('following')
+                .where('following_id', request.session.user_id)
+                .join('users', 'user_id', 'users.id')
+                .then((followRequest) => { 
+                    request.session.follow.push( followRequest );
+                     
+                    })
+                .catch(error => console.log(error));
+            
+
+
+        }
+
+
+        
+    
+       if(request.session.follow){
+           console.log(request.session.follow);
+       }
+    
+
+
+
         var posts = await knex.select('username', 'photo', 'caption', 'profilePic', 'posts.id')
             .from('posts')
+            .limit(5)
             .join('users', 'user_id', 'users.id')
             .orderBy('date_created', 'desc')
             .then((post) => {
@@ -93,7 +121,6 @@ router
                                                 var nums = [];
 
                                             }
-
 
                                             nums.push(b);
 
@@ -199,7 +226,15 @@ router
                             });
                         }
 
-                        response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
+                        if (request.session.isAuthenticated){
+                           
+                             console.log("__________-"); 
+                          
+                            response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: request.session.follow });
+                        } else {
+                            response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
+                        }
+                        
                     })
                     .catch((error) => {
                         console.log(error);

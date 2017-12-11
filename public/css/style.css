@@ -4,7 +4,8 @@ body {
 }
 
 a { text-decoration: none;
-    tex
+    color: black;
+
     }
 
 nav {
@@ -15,6 +16,8 @@ nav {
     font-weight: 600;
     line-height: 28px;
 }
+
+.white-bg { background: white; }
 
 .navbar-nav {
     float: none;
@@ -54,6 +57,7 @@ input[type="submit"] {
 }
 
 .mgTp-5px { margin-top: 5px;}
+.mgRt-5px { margin-right: 5px; }
 
 .post_comments {
     font-size: 10px;
@@ -73,3 +77,14 @@ input[type="submit"] {
     border: none;
 }
 
+.noBorder {
+    background: none !important;
+}
+
+.nocontent {
+    content: none !important;
+}
+
+.width50per {
+    width: 15vw !important;
+}
