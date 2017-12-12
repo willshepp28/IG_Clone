@@ -521,9 +521,19 @@ router.post('/following/:id', (request, response) => {
 router
 
     // we need a regex to find all the # in 
-    .route('/tags:hastag')
+    .route('/tags/:id')
     .get(async (request, response) => {
+        console.log('hei')
 
+        var categories = await knex.select('categories.id', 'category_name', 'post_id', 'category_id AS anotherId')
+            .from('categories')
+            .where('category_name', request.params.id)
+            .innerJoin('posts_in_categories', 'categories.id', 'category_id')
+            .then((category) => {
+                category.forEach((i) => { console.log(i)});
+                response.render('category');
+            })
+            .catch((error) => { console.log(error)});
     });
 
 

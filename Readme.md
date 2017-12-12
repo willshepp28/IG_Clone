@@ -66,17 +66,18 @@ This is my own version of instagram.
 
   ## Requirements
 
-  * User should be able to register
-  * User should be able to login
-  * User should be able to post content
-  * User should only be able to see the posts of users that they are following
-  * Users should be able to see their own profile page
-  * Users should be able to see the profile pictures of others users
-  * Users should can go see other profile pictures, but wont be able to actually see the posts of users they arent following.
-  * Users should be able to search for content associated with certain tags
-  * Users should be able to like pictures
-  * Users should only get be able to like one time per post
-  * Users should be able to comment on posts
+  - [X] User should be able to register
+  - [X] User should be able to login
+  - [X] User should be able to post content
+  - User should only be able to see the posts of users that they are following
+  - [X] Users should be able to see their own profile page
+  - [X] Users should be able to see the profile pictures of others users
+  - Users should can go see other profile pictures, but wont be able to actually see the posts of users they arent following.
+  - Users should be able to search for content associated with certain tags
+  - [X]  Users should be able to like post
+  - [X] Users should be able to unlike posts
+  - [X]  Users should only get be able to like one time per post
+  - [X]  Users should be able to comment on posts
 
 
    ## Problems/Challenges/Solutions
