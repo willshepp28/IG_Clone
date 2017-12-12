@@ -65,7 +65,7 @@ application.use(function (request, response, next) {
   if (request.session.isAuthenticated) {
 
     if(!request.session.follow){
-      console.log("Fuck yea")
+      // console.log("Fuck yea")
       // request.session.allNotifications = [
       //   likeNotifications = [],
         
@@ -89,16 +89,16 @@ application.use(function (request, response, next) {
     
   }
 
-  if (request.session.follow){
-    console.log("inside the middleware")
-    request.session.follow.forEach((i) => {
-      console.log(i);
-    })
-    console.log("inside the middleware")
-    for(let i =0; i < 5; i++) {
-      console.log("______________");
-    }
-  }
+  // if (request.session.follow){
+  //   console.log("inside the middleware")
+  //   request.session.follow.forEach((i) => {
+  //     console.log(i);
+  //   })
+  //   console.log("inside the middleware")
+  //   for(let i =0; i < 5; i++) {
+  //     console.log("______________");
+  //   }
+  // }
 
   if (!request.session.pageViews) {
     request.session.pageViews = 0;

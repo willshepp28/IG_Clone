@@ -25,29 +25,29 @@ router
     .get(async (request, response) => {
 
         // only run this is the user is logged in
-        if(request.session.isAuthenticated && request.session.follow < 2){
+        if (request.session.isAuthenticated && request.session.follow < 2) {
 
-                var followRequests = await knex.select('following.id','profilePic', 'username' )
+            var followRequests = await knex.select('following.id', 'profilePic', 'username')
                 .from('following')
                 .where('following_id', request.session.user_id)
                 .join('users', 'user_id', 'users.id')
-                .then((followRequest) => { 
-                    request.session.follow.push( followRequest );
-                     
-                    })
+                .then((followRequest) => {
+                    request.session.follow.push(followRequest);
+
+                })
                 .catch(error => console.log(error));
-            
+
 
 
         }
 
 
-        
-    
-       if(request.session.follow){
-           console.log(request.session.follow);
-       }
-    
+
+
+        if (request.session.follow) {
+            //    console.log(request.session.follow);
+        }
+
 
 
 
@@ -221,20 +221,20 @@ router
 
                         // if user is logged in let them comment on posts
                         if (request.session.isAuthenticated) {
-                            post.forEach(i => {
-                                i.userComment = true;
-                            });
+                            // post.forEach(i => {
+                            //     i.userComment = true;
+                            // });
                         }
 
-                        if (request.session.isAuthenticated){
-                           
-                             console.log("__________-"); 
-                          
+                        if (request.session.isAuthenticated) {
+
+                            //  console.log("__________-"); 
+
                             response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: request.session.follow });
                         } else {
                             response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
                         }
-                        
+
                     })
                     .catch((error) => {
                         console.log(error);
@@ -416,8 +416,8 @@ router
 */
 router.post('/addPost', async (request, response) => {
 
-    console.log("____________");
-    console.log(request.body);
+    // regex express to check and see if our caption has a hastag inside of it
+    var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
 
     var addPost = knex('posts')
         .insert({
@@ -425,7 +425,55 @@ router.post('/addPost', async (request, response) => {
             caption: request.body.caption,
             user_id: request.session.user_id
         })
-        .then(() => {
+        .returning('id')
+        .then((post) => {
+
+
+            // checks to see if any hashtags in users caption
+            // if so add create the category for it, if not already
+            // then create p
+            if (hashMatch) {
+
+               
+
+
+                knex('categories')
+                    .insert({
+                        category_name: hashMatch[0]
+                    })
+                    .then(() => {
+
+                        knex.select()
+                            .from('categories')
+                            .where('category_name', hashMatch[0])
+                            .then((category) => {
+
+                                console.log("++++++++++++++++")
+                                console.log(hashMatch[0])
+                                console.log(category[0].id);
+                                console.log(post[0]);
+                                console.log("++++++++++++++++")
+                                knex('posts_in_categories')
+                                    .insert({
+                                        post_id: post[0],
+                                        category_id: category[0].id
+                                    })
+                                    .then(() => { console.log('Getting matches') })
+                                    .catch((error) => { console.log(error) });
+                            })
+                    })
+                    .catch((error) => { console.log(error) })
+
+
+                // check to see if we already have a category for the specific hastag
+                // if NOT we need to run a regex to move the # symbol create one in the categories table
+                // then create a 
+
+
+
+            }
+
+
             response.redirect('/profile');
         })
         .catch((error) => {
@@ -471,6 +519,8 @@ router.post('/following/:id', (request, response) => {
 |--------------------------------------------------------------------------
 */
 router
+
+    // we need a regex to find all the # in 
     .route('/tags:hastag')
     .get(async (request, response) => {
 
@@ -560,13 +610,13 @@ router.post('/likes/:id', (request, response) => {
            */
 
 
-               /**
-             *  We have the likes back from the specific user
-                 now we need to check if any of the likes.post_id match the post.id stored on the requeste.params.id object
+            /**
+          *  We have the likes back from the specific user
+              now we need to check if any of the likes.post_id match the post.id stored on the requeste.params.id object
  
-                 If there is any matches, then we'll delete the like from the database
-                 If there are no matches, then we'll add a like to the database
-             */
+              If there is any matches, then we'll delete the like from the database
+              If there are no matches, then we'll add a like to the database
+          */
 
             // we need this to run throught the like array
             // but stop after that first match

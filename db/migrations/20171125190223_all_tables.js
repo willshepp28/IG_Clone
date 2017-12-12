@@ -44,9 +44,19 @@ exports.up = function(knex, Promise) {
             table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade');
             table.text('user_comment').notNullable();
         })
+        .createTable('categories', (table) => {
+            table.increments();
+            table.string('category_name').notNullable();
+        })
+        .createTable('posts_in_categories', (table) => {
+            table.increments();
+            table.integer('post_id').unsigned().references('id').inTable('posts').onDelete('cascade');
+            table.integer('category_id').unsigned().references('id').inTable('categories').onDelete('cascade');
+        })
+        
 
 };
 
 exports.down = function(knex, Promise) {
-   return knex.schema.dropTable('comments').dropTable('likes').dropTable('posts').dropTable('following').dropTable('followers').dropTable('users');
+   return knex.schema.dropTable('comments').dropTable('posts_in_categories').dropTable('categories').dropTable('likes').dropTable('posts').dropTable('following').dropTable('followers').dropTable('users');
 };
