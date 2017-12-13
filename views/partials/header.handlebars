@@ -18,13 +18,12 @@
       <form class="form-inline my-2 my-lg-0 m-auto">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form> --}} {{#if isAuthenticated}}
-
-
+      </form> --}} 
+      {{#if isAuthenticated}}
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/signup">
+          <a class="nav-link" href="/discover">
             <i class="fa fa-compass fa-2x" aria-hidden="true"></i>
 
             <span class="sr-only">(current)</span>
@@ -42,7 +41,8 @@
           <ul class="dropdown-menu width50per" aria-labelledby="dropdownMenu1">
 
             <h4>Follow Requests</h4>
-            
+
+            {{#if follow}}
              {{#each follow}}
             <div class="container width50per">
 
@@ -73,6 +73,9 @@
               </div>
             </div>
             {{/each}}
+            {{else}}
+            <p>No Notifications Yet!</p>
+            {{/if}}
 
           </ul>
         </div>

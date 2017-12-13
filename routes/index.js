@@ -29,21 +29,19 @@ router
 
             var followRequests = await knex.select('following.id', 'profilePic', 'username', 'user_id')
                 .from('following')
-                .where('following_id', request.session.user_id)
+                .where({
+                    following_id: request.session.user_id,
+                    acceptOrReject: 0
+                })
                 .join('users', 'user_id', 'users.id')
                 .returning('following.id')
                 .then((followRequest) => {
                     
-                  
-                    followRequest.forEach(i => {
-                        request.session.follow.push(i);
-                    })
-
-                    
-                    return followRequest
+                    return followRequest;
 
                 })
                 .catch(error => console.log(error));
+
 
         }
 
@@ -723,7 +721,21 @@ router.post('/likes/:id', (request, response) => {
 
 router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 
-    console.log(request.params.userId);
+
+                /* 
+                   **** THIS DETERMINES ACCEPTS/DENIES FOLLOW REQUEST *****
+   
+                               
+                   This operation checks the request.params.choice to see whether user accepts or denys follower
+
+                   0 = pending
+                   1 = accept
+                   2 = deny
+   
+                    If the user accepts, then we add a 1 to the following.acceptOrRequest 
+                    if the user denies, then we delete the specific row out of the following table
+           */
+
     
     // if user accepts follow request
     if(request.params.choice === 'accept') {
@@ -738,7 +750,7 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
             .catch((error) => { console.log(error); response.send(error + " this is the error")});
 
     } else {
-
+        // if user denys follow request
         knex('following')
         .where({
             following_id: request.session.user_id,
@@ -754,6 +766,31 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
     }
 
 })
+
+
+
+router  
+    .route('/discover')
+    .get(async (request, response) => {
+
+        // show the users some new people to follow
+        var potentialFollowers =  await knex.select()
+            .from('users')
+            .limit(4)
+            .then((user) => { return user })
+            .catch((error) => { console.log(error + " this is the error.")});
+
+
+        // some posts
+        var discoverPosts =  await knex.select()
+            .from('posts')
+            .limit(10)
+            .then((post) => { return post;})
+            .catch((error) => { console.log(error + " this is the error")})
+
+
+            response.render('discover', { potentialFollowers , discoverPosts })
+    })
 
 
 
