@@ -56,10 +56,26 @@ input[type="submit"] {
     border-top: 1px solid #efefef;
 }
 
+
+.height-78px {
+    height: 78px;
+}
+
+.height-293px {
+    max-height: 293px;
+}
+
+.padding-20px {
+    padding: 20px;
+}
+
 .mgTp-5px { margin-top: 5px;}
+.mgTp-15px { margin-top: 15px; }
 .mgTp-40px { margin-top: 20px; }
+.mgTp-50px { margin-top: 50px; }
 .mgTp-100px { margin-top: 100px;}
 .mgRt-5px { margin-right: 5px; }
+.mgBt-28px { margin-bottom: 28px; }
 
 .post_comments {
     font-size: 10px;
@@ -94,3 +110,5 @@ input[type="submit"] {
 .max400 {
     max-width: 400px;
 }
+
+

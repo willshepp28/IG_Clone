@@ -777,6 +777,7 @@ router
         var potentialFollowers =  await knex.select()
             .from('users')
             .limit(4)
+            .whereNot('id', request.session.user_id)
             .then((user) => { return user })
             .catch((error) => { console.log(error + " this is the error.")});
 
@@ -789,7 +790,7 @@ router
             .catch((error) => { console.log(error + " this is the error")})
 
 
-            response.render('discover', { potentialFollowers , discoverPosts })
+            response.render('discover', { potentialFollowers , discoverPosts,  isAuthenticated: request.session.isAuthenticated })
     })
 
 
