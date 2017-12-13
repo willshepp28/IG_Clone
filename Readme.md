@@ -96,6 +96,7 @@ This is my own version of instagram.
    * Order of seeding is important.
    * If you are storing a number on the request.params object, realize that the data type is a string and not a number. You'll have to convert it to a number with parseInt() method.
    * To get a promise back when running a `insert()` in knexjs use `returning()`
+   * You cannot use `#` in a url. If you do the browser will skip the part that has `/#some/url` and load `\` - https://stackoverflow.com/questions/17744003/get-url-after-in-express-js-middleware-request
 
 
    ## Lessons Learned
@@ -106,3 +107,4 @@ This is my own version of instagram.
  
 ```
 * Awesome knex js cheatsheet: https://devhints.io/knex
+* In express you can use multiple parameters in url - https://stackoverflow.com/questions/15128849/using-multiple-parameters-in-url-in-express

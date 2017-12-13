@@ -27,7 +27,7 @@ router
         // only run this is the user is logged in
         if (request.session.isAuthenticated && request.session.follow < 2) {
 
-            var followRequests = await knex.select('following.id', 'profilePic', 'username')
+            var followRequests = await knex.select('following.id', 'profilePic', 'username', 'user_id')
                 .from('following')
                 .where('following_id', request.session.user_id)
                 .join('users', 'user_id', 'users.id')
@@ -268,7 +268,6 @@ router
 
                             console.log("__________-"); 
 
-                            console.log(Array.isArray(request.session.follow));
 
                             response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
                         } else {
@@ -716,6 +715,43 @@ router.post('/likes/:id', (request, response) => {
             response.send(error);
         })
 
+
+});
+
+
+
+
+router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
+
+    console.log(request.params.userId);
+    
+    // if user accepts follow request
+    if(request.params.choice === 'accept') {
+
+        knex('following')
+            .where({
+                following_id: request.session.user_id,
+                user_id: request.params.userId
+            })
+            .update('acceptOrReject', 1)
+            .then(() => { response.redirect('/')})
+            .catch((error) => { console.log(error); response.send(error + " this is the error")});
+
+    } else {
+
+        knex('following')
+        .where({
+            following_id: request.session.user_id,
+            user_id: request.params.userId
+        })
+        .del()
+        .then(() => { 
+            
+            
+            response.redirect('/')})
+        .catch((error) => { console.log(error); response.send(error + " this is the error")});
+
+    }
 
 })
 
