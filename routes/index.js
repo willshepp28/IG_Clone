@@ -31,22 +31,28 @@ router
                 .from('following')
                 .where('following_id', request.session.user_id)
                 .join('users', 'user_id', 'users.id')
+                .returning('following.id')
                 .then((followRequest) => {
-                    request.session.follow.push(followRequest);
+                    
+                  
+                    followRequest.forEach(i => {
+                        request.session.follow.push(i);
+                    })
+
+                    
+                    return followRequest
 
                 })
                 .catch(error => console.log(error));
 
-
-
         }
 
+    
 
 
 
-        if (request.session.follow) {
-            //    console.log(request.session.follow);
-        }
+
+     
 
 
 
@@ -82,7 +88,7 @@ router
 
                     } 
 
-                    console.log(i);
+                 
                     
                 })
 
@@ -249,18 +255,24 @@ router
 
                         // if user is logged in let them comment on posts
                         if (request.session.isAuthenticated) {
-                            // post.forEach(i => {
-                            //     i.userComment = true;
-                            // });
+                            post.forEach(i => {
+                                i.userComment = true;
+                            });
                         }
 
                         if (request.session.isAuthenticated) {
 
-                            //  console.log("__________-"); 
+                             console.log("__________-"); 
 
-                            response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: request.session.follow });
+                            console.log(request.session.follow);
+
+                            console.log("__________-"); 
+
+                            console.log(Array.isArray(request.session.follow));
+
+                            response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
                         } else {
-                            response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username });
+                            response.render('home', { post });
                         }
 
                     })

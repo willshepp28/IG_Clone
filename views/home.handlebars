@@ -35,7 +35,13 @@
 {{else}}
     <p><strong>No likes yet.</strong></p>
 {{/if}}
-      <p><strong>{{username}}</strong> - {{caption}} <a href="/tags/{{hashArr}}">#{{hashArr}}</a></p>
+      <p><strong>{{username}}</strong> - {{caption}} 
+      
+      {{#if hashArr}}
+      <a href="/tags/{{hashArr}}">#{{hashArr}}
+      </a>
+      {{/if}}
+      </p>
 
     <div >
      <a href="post/{{id}}"><p class="lightgrey mgTp-5px" style="font-size:12px">View Comments</p></a> 
@@ -54,7 +60,7 @@
           </form>
       </div>
       {{else}}
-     
+  
       {{/if}}
 
     </div>
