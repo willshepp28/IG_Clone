@@ -1,7 +1,25 @@
 
-    
 
-{{#each post}}
-    <img src="{{photo}}" alt="">
-    <p>{{caption}}</p>
-{{/each}}
+
+<div class="container">
+    <div class="row">
+        {{#post}}
+        <div class="col-md-6">
+            <img src="{{photo}}" alt=""> 
+        </div>
+        {{/post}}
+
+        
+        <div class="col-md-6">
+            
+            <div class="container">
+                {{#each comment}}
+                <div class="row">
+                    <p>{{user_comment}}</p>
+                </div>
+                {{/each}}                
+            </div>
+            
+        </div>
+    </div>
+</div>

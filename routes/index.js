@@ -584,20 +584,37 @@ router
 */
 router.get('/post/:id', async (request, response) => {
 
-    var post = knex.select()
+    // var post = knex.select()
+    //     .from('posts')
+    //     .innerJoin('comments', 'posts.id', 'post_id')
+    //     .where('posts.id', request.params.id)
+
+    //     .then((post) => {
+
+    //         console.log(post);
+    //         response.render('comments', { post, isAuthenticated: request.session.user_id })
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //         response.send(error + " is the reason")
+    //     })
+
+    var post = await knex.select()
         .from('posts')
-        .innerJoin('comments', 'post_id', 'posts.id')
         .where('id', request.params.id)
+        .then((posts) => { return posts; })
+        .catch((error) => { console.log(error + " this is a post error")});
 
-        .then((post) => {
 
-            console.log(post);
-            response.render('comments', { post, isAuthenticated: request.session.user_id })
-        })
-        .catch((error) => {
-            console.log(error);
-            response.send(error + " is the reason")
-        })
+    var comment = await knex.select()
+        .from('comments')
+        .where('post_id', request.params.id)
+        .then((comments) => { return comments; })
+        .catch((error) => { console.log(error + " this is a comment error")})
+
+
+        response.render('comments', { post, comment, isAuthenticated: request.session.user_id })
+
 })
 
 
@@ -773,13 +790,68 @@ router
     .route('/discover')
     .get(async (request, response) => {
 
+        // exports.seed = function(knex, Promise) {
+        //     // Deletes ALL existing entries
+        //     return knex('following').del()
+        //       .then(function () {
+        //         // Inserts seed entries
+        //         return knex('following').insert([
+        //           { following_id: 1 , user_id: 2},
+        //           { following_id: 1 , user_id: 3}
+        //         ]);
+        //       });
+        //   };
+          
+
         // show the users some new people to follow
         var potentialFollowers =  await knex.select()
             .from('users')
-            .limit(4)
-            .whereNot('id', request.session.user_id)
-            .then((user) => { return user })
+            // .leftJoin('following' , 'users.id', 'following_id')
+             .whereNot('users.id', request.session.user_id)
+             
+            //  .havingNotIn('following.user_id', request.session.user_id)
+            // .whereNot('following.id', request.session.user_id)
+            // .whereNull('following.id')
+            // .limit(4)
+            .then((user) => {   
+
+                // user.forEach((i) => {
+
+                //     console.log(typeof i.user_id)
+
+                //     // if request.params.id matches user_id remove user from user promise
+                //     if(parseInt(request.params.id) === i.user_id) {
+                //         user.splice(i.length + 1, 1)
+                //     } 
+                // })
+                var userPosts = [];
+
+                knex('following')
+                    .then((follow) => {
+
+                        console.log(follow);
+
+                        // follow.forEach(i => {
+                        //     if(parseInt(request.session.user_id) !== i.user_id ) {
+                        //         userPosts.push(i);
+                        //     }
+                        // })
+
+                        // user.forEach((users) => {
+
+                        //     follow.forEach((followers) => {
+                        //         if(users.id )
+                        //     })
+                        // })
+
+                    })
+                    .catch((error) => { console.log(error)})
+
+                    
+                console.log(userPosts); 
+                return user  })
             .catch((error) => { console.log(error + " this is the error.")});
+
 
 
         // some posts
@@ -787,7 +859,7 @@ router
             .from('posts')
             .limit(10)
             .then((post) => { return post;})
-            .catch((error) => { console.log(error + " this is the error")})
+            .catch((error) => { console.log(error + " this is the error"); response.send(error + " this is a error")})
 
 
             response.render('discover', { potentialFollowers , discoverPosts,  isAuthenticated: request.session.isAuthenticated })
