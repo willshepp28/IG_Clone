@@ -95,7 +95,7 @@ This is my own version of instagram.
    * You cant use #each inside of a #if statement in handlebars smh
    * Order of seeding is important.
    * If you are storing a number on the request.params object, realize that the data type is a string and not a number. You'll have to convert it to a number with parseInt() method.
-   * To get a promise back when running a insert() in knexjs use returning()
+   * To get a promise back when running a `insert()` in knexjs use `returning()`
 
 
    ## Lessons Learned

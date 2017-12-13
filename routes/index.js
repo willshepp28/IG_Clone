@@ -419,6 +419,18 @@ router.post('/addPost', async (request, response) => {
     // regex express to check and see if our caption has a hastag inside of it
     var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
 
+
+
+    /* 
+   **** THIS HOW POSTS ARE CREATED *****
+
+   
+   This operation creates a post that users create
+
+   It also checks that caption the user writes to see if a hashtag is in the caption
+   Then creates a category if not is created, and adds that post to that specific category.
+*/
+
     var addPost = knex('posts')
         .insert({
             photo: request.body.photo,
@@ -430,29 +442,18 @@ router.post('/addPost', async (request, response) => {
 
 
             // checks to see if any hashtags in users caption
-            // if so add create the category for it, if not already
-            // then create p
             if (hashMatch) {
-
-               
-
 
                 knex('categories')
                     .insert({
-                        category_name: hashMatch[0]
+                        category_name: hashMatch[0].replace('#', '') // removes the hash symbol from hashtag
                     })
                     .then(() => {
 
                         knex.select()
                             .from('categories')
-                            .where('category_name', hashMatch[0])
+                            .where('category_name', hashMatch[0].replace('#', ''))
                             .then((category) => {
-
-                                console.log("++++++++++++++++")
-                                console.log(hashMatch[0])
-                                console.log(category[0].id);
-                                console.log(post[0]);
-                                console.log("++++++++++++++++")
                                 knex('posts_in_categories')
                                     .insert({
                                         post_id: post[0],
@@ -463,14 +464,6 @@ router.post('/addPost', async (request, response) => {
                             })
                     })
                     .catch((error) => { console.log(error) })
-
-
-                // check to see if we already have a category for the specific hastag
-                // if NOT we need to run a regex to move the # symbol create one in the categories table
-                // then create a 
-
-
-
             }
 
 
@@ -519,10 +512,10 @@ router.post('/following/:id', (request, response) => {
 |--------------------------------------------------------------------------
 */
 router
-
-    // we need a regex to find all the # in 
     .route('/tags/:id')
     .get(async (request, response) => {
+
+        // we need a regex to find all the # in 
         console.log('hei')
 
         var categories = await knex.select('categories.id', 'category_name', 'post_id', 'category_id AS anotherId')
@@ -530,10 +523,18 @@ router
             .where('category_name', request.params.id)
             .innerJoin('posts_in_categories', 'categories.id', 'category_id')
             .then((category) => {
-                category.forEach((i) => { console.log(i)});
-                response.render('category');
+
+                knex.select()
+                    .from('posts')
+                    .where('posts.id', category[0].post_id)
+                    .then((post) => {
+                        response.render('category', { category, post });
+                    })
+                    .catch((error) => { console.log(error)});
+
+    
             })
-            .catch((error) => { console.log(error)});
+            .catch((error) => { console.log(error); response.send(error + " this is the reason") });
     });
 
 
