@@ -58,6 +58,34 @@ router
             .orderBy('date_created', 'desc')
             .then((post) => {
 
+
+
+                // for each caption that has a hashtag push into hashArr
+                post.forEach((i) => {
+                    // var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
+                    // hashMatch[0].replace('#', '')
+
+
+                    // .replace(/#(\S*)/g,'<a href="localhost:3000/tags/">#$1</a>')
+                    
+                    // if the captions have hastage
+                    if (i.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/)){
+                        
+                        if(!i.hashArr) {
+                            i.hashArr = [];
+                        }
+                        
+                        hashtag = i.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/)
+
+                        i.hashArr.push(hashtag[0].replace('#', ''));
+                        i.caption = i.caption.replace(/\#\S+/g,'');
+
+                    } 
+
+                    console.log(i);
+                    
+                })
+
                 knex.select()
                     .from('likes')
                     .then((like) => {
@@ -516,7 +544,6 @@ router
     .get(async (request, response) => {
 
         // we need a regex to find all the # in 
-        console.log('hei')
 
         var categories = await knex.select('categories.id', 'category_name', 'post_id', 'category_id AS anotherId')
             .from('categories')

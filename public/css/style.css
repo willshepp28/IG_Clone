@@ -89,3 +89,7 @@ input[type="submit"] {
 .width50per {
     width: 15vw !important;
 }
+
+.max400 {
+    max-width: 400px;
+}

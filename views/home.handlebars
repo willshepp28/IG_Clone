@@ -3,7 +3,7 @@
 
 <d-flex class="d-flex align-items-center p-2 getme">
 
-  <div class="card ">
+  <div class="card max400">
     <p class="card-header white-bg">
       <a href="/profile/{{id}}"><img src="{{profilePic}}" alt="user profile picture" style="height: 25px;" class="rounded-circle">
       <strong>{{username}}</strong></a>
@@ -35,7 +35,7 @@
 {{else}}
     <p><strong>No likes yet.</strong></p>
 {{/if}}
-      <p><strong>{{username}}</strong> - {{caption}}</p>
+      <p><strong>{{username}}</strong> - {{caption}} <a href="/tags/{{hashArr}}">#{{hashArr}}</a></p>
 
     <div >
      <a href="post/{{id}}"><p class="lightgrey mgTp-5px" style="font-size:12px">View Comments</p></a> 
