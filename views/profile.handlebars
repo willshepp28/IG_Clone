@@ -1,36 +1,58 @@
-<h1>Profile</h1>
+<div class="container mgTp-50px">
+    <div class="row">
+        <div class="col-md-3">
+            {{#user}} {{!--
+            <p>{{id}}</p> --}}
+
+            <img src="{{profilePic}}" alt="" class="rounded-circle float_right" style="height:152px">
+
+        </div>
+        <!-- Button trigger modal -->
+
+        <div class="col-md-9 mgTp-60px">
+
+            <div class="container width3 float_left">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="h1font1">{{username}}</h1>
+                    </div>
+                    {{/user}}
+                    <div class="col-md-6">
+                        {{#if follower}}
+
+                        <form action="/following/{{follower_id}}" method="post">
+                            <button type="submit" class="btn btn-success">
+                                Follow
+                            </button>
+                        </form>
+
+                        {{else}}
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                            Create a Post
+                        </button>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div class="row mgTp-40px">
+                    <div class="col-md-4"> <strong>4</strong> posts</div>
+                     <div class="col-md-4"><strong>19</strong> followers</div>
+                      <div class="col-md-4"><strong>800</strong> following</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
 
 
-
-{{#each user}}
-
-{{!-- <p>{{id}}</p> --}}
-
-<img src="{{profilePic}}" alt="" class="rounded-circle"> {{/each}}
-
-
-<!-- Button trigger modal -->
-
-{{#if follower}}
-
-<form action="/following/{{follower_id}}" method="post">
-    <button type="submit" class="btn btn-success">
-        Follow
-    </button>
-</form>
-
-{{else}}
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-    Create a Post
-</button>
-{{/if}}
-
-<div class="container">
+<div class="container mgTp-100px">
     <div class="row">
 
         {{#each user_posts}}
-        <div class="col-md-4">
-            <img src="{{photo}}"> </div>
+        <div class="col-md-4 mgBt-28px">
+            <img src="{{photo}}" class="height-293px"> </div>
 
         {{/each}}
     </div>

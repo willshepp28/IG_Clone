@@ -1,7 +1,7 @@
 
 
-
-<div class="container">
+{{!-- left side --}}
+<div class="container mgTp-100px white-bg">
     <div class="row">
         {{#post}}
         <div class="col-md-6">
@@ -10,14 +10,33 @@
         {{/post}}
 
         
-        <div class="col-md-6">
+
+        {{!-- right side --}}
+        <div class="col-md-6 mgTp-40px">
             
+            {{#post}}
             <div class="container">
+                <div class="row">
+                    <div class="col-md-1"><img src="{{profilePic}}" alt="" class="rounded-circle" style="height:40px"></div>
+                    <div class="col-md-11 float-left"><strong>{{username}}</strong></div>
+                </div>
+           
+
+            <hr>
+                <p><strong>{{username}}</strong> - {{caption}}</p>
+             {{/post}}
+
+             <p class="mgTp-60px  lightgrey">Load more comments</p>
                 {{#each comment}}
                 <div class="row">
-                    <p>{{user_comment}}</p>
+                    <p><strong><a href="/profile/{{user_id}}">{{username}}</a></strong>  {{user_comment}}</p>
                 </div>
-                {{/each}}                
+                {{/each}}  
+
+
+                {{#post}}
+                <p><strong></strong></p>
+                {{/post}}              
             </div>
             
         </div>

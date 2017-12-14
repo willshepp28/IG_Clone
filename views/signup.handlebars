@@ -1,27 +1,54 @@
-<h1>Sign Up</h1>
 
 
-<form action="/signup" method="post">
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="username">Username</label>
-      <input type="text" name="username"class="form-control" id="inputEmail4" placeholder="Please Enter Your Username">
+
+
+
+
+<div class="container signup text-center padding-20px mgTp-60px border1pxef">
+  <h1>Instagram</h1>
+  <div class="row mgTp-40px">
+    <h4 class="lightgrey signup_intro">Sign up to see photos and videos from your friends.</h4>
+    <div class="col-md-12 mgTp-40px">
+      <form action="/signup" method="post">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" name="username" class="form-control" id="inputEmail4" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" class="form-control" id="inputPassword4" placeholder="Email">
+          </div>
+
+            <div class="form-group">
+          <input type="text" name="number" class="form-control" id="inputAddress" placeholder="Mobile Number">
+        </div>
+        <div class="form-group">
+          
+          <input type="text" name="password" class="form-control" id="inputAddress2" placeholder="Password">
+        </div>
+
+        </div>
+
+
+
+        <button type="submit" class="btn form_button">Sign up</button>
+
+         <p class="lightgrey mgTp-40px signup-terms">By signing up, you agree to our Terms & Privacy Policy.</p>
+      </form>
     </div>
-    <div class="form-group col-md-6">
-      <label for="email">Email</label>
-      <input type="email" name="email" class="form-control" id="inputPassword4" placeholder="Please Enter Your Email">
-    </div>
   </div>
-  <div class="form-group">
-    <label for="Number">Phone Number</label>
-    <input type="text" name="number" class="form-control" id="inputAddress" placeholder="Please Enter Your Phone Number">
-  </div>
-  <div class="form-group">
-    <label for="Password">Password</label>
-    <input type="text" name="password" class="form-control" id="inputAddress2" placeholder="Please Enter Your Password">
-  </div>
-  
+</div>
 
+<div class="container white-bg width20vw mgTp-50px padding-20px border1pxef">
+  <div class="row">
+    <div class="col-md-12 text-center">Have an account? <a href="/login" class="babyblue">Log in</a></div>
+  </div>
+</div>
 
-  <button type="submit" class="btn btn-primary">Create Account</button>
-</form>
+<p class="text-center mgTp-15px">Get the app.</p>
+
+<div class="container width20vw mgTp-50px">
+  <div class="row">
+    <div class="col-md-6"><a href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&ct=igweb.signupPage.badge&mt=8"><img src="/assets/img/widgets/app_store.png" alt="app store widget" class="widgets"></a></div>
+    <div class="col-md-6"><a href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DsignupPage%26utm_medium%3Dbadge"><img src="/assets/img/widgets/google_play.png" alt="google play widget" class="widgets"></a></div>
+  </div>
+</div>

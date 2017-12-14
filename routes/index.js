@@ -597,17 +597,21 @@ router.get('/post/:id', async (request, response) => {
     //     .catch((error) => {
     //         console.log(error);
     //         response.send(error + " is the reason")
+
     //     })
+
 
     var post = await knex.select()
         .from('posts')
-        .where('id', request.params.id)
-        .then((posts) => { return posts; })
+        .innerJoin('users', 'user_id', 'users.id')
+        .where('posts.id', request.params.id)
+        .then((posts) => {  console.log(posts);return posts; })
         .catch((error) => { console.log(error + " this is a post error")});
 
 
     var comment = await knex.select()
         .from('comments')
+        .innerJoin('users', 'user_id', 'users.id')
         .where('post_id', request.params.id)
         .then((comments) => { return comments; })
         .catch((error) => { console.log(error + " this is a comment error")})

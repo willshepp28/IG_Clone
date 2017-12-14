@@ -73,6 +73,9 @@ input[type="submit"] {
 .mgTp-15px { margin-top: 15px; }
 .mgTp-40px { margin-top: 20px; }
 .mgTp-50px { margin-top: 50px; }
+.mgTp-60px {
+    margin-top: 60px;
+}
 .mgTp-100px { margin-top: 100px;}
 .mgRt-5px { margin-right: 5px; }
 .mgBt-28px { margin-bottom: 28px; }
@@ -111,4 +114,62 @@ input[type="submit"] {
     max-width: 400px;
 }
 
+.h1font1 {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 200;
+}
 
+
+.width32vw {
+    width: 32vw;
+}
+
+.width20vw {
+    width: 20vw;
+}
+
+.float_left {
+    float: left;
+}
+
+.float_right {
+    float: right;
+}
+
+.signup {
+    width: 28vw;
+    background: white;
+}
+
+.border1pxef {
+    border: 1px solid #e6e6e6;
+}
+
+.signup input {
+    border: 1px solid #efefef;
+    background: #fafafa;
+}
+
+.babyblue {
+    color: #3897f0;
+}
+
+.signup_intro {
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 17px;
+    margin: 0 40px 10px;
+}
+
+.signup-terms {
+    font-size: 14px;
+}
+
+.form_button {
+    background: #3897f0;
+    border-color: #3897f0;
+    color: white;
+}
+
+.widgets { height: 40px;}

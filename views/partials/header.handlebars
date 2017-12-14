@@ -82,12 +82,14 @@
         </div>
 
         {{!-- --}} {{!-- go to profile page --}}
+        {{#isAuthenticated}}
         <li class="nav-item">
           <a class="nav-link" href="/profile">
             <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
 
           </a>
         </li>
+        {{/isAuthenticated}}
 
       </ul>
 
