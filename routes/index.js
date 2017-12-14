@@ -794,67 +794,44 @@ router
     .route('/discover')
     .get(async (request, response) => {
 
-        // exports.seed = function(knex, Promise) {
-        //     // Deletes ALL existing entries
-        //     return knex('following').del()
-        //       .then(function () {
-        //         // Inserts seed entries
-        //         return knex('following').insert([
-        //           { following_id: 1 , user_id: 2},
-        //           { following_id: 1 , user_id: 3}
-        //         ]);
-        //       });
-        //   };
-          
 
-        // show the users some new people to follow
-        var potentialFollowers =  await knex.select()
-            .from('users')
-            // .leftJoin('following' , 'users.id', 'following_id')
-             .whereNot('users.id', request.session.user_id)
-             
-            //  .havingNotIn('following.user_id', request.session.user_id)
-            // .whereNot('following.id', request.session.user_id)
-            // .whereNull('following.id')
-            // .limit(4)
-            .then((user) => {   
+    // Get the users to show in discover people
+    var potentialFollowers = await knex.select()
+        .from('users')
+        .whereNot('id', request.session.user_id)
+        .then((user) => {
+            
+         
+            // check the database to see which users the current user is already trying to follow and exclude them
+            knex('following')
+                .where('user_id', request.session.user_id)
+                .then((follow) => {
 
-                // user.forEach((i) => {
+                    for(let i = 0; i < user.length; i++) {
+                        // console.log(user[i])
+                        console.log("___________");
+                        for(let j = 0; j < follow.length; j++) {
+                            console.log(user[i].id);
+                            console.log(follow[j].following_id);
+                            console.log(user[i].id === follow[j].following_id);
 
-                //     console.log(typeof i.user_id)
+                            // if users.id matchs the following.following_id, then delete from array
+                            if(user[i].id === follow[j].following_id) {
+                                console.log('removing index ' + i);
+                                
+                                remove(user, user[i]);
+                            }
+                        }
+                    }
+                })
+                .catch((error) => { console.log(error + " this is a error")})
 
-                //     // if request.params.id matches user_id remove user from user promise
-                //     if(parseInt(request.params.id) === i.user_id) {
-                //         user.splice(i.length + 1, 1)
-                //     } 
-                // })
-                var userPosts = [];
-
-                knex('following')
-                    .then((follow) => {
-
-                        console.log(follow);
-
-                        // follow.forEach(i => {
-                        //     if(parseInt(request.session.user_id) !== i.user_id ) {
-                        //         userPosts.push(i);
-                        //     }
-                        // })
-
-                        // user.forEach((users) => {
-
-                        //     follow.forEach((followers) => {
-                        //         if(users.id )
-                        //     })
-                        // })
-
-                    })
-                    .catch((error) => { console.log(error)})
-
-                    
-                console.log(userPosts); 
-                return user  })
-            .catch((error) => { console.log(error + " this is the error.")});
+        
+            return user;
+            
+                
+        })
+        .catch((error) => { console.log(error)});
 
 
 
@@ -870,6 +847,17 @@ router
     })
 
 
+    // function remove(array, element) {
+    //     return array.filter(e => e !== element);
+    // }
+
+    function remove(array, element) {
+        const index = array.indexOf(element);
+        
+        if (index !== -1) {
+            array.splice(index, 1);
+        }
+    }
 
 
 
