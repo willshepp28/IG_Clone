@@ -138,8 +138,9 @@ input[type="submit"] {
 }
 
 .signup {
-    width: 28vw;
+    /* width: 28vw; */
     background: white;
+    margin: 0 auto;
 }
 
 .border1pxef {
@@ -173,3 +174,16 @@ input[type="submit"] {
 }
 
 .widgets { height: 40px;}
+
+
+.border-blue {
+    border: 1px solid blue;
+}
+
+.border-green {
+    border: 1px solid green;
+}
+
+.border-red {
+ border: 1px solid red   
+}

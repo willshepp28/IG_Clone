@@ -22,7 +22,7 @@ const router = require('express').Router(),
 */
 router
     .route('/')
-    .get(async (request, response) => {
+    .get(checkAuthenticated ,async (request, response) => {
 
         // only run this is the user is logged in
         if (request.session.isAuthenticated && request.session.follow < 2) {
@@ -378,7 +378,7 @@ router
 */
 router
     .route('/profile')
-    .get(async (request, response) => {
+    .get(checkAuthenticated, async (request, response) => {
 
 
 
@@ -412,7 +412,7 @@ router
 |--------------------------------------------------------------------------
 */
 router
-    .route('/profile/:id')
+    .route(checkAuthenticated, '/profile/:id')
     .get(async (request, response) => {
 
         var user = await knex.select()
@@ -792,7 +792,7 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 
 router  
     .route('/discover')
-    .get(async (request, response) => {
+    .get(checkAuthenticated, async (request, response) => {
 
 
     // Get the users to show in discover people
@@ -808,17 +808,11 @@ router
                 .then((follow) => {
 
                     for(let i = 0; i < user.length; i++) {
-                        // console.log(user[i])
-                        console.log("___________");
+    
                         for(let j = 0; j < follow.length; j++) {
-                            console.log(user[i].id);
-                            console.log(follow[j].following_id);
-                            console.log(user[i].id === follow[j].following_id);
-
+                    
                             // if users.id matchs the following.following_id, then delete from array
                             if(user[i].id === follow[j].following_id) {
-                                console.log('removing index ' + i);
-                                
                                 remove(user, user[i]);
                             }
                         }
@@ -858,6 +852,20 @@ router
             array.splice(index, 1);
         }
     }
+
+
+    function checkAuthenticated(request, response, next) {
+        
+            // do any checks you want to in here
+        
+            // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+            // you can do this however you want with whatever variables you set up
+            if (request.session.isAuthenticated)
+                return next();
+        
+            // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+            response.redirect('/signup' || '/login');
+        }
 
 
 

@@ -65,50 +65,19 @@ application.use(function (request, response, next) {
   if (request.session.isAuthenticated) {
 
     if(!request.session.follow){
-      // console.log("Fuck yea")
-      // request.session.allNotifications = [
-      //   likeNotifications = [],
-        
-      //   followNotifications = [],
-      //   commentNotifications = []
-      // ];
+
 
       request.session.follow = [];
 
-      // request.session.allNotifications[0].push(1);
-      // request.session.allNotifications[1].push({id:1, user_id: 2, caption: "you have followers"})
-      // request.session.allNotifications[1].push({id:1, user_id: 3, caption: "what a great day"})
-      // console.log("________");
-      // request.session.allNotifications.forEach((i) => {
-      //   console.log(i);
-      // })
-    }
-   
-
-   
-    
+    } 
   }
 
-  // if (request.session.follow){
-  //   console.log("inside the middleware")
-  //   request.session.follow.forEach((i) => {
-  //     console.log(i);
-  //   })
-  //   console.log("inside the middleware")
-  //   for(let i =0; i < 5; i++) {
-  //     console.log("______________");
-  //   }
-  // }
 
   if (!request.session.pageViews) {
     request.session.pageViews = 0;
-  }// else if(request.session.pageViews > 0){
-  //       request.session.pageViews += 1;
-  //   }
-
+  }
   request.session.pageViews += 1;
 
-  // console.log(request.session)
   next();
 });
 
