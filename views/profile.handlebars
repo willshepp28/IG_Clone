@@ -4,7 +4,7 @@
             {{#user}} {{!--
             <p>{{id}}</p> --}}
 
-            <img src="{{profilePic}}" alt="" class="rounded-circle float_right" style="height:152px">
+            <img src="{{profilePic}}" alt="" class="rounded-circle float_right img-fluid" style="height:152px">
 
         </div>
         <!-- Button trigger modal -->
@@ -51,8 +51,8 @@
     <div class="row">
 
         {{#each user_posts}}
-        <div class="col-md-4 mgBt-28px">
-            <img src="{{photo}}" class="height-293px"> </div>
+        <div class="col-md-4 col-4 mgBt-28px">
+            <img src="{{photo}}" class="height-293px img-fluid"> </div>
 
         {{/each}}
     </div>

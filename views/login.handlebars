@@ -5,15 +5,13 @@
 
 {{!-- HERE --}}
 
-
-
 <div class="container  text-center mgTp-60px ">
   
   <div class="row mgTp-40px text-center">
     
     <div class="col-lg-4 col-sm-7 mgTp-40px signup border1pxef padding-20px  ">
       <h1>Instagram</h1>
-          <form action="/login" method="post">
+          <form action="/login" method="post" class="mgTp-15px">
         <div class="form-row">
           <div class="form-group">
             <input type="text" name="username" class="form-control" id="inputEmail4" placeholder="Please Enter Your Username">
@@ -30,11 +28,17 @@
 
 
         <button type="submit" class="btn form_button">Log in</button>
-
-        <p class="lightgrey mgTp-40px signup-terms">By signing up, you agree to our Terms & Privacy Policy.</p>
+       
+       {{> error}}
       </form>
+
+
     </div>
+
+
   </div>
+
+  
 </div>
 
 <div class="container  mgTp-50px">

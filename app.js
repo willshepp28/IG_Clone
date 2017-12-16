@@ -6,7 +6,8 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
-  validator = require('express-validator'),
+  expressValidator = require('express-validator'),
+  flash = require('connect-flash'),
   path = require('path'),
   morgan = require('morgan'),
   bcrypt = require('bcrypt'),
@@ -42,6 +43,8 @@ application.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 application.use(bodyParser.json());
 
+application.use(expressValidator());
+
 
 application.use(session({
   secret: 'somanyparts',
@@ -49,6 +52,34 @@ application.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
+
+
+// express messages
+// app.use(require('connect-flash')());
+// app.use(function (req, res, next) {
+//   res.locals.messages = require('express-messages')(req, res)();
+//   next();
+// });
+
+
+
+// // Express Validator Middleware
+// applic.use(expressValidator({
+//   errorFormatter: function(param, msg, value) {
+//       var namespace = param.split('.')
+//       , root    = namespace.shift()
+//       , formParam = root;
+
+//     while(namespace.length) {
+//       formParam += '[' + namespace.shift() + ']';
+//     }
+//     return {
+//       param : formParam,
+//       msg   : msg,
+//       value : value
+//     };
+//   }
+// }));
 
 
 

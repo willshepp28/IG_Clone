@@ -22,7 +22,8 @@ const router = require('express').Router(),
 */
 router
     .route('/')
-    .get(checkAuthenticated ,async (request, response) => {
+    // checkAuthenticated ,
+    .get(async (request, response) => {
 
         // only run this is the user is logged in
         if (request.session.isAuthenticated && request.session.follow < 2) {
@@ -36,7 +37,7 @@ router
                 .join('users', 'user_id', 'users.id')
                 .returning('following.id')
                 .then((followRequest) => {
-                    
+
                     return followRequest;
 
                 })
@@ -45,12 +46,12 @@ router
 
         }
 
-    
 
 
 
 
-     
+
+
 
 
 
@@ -71,23 +72,23 @@ router
 
 
                     // .replace(/#(\S*)/g,'<a href="localhost:3000/tags/">#$1</a>')
-                    
+
                     // if the captions have hastage
-                    if (i.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/)){
-                        
-                        if(!i.hashArr) {
+                    if (i.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/)) {
+
+                        if (!i.hashArr) {
                             i.hashArr = [];
                         }
-                        
+
                         hashtag = i.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/)
 
                         i.hashArr.push(hashtag[0].replace('#', ''));
-                        i.caption = i.caption.replace(/\#\S+/g,'');
+                        i.caption = i.caption.replace(/\#\S+/g, '');
 
-                    } 
+                    }
 
-                 
-                    
+
+
                 })
 
                 knex.select()
@@ -260,11 +261,11 @@ router
 
                         if (request.session.isAuthenticated) {
 
-                             console.log("__________-"); 
+                            console.log("__________-");
 
                             console.log(request.session.follow);
 
-                            console.log("__________-"); 
+                            console.log("__________-");
 
 
                             response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
@@ -290,6 +291,8 @@ router
 
 
 
+router.get('/')
+
 
 
 /*
@@ -300,10 +303,23 @@ router
 router
     .route('/signup')
     .get(async (request, response) => {
-        response.render("signup");
+        response.render("signup", { errors: request.session.errors });
     })
     .post((request, response) => {
 
+        request.check('username', 'The username you entered doesn\'t belong to an account').isEmpty();
+        request.check('email', "Please enter a valid email address").notEmpty().isEmail();
+        request.check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
+        request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').notEmpty().isLength({ min: 4 })
+        request.check('number', 'Please enter a valid number').isMobilePhone().notEmpty();
+       
+
+        var errors = request.validationErrors();
+
+        if (errors) {
+            request.session.errors = errors;
+            response.redirect('/signup')
+        } else {
 
 
         var encrypt = function (password) { return crypto.pbkdf2Sync(password, 'salt', 10, 512, 'sha512').toString('base64'); };
@@ -323,7 +339,7 @@ router
                 console.log(error);
                 response.redirect('/signup');
             });
-
+        }
 
     });
 
@@ -339,32 +355,45 @@ router
 router
     .route('/login')
     .get(async (request, response) => {
-        response.render("login");
+        response.render("login", { errors: request.session.errors });
+        request.session.errors = null;
     })
     .post((request, response) => {
 
-        var decrypt = crypto.pbkdf2Sync(request.body.password, 'salt', 10, 512, 'sha512').toString('base64');
+        request.check('username', 'The username you entered doesn\'t belong to an account').isEmpty();
+        request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').isLength({ min: 4 })
+
+        var errors = request.validationErrors();
+
+        if (errors) {
+            request.session.errors = errors;
+            response.redirect('/login')
+        } else {
 
 
-        // when user logs in decrypt password, set username and isAuthenticated in session, then redirect to /
-        var user = knex.select()
-            .from('users')
-            .where({
-                username: request.body.username,
-                password: decrypt
-            })
-            .then((user) => {
+            var decrypt = crypto.pbkdf2Sync(request.body.password, 'salt', 10, 512, 'sha512').toString('base64');
 
-                request.session.isAuthenticated = true;
-                request.session.user_id = user[0].id;
-                request.session.username = user[0].username;
 
-                response.redirect('/');
-            })
-            .catch((error) => {
-                console.log(error);
-                response.redirect('/login');
-            })
+            // when user logs in decrypt password, set username and isAuthenticated in session, then redirect to /
+            var user = knex.select()
+                .from('users')
+                .where({
+                    username: request.body.username,
+                    password: decrypt
+                })
+                .then((user) => {
+
+                    request.session.isAuthenticated = true;
+                    request.session.user_id = user[0].id;
+                    request.session.username = user[0].username;
+
+                    response.redirect('/');
+                })
+                .catch((error) => {
+                    console.log(error);
+                    response.redirect('/login');
+                })
+        }
     });
 
 
@@ -412,8 +441,8 @@ router
 |--------------------------------------------------------------------------
 */
 router
-    .route(checkAuthenticated, '/profile/:id')
-    .get(async (request, response) => {
+    .route('/profile/:id')
+    .get(checkAuthenticated, async (request, response) => {
 
         var user = await knex.select()
             .from('users')
@@ -566,9 +595,9 @@ router
                     .then((post) => {
                         response.render('category', { category, post });
                     })
-                    .catch((error) => { console.log(error)});
+                    .catch((error) => { console.log(error) });
 
-    
+
             })
             .catch((error) => { console.log(error); response.send(error + " this is the reason") });
     });
@@ -605,8 +634,8 @@ router.get('/post/:id', async (request, response) => {
         .from('posts')
         .innerJoin('users', 'user_id', 'users.id')
         .where('posts.id', request.params.id)
-        .then((posts) => {  console.log(posts);return posts; })
-        .catch((error) => { console.log(error + " this is a post error")});
+        .then((posts) => { console.log(posts); return posts; })
+        .catch((error) => { console.log(error + " this is a post error") });
 
 
     var comment = await knex.select()
@@ -614,10 +643,10 @@ router.get('/post/:id', async (request, response) => {
         .innerJoin('users', 'user_id', 'users.id')
         .where('post_id', request.params.id)
         .then((comments) => { return comments; })
-        .catch((error) => { console.log(error + " this is a comment error")})
+        .catch((error) => { console.log(error + " this is a comment error") })
 
 
-        response.render('comments', { post, comment, isAuthenticated: request.session.user_id })
+    response.render('comments', { post, comment, isAuthenticated: request.session.user_id })
 
 })
 
@@ -743,23 +772,23 @@ router.post('/likes/:id', (request, response) => {
 router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 
 
-                /* 
-                   **** THIS DETERMINES ACCEPTS/DENIES FOLLOW REQUEST *****
-   
-                               
-                   This operation checks the request.params.choice to see whether user accepts or denys follower
+    /* 
+       **** THIS DETERMINES ACCEPTS/DENIES FOLLOW REQUEST *****
+ 
+                   
+       This operation checks the request.params.choice to see whether user accepts or denys follower
 
-                   0 = pending
-                   1 = accept
-                   2 = deny
-   
-                    If the user accepts, then we add a 1 to the following.acceptOrRequest 
-                    if the user denies, then we delete the specific row out of the following table
-           */
+       0 = pending
+       1 = accept
+       2 = deny
+ 
+        If the user accepts, then we add a 1 to the following.acceptOrRequest 
+        if the user denies, then we delete the specific row out of the following table
+*/
 
-    
+
     // if user accepts follow request
-    if(request.params.choice === 'accept') {
+    if (request.params.choice === 'accept') {
 
         knex('following')
             .where({
@@ -767,22 +796,23 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
                 user_id: request.params.userId
             })
             .update('acceptOrReject', 1)
-            .then(() => { response.redirect('/')})
-            .catch((error) => { console.log(error); response.send(error + " this is the error")});
+            .then(() => { response.redirect('/') })
+            .catch((error) => { console.log(error); response.send(error + " this is the error") });
 
     } else {
         // if user denys follow request
         knex('following')
-        .where({
-            following_id: request.session.user_id,
-            user_id: request.params.userId
-        })
-        .del()
-        .then(() => { 
-            
-            
-            response.redirect('/')})
-        .catch((error) => { console.log(error); response.send(error + " this is the error")});
+            .where({
+                following_id: request.session.user_id,
+                user_id: request.params.userId
+            })
+            .del()
+            .then(() => {
+
+
+                response.redirect('/')
+            })
+            .catch((error) => { console.log(error); response.send(error + " this is the error") });
 
     }
 
@@ -790,82 +820,83 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 
 
 
-router  
+router
     .route('/discover')
     .get(checkAuthenticated, async (request, response) => {
 
 
-    // Get the users to show in discover people
-    var potentialFollowers = await knex.select()
-        .from('users')
-        .whereNot('id', request.session.user_id)
-        .then((user) => {
-            
-         
-            // check the database to see which users the current user is already trying to follow and exclude them
-            knex('following')
-                .where('user_id', request.session.user_id)
-                .then((follow) => {
+        // Get the users to show in discover people
+        var potentialFollowers = await knex.select()
+            .from('users')
+            .limit(4)
+            .whereNot('id', request.session.user_id)
+            .then((user) => {
 
-                    for(let i = 0; i < user.length; i++) {
-    
-                        for(let j = 0; j < follow.length; j++) {
-                    
-                            // if users.id matchs the following.following_id, then delete from array
-                            if(user[i].id === follow[j].following_id) {
-                                remove(user, user[i]);
+
+                // check the database to see which users the current user is already trying to follow and exclude them
+                knex('following')
+                    .where('user_id', request.session.user_id)
+                    .then((follow) => {
+
+                        for (let i = 0; i < user.length; i++) {
+
+                            for (let j = 0; j < follow.length; j++) {
+
+                                // if users.id matchs the following.following_id, then delete from array
+                                if (user[i].id === follow[j].following_id) {
+                                    remove(user, user[i]);
+                                }
                             }
                         }
-                    }
-                })
-                .catch((error) => { console.log(error + " this is a error")})
+                    })
+                    .catch((error) => { console.log(error + " this is a error") })
 
-        
-            return user;
-            
-                
-        })
-        .catch((error) => { console.log(error)});
+
+                return user;
+
+
+            })
+            .catch((error) => { console.log(error) });
 
 
 
         // some posts
-        var discoverPosts =  await knex.select()
+        var discoverPosts = await knex.select()
             .from('posts')
             .limit(10)
-            .then((post) => { return post;})
-            .catch((error) => { console.log(error + " this is the error"); response.send(error + " this is a error")})
+            .then((post) => { return post; })
+            .catch((error) => { console.log(error + " this is the error"); response.send(error + " this is a error") })
 
 
-            response.render('discover', { potentialFollowers , discoverPosts,  isAuthenticated: request.session.isAuthenticated })
+        response.render('discover', { potentialFollowers, discoverPosts, isAuthenticated: request.session.isAuthenticated })
     })
 
 
-    // function remove(array, element) {
-    //     return array.filter(e => e !== element);
-    // }
+// function remove(array, element) {
+//     return array.filter(e => e !== element);
+// }
 
-    function remove(array, element) {
-        const index = array.indexOf(element);
-        
-        if (index !== -1) {
-            array.splice(index, 1);
-        }
+function remove(array, element) {
+    const index = array.indexOf(element);
+
+    if (index !== -1) {
+        array.splice(index, 1);
     }
+}
 
 
-    function checkAuthenticated(request, response, next) {
-        
-            // do any checks you want to in here
-        
-            // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
-            // you can do this however you want with whatever variables you set up
-            if (request.session.isAuthenticated)
-                return next();
-        
-            // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-            response.redirect('/signup' || '/login');
-        }
+function checkAuthenticated(request, response, next) {
+
+    // do any checks you want to in here
+
+    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+    // you can do this however you want with whatever variables you set up
+    if (request.session.isAuthenticated)
+        return next();
+
+    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+    response.redirect('/signup' || '/login');
+}
 
 
 

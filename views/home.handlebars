@@ -1,74 +1,85 @@
+
+
+<div class="container">
+
 {{#each post}}
+      <div class="row">
+    <div class="col-lg-5 col-md-7 col-12 mx-auto">
+      <div class="card ">
+        <p class="card-header white-bg">
+          <a href="/profile/{{id}}">
+            <img src="{{profilePic}}" alt="user profile picture" style="height: 25px;" class="rounded-circle">
+            <strong>{{username}}</strong>
+          </a>
+        </p>
+        <img class="card-img-top img-fluid" src="{{photo}}" alt="Card image cap">
+        <div class="card-block">
 
 
-<d-flex class="d-flex align-items-center p-2 getme">
+          {{!-- Comment, Like , and Save Buttons --}}
+          <div class="d-flex flex-row my-flex-container iconContainer">
 
-  <div class="card max400">
-    <p class="card-header white-bg">
-      <a href="/profile/{{id}}"><img src="{{profilePic}}" alt="user profile picture" style="height: 25px;" class="rounded-circle">
-      <strong>{{username}}</strong></a>
-    </p>
-    <img class="card-img-top" src="{{photo}}" alt="Card image cap">
-    <div class="card-block">
+            <form action="/likes/{{id}}" method="post">
+              <button type="submit" class="likePost">
+                <i class="fa fa-heart-o p-2 order-1" aria-hidden="true"></i>
+              </button>
+            </form>
 
 
-{{!-- Comment, Like , and Save Buttons --}}
-      <div class="d-flex flex-row my-flex-container iconContainer">
-      
-      <form action="/likes/{{id}}" method="post">
-            <button type="submit" class="likePost"><i class="fa fa-heart-o p-2 order-1" aria-hidden="true"></i></button>
-      </form>
-         
-     
-        
-         <i class="fa fa-comment-o p-2 order-2 commentBtn" aria-hidden="true"></i> 
-      
-         
-       
-       
-          <i class="fa fa-bookmark-o p-2 order-3 ml-auto" aria-hidden="true"></i>
-       
+
+            <i class="fa fa-comment-o p-2 order-2 commentBtn" aria-hidden="true"></i>
+
+
+
+
+            <i class="fa fa-bookmark-o p-2 order-3 ml-auto" aria-hidden="true"></i>
+
+          </div>
+
+          {{#if postLikes}}
+          <p>
+            <strong>{{postLikes}} Likes</strong>
+          </p>
+          {{else}}
+          <p>
+            <strong>No likes yet.</strong>
+          </p>
+          {{/if}}
+          <p>
+            <strong>{{username}}</strong> - {{caption}} {{#if hashArr}}
+            <a href="/tags/{{hashArr}}">#{{hashArr}}
+            </a>
+            {{/if}}
+          </p>
+
+          <div>
+            <a href="/post/{{id}}">
+              <p class="lightgrey mgTp-5px" style="font-size:12px">View Comments</p>
+            </a>
+
+            {{#each myComments}}
+            <p class="post_comments">
+              <strong>{{this.username}} - </strong>{{this.usercomments}}</p>
+            {{/each}}
+          </div>
+
+          {{#if userComment}}
+          <div class="addComment">
+            <hr>
+            <form action="/addComment/{{id}}" method="post">
+
+              <input type="text" name="user_comment" class="focusOn" placeholder="Add a comment..." data-emojiable="true">
+              <input type="submit" style="display:none;" />
+            </form>
+          </div>
+          {{else}} {{/if}}
+
+        </div>
       </div>
-
-{{#if postLikes}}
-    <p><strong>{{postLikes}} Likes</strong></p>
-{{else}}
-    <p><strong>No likes yet.</strong></p>
-{{/if}}
-      <p><strong>{{username}}</strong> - {{caption}} 
-      
-      {{#if hashArr}}
-      <a href="/tags/{{hashArr}}">#{{hashArr}}
-      </a>
-      {{/if}}
-      </p>
-
-    <div >
-     <a href="/post/{{id}}"><p class="lightgrey mgTp-5px" style="font-size:12px">View Comments</p></a> 
-
-      {{#each myComments}}
-         <p class="post_comments"><strong>{{this.username}} - </strong>{{this.usercomments}}</p> 
-      {{/each}}
     </div>
-      
-     {{#if userComment}}
-      <div class="addComment">
-          <hr>
-          <form action="/addComment/{{id}}" method="post">
-   
-            <input type="text" name="user_comment" class="focusOn"  placeholder="Add a comment..." data-emojiable="true" >
-            <input type="submit" style="display:none;" />
-          </form>
-      </div>
-      {{else}}
-  
-      {{/if}}
-
-    </div>
-  </div>
-</d-flex>
+   </div>
 
 
 {{/each}}
-
-
+ 
+</div>

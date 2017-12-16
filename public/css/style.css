@@ -187,3 +187,5 @@ input[type="submit"] {
 .border-red {
  border: 1px solid red   
 }
+
+.ifError {color: #ed4956; font-size: 78%;}

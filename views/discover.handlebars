@@ -3,11 +3,11 @@
 
     <div class="row">
         {{#each potentialFollowers}}
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-6 mx-auto">
             <div class="card text-center padding-20px">
                 <div class="card-body">
                     <a href="/profile/{{id}}">
-                        <img src="{{profilePic}}" alt="" class="rounded-circle height-78px">
+                        <img src="{{profilePic}}" alt="" class="rounded-circle  img-fluid">
                     </a>
                     <a href="/profile/{{id}}">
                         <p class="card-text">
@@ -36,8 +36,8 @@
 
     <div class="row mgTp-50px">
         {{#each discoverPosts}}
-        <div class="col-md-4 mgBt-28px">
-            <a href="/post/{{id}}"><img src="{{photo}}" alt="" class="height-293px"></a>
+        <div class="col-md-4 col-4 mgBt-28px">
+            <a href="/post/{{id}}"><img src="{{photo}}" alt="" class="height-293px img-fluid"></a>
             
         </div>
         {{/each}}
