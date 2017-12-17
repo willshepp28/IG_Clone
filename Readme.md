@@ -18,6 +18,7 @@ This is my own version of instagram.
  Handlebars
  Knex/ PostgreSQL
  Socket.IO
+ AWS S3
  
 ```
 
@@ -97,6 +98,7 @@ This is my own version of instagram.
    * If you are storing a number on the request.params object, realize that the data type is a string and not a number. You'll have to convert it to a number with parseInt() method.
    * To get a promise back when running a `insert()` in knexjs use `returning()`
    * You cannot use `#` in a url. If you do the browser will skip the part that has `/#some/url` and load `\` - https://stackoverflow.com/questions/17744003/get-url-after-in-express-js-middleware-request
+   * Before uploading images to AWS-S3 make sure to include `contentType: multerS3.AUTO_CONTENT_TYPE` in the `multerS3` object
 
 
    ## Lessons Learned

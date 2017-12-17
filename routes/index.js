@@ -32,24 +32,24 @@ var upload = multer({
     })
   })
 
-/*
-|--------------------------------------------------------------------------
-|  /profile/upload
-|--------------------------------------------------------------------------
-*/
+// /*
+// |--------------------------------------------------------------------------
+// |  /profile/upload
+// |--------------------------------------------------------------------------
+// */
 
-router
-  .route('/profile/upload')
-  .get((request, response) => {
-        response.render('upload')
-  })
-  .post(upload.any(),(request, response) => {
+// router
+//   .route('/profile/upload')
+//   .get((request, response) => {
+//         response.render('upload')
+//   })
+//   .post(upload.any(),(request, response) => {
 
         
       
-        response.send(request.files[0].location + " " + request.body.whatever);
-        console.log(request.files);
-  })    
+//         response.send(request.files[0].location + " " + request.body.whatever);
+//         console.log(request.files);
+//   })    
 
 
 /*
