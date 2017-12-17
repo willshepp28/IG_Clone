@@ -27,17 +27,40 @@
                         </form>
 
                         {{else}}
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                            Create a Post
-                        </button>
+
+
+
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                        Create a Post
+                                    </button>
+                                </div>
+
+                                  <div class="col-md-6">
+                                    <a href="/profilePic" class="btn btn-primary">
+                                        Change Profile Picture
+                                    </a>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+
                         {{/if}}
                     </div>
                 </div>
 
                 <div class="row mgTp-40px">
-                    <div class="col-md-4"> <strong>4</strong> posts</div>
-                     <div class="col-md-4"><strong>19</strong> followers</div>
-                      <div class="col-md-4"><strong>800</strong> following</div>
+                    <div class="col-md-4">
+                        <strong>4</strong> posts</div>
+                    <div class="col-md-4">
+                        <strong>19</strong> followers</div>
+                    <div class="col-md-4">
+                        <strong>800</strong> following</div>
                 </div>
             </div>
 
@@ -52,15 +75,19 @@
 
         {{#each user_posts}}
         <div class="col-md-4 col-4 mgBt-28px">
-            <img src="{{photo}}" class="height-293px img-fluid"> </div>
 
+            <a href="/post/{{id}}">
+                <img src="{{photo}}" alt="" class="height-293px img-fluid">
+            </a>
+        </div>
         {{/each}}
     </div>
 </div>
 
 
 
-<!-- Modal -->
+
+<!-- Create Post Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

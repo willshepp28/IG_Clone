@@ -405,6 +405,58 @@ router
 
 /*
 |--------------------------------------------------------------------------
+|  /profilePic - route where you add profile pic
+|--------------------------------------------------------------------------
+*/
+router
+    .route('/profilePic')
+    .get((request,response) => {
+
+        var user = knex.select()
+            .from('users')
+            .where('id', request.session.user_id)
+            .then((user) => {
+                response.render('profilePic', { user, isAuthenticated: request.session.isAuthenticated });
+            })
+            .catch((error) => { console.log(error)})
+        
+    })
+    .post(upload.any(),(request,response) => {
+
+        // app.put('/todos/:id', (req, res) => {
+        //     knex('todos')
+        //      .where('id', req.params.id)
+        //      .update({
+        //          title: req.body.title,
+        //          completed: req.body.completed
+        //      })
+        //      .then(() => {
+        //          knex
+        //              .select()
+        //              .from('todos')
+        //              .then(todos => {
+        //                  res.send(todos);
+        //              });
+        //      });
+        //  });
+
+        var changeProfile = knex('users')
+            .where('id', request.session.user_id)
+            .update({
+                profilePic:request.files[0].location
+            })
+            .then(() => {
+                response.redirect('/profile')
+            })
+            .catch((error) => { console.log(error); response.redirect('/profilePic')})
+    })
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
 |  Login Page - Page where users login 
 |--------------------------------------------------------------------------
 */

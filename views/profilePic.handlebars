@@ -1,0 +1,32 @@
+<div class="container mgTp-100px">
+    <div class="row">
+        <div class="col-md-5 mx-auto text-center">
+
+
+            {{#user}}
+            <div class="card-body white-bg border1pxef padding-20px">
+                <a href="/profile/{{id}}">
+                    <img src="{{profilePic}}" alt="" class="rounded-circle  img-fluid">
+                </a>
+                <a href="/profile/{{id}}" class="mgTp-40px">
+                    <p class="card-text">
+                        <strong>{{username}}</strong>
+                    </p>
+                </a>
+
+
+                <form action="/profilePic" method="post" enctype="multipart/form-data" class="mgTp-40px">
+
+
+                    <input type="file" name="photo"  placeholder="Upload a Image">
+
+                    <button type="submit" class="btn btn-primary" class="mgTp-60px">Save changes</button>
+
+                </form>
+                {{/user}}
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
