@@ -2,17 +2,54 @@
 
 const router = require('express').Router(),
     crypto = require('crypto'),
+    { getAllFollowRequests } = require('../db/query'),
+    AWS = require('aws-sdk');
+    multer = require('multer'),
+    multerS3 = require('multer-S3'),
     knex = require('../db/knex');
 
 
 
 // var hashtag = '\S*#(?:\[[^\]]+\]|\S+)';           *** Dont worry about me for now
 
+AWS.config.loadFromPath('./config.json');
+AWS.config.update({signatureVersion: 'v4'});
+var s3 = new AWS.S3();
 
 
+var upload = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: 'ig-clone-v1',
+      acl: 'public-read',
+      contentType: multerS3.AUTO_CONTENT_TYPE,
+      metadata: function (req, file, cb) {
+        cb(null, {fieldName: file.fieldname});
+      },
+      key: function (req, file, cb) {
+        cb(null, Date.now().toString() + '.jpg')
+      }
+    })
+  })
 
+/*
+|--------------------------------------------------------------------------
+|  /profile/upload
+|--------------------------------------------------------------------------
+*/
 
+router
+  .route('/profile/upload')
+  .get((request, response) => {
+        response.render('upload')
+  })
+  .post(upload.any(),(request, response) => {
 
+        
+      
+        response.send(request.files[0].location + " " + request.body.whatever);
+        console.log(request.files);
+  })    
 
 
 /*
@@ -22,8 +59,7 @@ const router = require('express').Router(),
 */
 router
     .route('/')
-    // checkAuthenticated ,
-    .get(async (request, response) => {
+    .get(checkAuthenticated, async (request, response) => {
 
         // only run this is the user is logged in
         if (request.session.isAuthenticated && request.session.follow < 2) {
@@ -56,12 +92,31 @@ router
 
 
 
-        var posts = await knex.select('username', 'photo', 'caption', 'profilePic', 'posts.id')
+        var posts = await knex.select('username', 'users.id AS userId', 'photo', 'caption', 'profilePic', 'posts.id')
             .from('posts')
-            .limit(5)
+            // .limit(5)
             .join('users', 'user_id', 'users.id')
             .orderBy('date_created', 'desc')
             .then((post) => {
+
+                // post.forEach(i => { console.log("______"); console.log(post)})
+
+
+                knex.select()
+                    .from('following')
+                    .where('user_id', request.session.user_id)
+                    .where('acceptOrReject', 1)
+                    .then((follow) => {
+
+                        for(let i = 0; i < post.length; i++) {
+                            console.log("_________");
+                            console.log(follow[i])
+                            console.log("_________");
+                        }
+                     
+
+
+                    })
 
 
 
@@ -255,19 +310,20 @@ router
                         // if user is logged in let them comment on posts
                         if (request.session.isAuthenticated) {
                             post.forEach(i => {
+
                                 i.userComment = true;
                             });
                         }
 
                         if (request.session.isAuthenticated) {
 
-                            console.log("__________-");
+                            // console.log("__________-");
 
-                            console.log(request.session.follow);
+                            // console.log(request.session.follow);
 
-                            console.log("__________-");
+                            // console.log("__________-");
 
-
+                            // console.log(post);
                             response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
                         } else {
                             response.render('home', { post });
@@ -312,7 +368,7 @@ router
         request.check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
         request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').notEmpty().isLength({ min: 4 })
         request.check('number', 'Please enter a valid number').isMobilePhone().notEmpty();
-       
+
 
         var errors = request.validationErrors();
 
@@ -322,23 +378,23 @@ router
         } else {
 
 
-        var encrypt = function (password) { return crypto.pbkdf2Sync(password, 'salt', 10, 512, 'sha512').toString('base64'); };
+            var encrypt = function (password) { return crypto.pbkdf2Sync(password, 'salt', 10, 512, 'sha512').toString('base64'); };
 
-        var users = knex('users')
-            .insert({
-                username: request.body.username,
-                email: request.body.email,
-                number: request.body.number,
-                password: encrypt(request.body.password)
+            var users = knex('users')
+                .insert({
+                    username: request.body.username,
+                    email: request.body.email,
+                    number: request.body.number,
+                    password: encrypt(request.body.password)
 
-            })
-            .then(() => {
-                response.redirect('/')
-            })
-            .catch((error) => {
-                console.log(error);
-                response.redirect('/signup');
-            });
+                })
+                .then(() => {
+                    response.redirect('/')
+                })
+                .catch((error) => {
+                    console.log(error);
+                    response.redirect('/signup');
+                });
         }
 
     });
@@ -360,8 +416,8 @@ router
     })
     .post((request, response) => {
 
-        request.check('username', 'The username you entered doesn\'t belong to an account').isEmpty();
-        request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').isLength({ min: 4 })
+        request.check('username', 'The username you entered doesn\'t belong to an account').notEmpty();
+        request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').isLength({ min: 3 })
 
         var errors = request.validationErrors();
 
@@ -480,7 +536,18 @@ router
 |  /addPost Route  - Post method where users add posts
 |--------------------------------------------------------------------------
 */
-router.post('/addPost', async (request, response) => {
+router.post('/addPost', upload.any(), async (request, response) => {
+
+    // router
+    // .route('/profile/upload')
+    // .get((request, response) => {
+    //       response.render('upload')
+    // })
+    // .post(upload.any(),(request, response) => {
+        
+    //       response.send(request.files);
+    //       console.log(request.files);
+    // })    
 
     // regex express to check and see if our caption has a hastag inside of it
     var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
@@ -499,7 +566,7 @@ router.post('/addPost', async (request, response) => {
 
     var addPost = knex('posts')
         .insert({
-            photo: request.body.photo,
+            photo: request.files[0].location,
             caption: request.body.caption,
             user_id: request.session.user_id
         })
@@ -792,8 +859,8 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 
         knex('following')
             .where({
-                following_id: request.session.user_id,
-                user_id: request.params.userId
+                following_id: request.params.userId,
+                user_id: request.session.user_id
             })
             .update('acceptOrReject', 1)
             .then(() => { response.redirect('/') })
@@ -895,7 +962,7 @@ function checkAuthenticated(request, response, next) {
         return next();
 
     // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-    response.redirect('/signup' || '/login');
+    response.redirect('/login');
 }
 
 
