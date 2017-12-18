@@ -32,24 +32,7 @@ var upload = multer({
     })
   })
 
-// /*
-// |--------------------------------------------------------------------------
-// |  /profile/upload
-// |--------------------------------------------------------------------------
-// */
 
-// router
-//   .route('/profile/upload')
-//   .get((request, response) => {
-//         response.render('upload')
-//   })
-//   .post(upload.any(),(request, response) => {
-
-        
-      
-//         response.send(request.files[0].location + " " + request.body.whatever);
-//         console.log(request.files);
-//   })    
 
 
 /*
@@ -363,11 +346,12 @@ router
     })
     .post((request, response) => {
 
-        request.check('username', 'The username you entered doesn\'t belong to an account').isEmpty();
+        request.check('username', 'Please enter a username').notEmpty();
         request.check('email', "Please enter a valid email address").notEmpty().isEmail();
-        request.check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
-        request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').notEmpty().isLength({ min: 4 })
-        request.check('number', 'Please enter a valid number').isMobilePhone().notEmpty();
+        // request.check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
+        // request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').notEmpty().isLength({ min: 4 })
+        request.check('password', 'Please enter a valid password').notEmpty().isLength({ min: 4 });
+    
 
 
         var errors = request.validationErrors();
