@@ -2,25 +2,35 @@ const crypto = require('crypto'),
     knex = require('./knex');
 
 
-function getAllFollowRequests(userId) {
 
-    return followRequests = knex.select('following.id', 'profilePic', 'username', 'user_id')
+
+
+async function getAllFollowRequests(userId) {
+
+    return await knex.select('following.id', 'profilePic', 'username', 'user_id', 'acceptOrReject')
         .from('following')
         .where({
             following_id: userId,
-            acceptOrReject: 0
+            acceptOrReject: 1
         })
         .join('users', 'user_id', 'users.id')
         .returning('following.id')
         .then((followRequest) => {
 
-            console.log(followRequest);
+            followRequest.forEach(request => {
+                
+                console.log(request);
+                console.log('_______')
+            })
+
+            
 
             return followRequest;
 
         })
         .catch(error => console.log(error));
 };
+
 
 
 module.exports = {
