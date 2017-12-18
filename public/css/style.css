@@ -1,4 +1,7 @@
 
+
+/* Global  */
+
 body {
     background-color: #fafafa;
 }
@@ -85,6 +88,9 @@ input[type="submit"] {
 .mgRt-100px { margin-right: 100px; }
 
 
+.mgLf-2px { margin-left: 2px; }
+.mgLf-5px { margin-left: 5px; }
+.mgLft-10px { margin-left: 10px; }
 .mgLf-100px { margin-left: 100px; }
 
 .mgBt-28px { margin-bottom: 28px; }
@@ -204,3 +210,49 @@ input[type="submit"] {
 .iconNav { justify-content: end; width: 50%;}
 
 .dropdown-toggle::after { content: none;}
+
+
+
+
+/*==========  Mobile First Method  ==========*/
+
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+        
+      }
+  
+      /* Extra Small Devices, Phones */ 
+      @media only screen and (min-width : 480px) {
+     
+      }
+  
+  
+      @media only screen and (min-width: 650px) {
+  
+      
+      }
+  
+      /* Small Devices, Tablets */
+      @media only screen and (min-width : 768px) {
+      
+      }
+  
+      
+  
+      /* Medium Devices, Desktops */
+  
+      @media only screen and (min-width : 992px) {
+  
+  
+  
+      }
+
+
+  
+      /* Large Devices, Wide Screens */
+      @media only screen and (min-width : 1200px) {
+      
+  
+         
+  }
