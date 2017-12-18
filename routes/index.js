@@ -926,9 +926,10 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
                    
        This operation checks the request.params.choice to see whether user accepts or denys follower
 
-       0 = pending
-       1 = accept
-       2 = deny
+       1 = pending
+       2 = accept
+     
+        if acceptOrRequest isnt either 1 or 2 it means the user denies the follower so we delete the request out of the databsase
  
         If the user accepts, then we add a 1 to the following.acceptOrRequest 
         if the user denies, then we delete the specific row out of the following table
@@ -940,10 +941,10 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 
         knex('following')
             .where({
-                following_id: request.params.userId,
-                user_id: request.session.user_id
+                following_id: request.session.user_id,
+                user_id: request.params.userId
             })
-            .update('acceptOrReject', 1)
+            .update('acceptOrReject', 2)
             .then(() => { response.redirect('/') })
             .catch((error) => { console.log(error); response.send(error + " this is the error") });
 
