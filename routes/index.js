@@ -4,7 +4,7 @@ const router = require('express').Router(),
     crypto = require('crypto'),
     { getAllFollowRequests } = require('../db/query'),
     AWS = require('aws-sdk');
-    multer = require('multer'),
+multer = require('multer'),
     multerS3 = require('multer-S3'),
     knex = require('../db/knex');
 
@@ -13,24 +13,24 @@ const router = require('express').Router(),
 // var hashtag = '\S*#(?:\[[^\]]+\]|\S+)';           *** Dont worry about me for now
 
 AWS.config.loadFromPath('./config.json');
-AWS.config.update({signatureVersion: 'v4'});
+AWS.config.update({ signatureVersion: 'v4' });
 var s3 = new AWS.S3();
 
 
 var upload = multer({
     storage: multerS3({
-      s3: s3,
-      bucket: 'ig-clone-v1',
-      acl: 'public-read',
-      contentType: multerS3.AUTO_CONTENT_TYPE,
-      metadata: function (req, file, cb) {
-        cb(null, {fieldName: file.fieldname});
-      },
-      key: function (req, file, cb) {
-        cb(null, Date.now().toString() + '.jpg')
-      }
+        s3: s3,
+        bucket: 'ig-clone-v1',
+        acl: 'public-read',
+        contentType: multerS3.AUTO_CONTENT_TYPE,
+        metadata: function (req, file, cb) {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key: function (req, file, cb) {
+            cb(null, Date.now().toString() + '.jpg')
+        }
     })
-  })
+})
 
 // /*
 // |--------------------------------------------------------------------------
@@ -45,8 +45,8 @@ var upload = multer({
 //   })
 //   .post(upload.any(),(request, response) => {
 
-        
-      
+
+
 //         response.send(request.files[0].location + " " + request.body.whatever);
 //         console.log(request.files);
 //   })    
@@ -64,22 +64,9 @@ router
         // only run this is the user is logged in
         if (request.session.isAuthenticated && request.session.follow < 2) {
 
-            var followRequests = await knex.select('following.id', 'profilePic', 'username', 'user_id')
-                .from('following')
-                .where({
-                    following_id: request.session.user_id,
-                    acceptOrReject: 0
-                })
-                .join('users', 'user_id', 'users.id')
-                .returning('following.id')
-                .then((followRequest) => {
-
-                    return followRequest;
-
-                })
-                .catch(error => console.log(error));
 
 
+            var followRequests = await getAllFollowRequests(request.session.user_id)
         }
 
 
@@ -108,12 +95,12 @@ router
                     .where('acceptOrReject', 1)
                     .then((follow) => {
 
-                        for(let i = 0; i < post.length; i++) {
+                        for (let i = 0; i < post.length; i++) {
                             console.log("_________");
                             console.log(follow[i])
                             console.log("_________");
                         }
-                     
+
 
 
                     })
@@ -410,18 +397,27 @@ router
 */
 router
     .route('/profilePic')
-    .get((request,response) => {
+    .get(async(request, response) => {
+
+        // only run this is the user is logged in
+        if (request.session.isAuthenticated && request.session.follow < 2) {
+
+
+
+            var followRequests = await getAllFollowRequests(request.session.user_id)
+        }
+
 
         var user = knex.select()
             .from('users')
             .where('id', request.session.user_id)
             .then((user) => {
-                response.render('profilePic', { user, isAuthenticated: request.session.isAuthenticated });
+                response.render('profilePic', { user, isAuthenticated: request.session.isAuthenticated, follow: followRequests });
             })
-            .catch((error) => { console.log(error)})
-        
+            .catch((error) => { console.log(error) })
+
     })
-    .post(upload.any(),(request,response) => {
+    .post(upload.any(), (request, response) => {
 
         // app.put('/todos/:id', (req, res) => {
         //     knex('todos')
@@ -443,12 +439,12 @@ router
         var changeProfile = knex('users')
             .where('id', request.session.user_id)
             .update({
-                profilePic:request.files[0].location
+                profilePic: request.files[0].location
             })
             .then(() => {
                 response.redirect('/profile')
             })
-            .catch((error) => { console.log(error); response.redirect('/profilePic')})
+            .catch((error) => { console.log(error); response.redirect('/profilePic') })
     })
 
 
@@ -517,6 +513,15 @@ router
     .route('/profile')
     .get(checkAuthenticated, async (request, response) => {
 
+        // only run this is the user is logged in
+        if (request.session.isAuthenticated && request.session.follow < 2) {
+
+
+
+            var followRequests = await getAllFollowRequests(request.session.user_id)
+        }
+
+
 
 
         var user = await knex.select()
@@ -528,7 +533,7 @@ router
                     .from('posts')
                     .where('user_id', request.session.user_id)
                     .then((user_posts) => {
-                        response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, myid: request.session.user_id })
+                        response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, myid: request.session.user_id, follow: followRequests })
                     })
 
             })
@@ -552,6 +557,14 @@ router
     .route('/profile/:id')
     .get(checkAuthenticated, async (request, response) => {
 
+        // only run this is the user is logged in
+        if (request.session.isAuthenticated && request.session.follow < 2) {
+
+
+
+            var followRequests = await getAllFollowRequests(request.session.user_id)
+        }
+
         var user = await knex.select()
             .from('users')
             .where('id', request.params.id)
@@ -564,9 +577,9 @@ router
 
                         if (request.session.user_id === parseInt(request.params.id)) {
 
-                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id });
+                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follow: followRequests });
                         } else {
-                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follower: true })
+                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follower: true, follow: followRequests })
                         }
 
                     })
@@ -596,7 +609,7 @@ router.post('/addPost', upload.any(), async (request, response) => {
     //       response.render('upload')
     // })
     // .post(upload.any(),(request, response) => {
-        
+
     //       response.send(request.files);
     //       console.log(request.files);
     // })    
@@ -700,6 +713,14 @@ router
     .route('/tags/:id')
     .get(async (request, response) => {
 
+        // only run this is the user is logged in
+        if (request.session.isAuthenticated && request.session.follow < 2) {
+
+
+
+            var followRequests = await getAllFollowRequests(request.session.user_id)
+        }
+
         // we need a regex to find all the # in 
 
         var categories = await knex.select('categories.id', 'category_name', 'post_id', 'category_id AS anotherId')
@@ -712,7 +733,7 @@ router
                     .from('posts')
                     .where('posts.id', category[0].post_id)
                     .then((post) => {
-                        response.render('category', { category, post });
+                        response.render('category', { category, post, follow: followRequests });
                     })
                     .catch((error) => { console.log(error) });
 
@@ -731,6 +752,14 @@ router
 |--------------------------------------------------------------------------
 */
 router.get('/post/:id', async (request, response) => {
+
+    // only run this is the user is logged in
+    if (request.session.isAuthenticated && request.session.follow < 2) {
+
+
+
+        var followRequests = await getAllFollowRequests(request.session.user_id)
+    }
 
     // var post = knex.select()
     //     .from('posts')
@@ -765,7 +794,7 @@ router.get('/post/:id', async (request, response) => {
         .catch((error) => { console.log(error + " this is a comment error") })
 
 
-    response.render('comments', { post, comment, isAuthenticated: request.session.user_id })
+    response.render('comments', { post, comment, isAuthenticated: request.session.user_id, follow: followRequests })
 
 })
 
@@ -943,6 +972,14 @@ router
     .route('/discover')
     .get(checkAuthenticated, async (request, response) => {
 
+            // only run this is the user is logged in
+    if (request.session.isAuthenticated && request.session.follow < 2) {
+        
+        
+        
+                var followRequests = await getAllFollowRequests(request.session.user_id)
+            }
+
 
         // Get the users to show in discover people
         var potentialFollowers = await knex.select()
@@ -987,7 +1024,7 @@ router
             .catch((error) => { console.log(error + " this is the error"); response.send(error + " this is a error") })
 
 
-        response.render('discover', { potentialFollowers, discoverPosts, isAuthenticated: request.session.isAuthenticated })
+        response.render('discover', { potentialFollowers, discoverPosts, isAuthenticated: request.session.isAuthenticated, follow: followRequests })
     })
 
 
