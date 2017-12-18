@@ -33,14 +33,7 @@ var upload = multer({
 })
 
 
-<<<<<<< HEAD
-=======
 
-
-//         response.send(request.files[0].location + " " + request.body.whatever);
-//         console.log(request.files);
-//   })    
->>>>>>> notification_feature
 
 
 /*
@@ -53,9 +46,7 @@ router
     .get(checkAuthenticated, async (request, response) => {
 
         // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
-
-
+        if (request.session.isAuthenticated) {
 
             var followRequests = await getAllFollowRequests(request.session.user_id)
         }
@@ -74,27 +65,17 @@ router
             .from('posts')
             // .limit(5)
             .join('users', 'user_id', 'users.id')
+            .join('following', 'following_id', 'users.id')
+            .where({
+                userId: request.session.user_id,
+                acceptOrReject: 2
+            })
             .orderBy('date_created', 'desc')
             .then((post) => {
 
-                // post.forEach(i => { console.log("______"); console.log(post)})
+               
 
 
-                knex.select()
-                    .from('following')
-                    .where('user_id', request.session.user_id)
-                    .where('acceptOrReject', 1)
-                    .then((follow) => {
-
-                        for (let i = 0; i < post.length; i++) {
-                            console.log("_________");
-                            console.log(follow[i])
-                            console.log("_________");
-                        }
-
-
-
-                    })
 
 
 
@@ -367,7 +348,20 @@ router
                     password: encrypt(request.body.password)
 
                 })
-                .then(() => {
+                .returning('id')
+                .then((id) => {
+
+            
+                    // user is following theirself. Helps us with populating their own posts on newsfeed in '/' route
+                    knex('following')
+                        insert({
+                            following_id: id[0],
+                            userId: id[0],
+                            acceptOrReject: 2
+                        })
+                        .then(() => {})
+                        .catch((error) => { console.log(error); response.redirect('/signup')})
+
                     response.redirect('/')
                 })
                 .catch((error) => {
@@ -680,7 +674,7 @@ router.post('/following/:id', (request, response) => {
     var followUser = knex('following')
         .insert({
             following_id: request.params.id,
-            user_id: request.session.user_id
+            userId: request.session.user_id
         })
         .then(() => {
             console.log("Request to follow, successfully sent.");
@@ -934,7 +928,7 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
         knex('following')
             .where({
                 following_id: request.session.user_id,
-                user_id: request.params.userId
+                userId: request.params.userId
             })
             .update('acceptOrReject', 2)
             .then(() => { response.redirect('/') })
@@ -945,7 +939,7 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
         knex('following')
             .where({
                 following_id: request.session.user_id,
-                user_id: request.params.userId
+                userId: request.params.userId
             })
             .del()
             .then(() => {
@@ -984,7 +978,7 @@ router
 
                 // check the database to see which users the current user is already trying to follow and exclude them
                 knex('following')
-                    .where('user_id', request.session.user_id)
+                    .where('userId', request.session.user_id)
                     .then((follow) => {
 
                         for (let i = 0; i < user.length; i++) {

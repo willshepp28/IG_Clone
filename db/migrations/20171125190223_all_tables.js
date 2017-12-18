@@ -21,7 +21,7 @@ exports.up = function(knex, Promise) {
         .createTable('following', (table) => {
             table.increments();
             table.integer('following_id').unsigned().references('id').inTable('users').onDelete('cascade');
-            table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade');
+            table.integer('userId').unsigned().references('id').inTable('users').onDelete('cascade');
             table.integer('acceptOrReject').notNullable().defaultTo(1);
             table.timestamp('follow_date').defaultTo(knex.fn.now());
         })

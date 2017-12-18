@@ -7,13 +7,13 @@ const crypto = require('crypto'),
 
 async function getAllFollowRequests(userId) {
 
-    return await knex.select('following.id', 'profilePic', 'username', 'user_id', 'acceptOrReject')
+    return await knex.select('following.id', 'profilePic', 'username', 'userId', 'acceptOrReject')
         .from('following')
         .where({
             following_id: userId,
             acceptOrReject: 1
         })
-        .join('users', 'user_id', 'users.id')
+        .join('users', 'userId', 'users.id')
         .returning('following.id')
         .then((followRequest) => {
 
