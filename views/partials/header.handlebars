@@ -1,17 +1,17 @@
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+  {{!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
+  </button> --}}
 
 
   {{!-- flex container --}}
   <div class="d-flex flex-row  my-flex-container" style="width: 100%;">
-    <i class="fa fa-instagram fa-3x move-5px" aria-hidden="true"></i>
+    <i class="fa fa-instagram fa-3x move-5px mgLf-100px" aria-hidden="true"></i>
 
     <a class="navbar-brand" href="/"> | Instagram</a>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="width100per" id="navbarSupportedContent">
 
 
       {{!--
@@ -21,7 +21,7 @@
       </form> --}} 
       {{#if isAuthenticated}}
 
-      <ul class="navbar-nav ml-auto">
+      <ul class="block ml-auto iconNav mgRt-100px">
         <li class="nav-item active">
           <a class="nav-link" href="/discover">
             <i class="fa fa-compass fa-2x" aria-hidden="true"></i>

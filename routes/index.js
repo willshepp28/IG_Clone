@@ -32,24 +32,6 @@ var upload = multer({
     })
   })
 
-// /*
-// |--------------------------------------------------------------------------
-// |  /profile/upload
-// |--------------------------------------------------------------------------
-// */
-
-// router
-//   .route('/profile/upload')
-//   .get((request, response) => {
-//         response.render('upload')
-//   })
-//   .post(upload.any(),(request, response) => {
-
-        
-      
-//         response.send(request.files[0].location + " " + request.body.whatever);
-//         console.log(request.files);
-//   })    
 
 
 /*
@@ -347,7 +329,7 @@ router
 
 
 
-router.get('/')
+//router.get('/')
 
 
 
@@ -423,22 +405,7 @@ router
     })
     .post(upload.any(),(request,response) => {
 
-        // app.put('/todos/:id', (req, res) => {
-        //     knex('todos')
-        //      .where('id', req.params.id)
-        //      .update({
-        //          title: req.body.title,
-        //          completed: req.body.completed
-        //      })
-        //      .then(() => {
-        //          knex
-        //              .select()
-        //              .from('todos')
-        //              .then(todos => {
-        //                  res.send(todos);
-        //              });
-        //      });
-        //  });
+        
 
         var changeProfile = knex('users')
             .where('id', request.session.user_id)
@@ -590,16 +557,7 @@ router
 */
 router.post('/addPost', upload.any(), async (request, response) => {
 
-    // router
-    // .route('/profile/upload')
-    // .get((request, response) => {
-    //       response.render('upload')
-    // })
-    // .post(upload.any(),(request, response) => {
-        
-    //       response.send(request.files);
-    //       console.log(request.files);
-    // })    
+   
 
     // regex express to check and see if our caption has a hastag inside of it
     var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
