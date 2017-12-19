@@ -3,7 +3,7 @@
 const router = require('express').Router(),
     crypto = require('crypto'),
     { getAllFollowRequests } = require('../db/query'),
-    AWS = require('aws-sdk');
+    AWS = require('aws-sdk'),
 multer = require('multer'),
     multerS3 = require('multer-S3'),
     knex = require('../db/knex');
@@ -306,7 +306,6 @@ router
 
 
 
-router.get('/')
 
 
 
@@ -376,64 +375,6 @@ router
 
 
 
-/*
-|--------------------------------------------------------------------------
-|  /profilePic - route where you add profile pic
-|--------------------------------------------------------------------------
-*/
-router
-    .route('/profilePic')
-    .get(async(request, response) => {
-
-        // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
-
-
-
-            var followRequests = await getAllFollowRequests(request.session.user_id)
-        }
-
-
-        var user = knex.select()
-            .from('users')
-            .where('id', request.session.user_id)
-            .then((user) => {
-                response.render('profilePic', { user, isAuthenticated: request.session.isAuthenticated, follow: followRequests });
-            })
-            .catch((error) => { console.log(error) })
-
-    })
-    .post(upload.any(), (request, response) => {
-
-        // app.put('/todos/:id', (req, res) => {
-        //     knex('todos')
-        //      .where('id', req.params.id)
-        //      .update({
-        //          title: req.body.title,
-        //          completed: req.body.completed
-        //      })
-        //      .then(() => {
-        //          knex
-        //              .select()
-        //              .from('todos')
-        //              .then(todos => {
-        //                  res.send(todos);
-        //              });
-        //      });
-        //  });
-
-        var changeProfile = knex('users')
-            .where('id', request.session.user_id)
-            .update({
-                profilePic: request.files[0].location
-            })
-            .then(() => {
-                response.redirect('/profile')
-            })
-            .catch((error) => { console.log(error); response.redirect('/profilePic') })
-    })
-
-
 
 
 
@@ -490,93 +431,6 @@ router
 
 
 
-/*
-|--------------------------------------------------------------------------
-|  Profile Page - Get method to see ,logged in user's profile page
-|--------------------------------------------------------------------------
-*/
-router
-    .route('/profile')
-    .get(checkAuthenticated, async (request, response) => {
-
-        // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
-
-
-
-            var followRequests = await getAllFollowRequests(request.session.user_id)
-        }
-
-
-
-
-        var user = await knex.select()
-            .from('users')
-            .where('id', request.session.user_id)
-            .then((user) => {
-
-                knex.select()
-                    .from('posts')
-                    .where('user_id', request.session.user_id)
-                    .then((user_posts) => {
-                        response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, myid: request.session.user_id, follow: followRequests })
-                    })
-
-            })
-            .catch((error) => {
-                console.log(error);
-                response.redirect('/');
-            });
-
-    });
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-|  Follower Profile Page - Get method where users can see other users proflie
-|--------------------------------------------------------------------------
-*/
-router
-    .route('/profile/:id')
-    .get(checkAuthenticated, async (request, response) => {
-
-        // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
-
-
-
-            var followRequests = await getAllFollowRequests(request.session.user_id)
-        }
-
-        var user = await knex.select()
-            .from('users')
-            .where('id', request.params.id)
-            .then((user) => {
-
-                knex.select()
-                    .from('posts')
-                    .where('user_id', request.params.id)
-                    .then((user_posts) => {
-
-                        if (request.session.user_id === parseInt(request.params.id)) {
-
-                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follow: followRequests });
-                        } else {
-                            response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follower: true, follow: followRequests })
-                        }
-
-                    })
-
-            })
-            .catch((error) => {
-                console.log(error);
-                response.redirect('/');
-            });
-
-    });
 
 
 
@@ -671,20 +525,59 @@ router.post('/addPost', upload.any(), async (request, response) => {
 */
 router.post('/following/:id', (request, response) => {
 
-    var followUser = knex('following')
-        .insert({
+
+    console.log('following id is ' + request.params.id);
+
+    var checkUser = knex.select()
+        .from('following')
+        .where({
             following_id: request.params.id,
             userId: request.session.user_id
         })
-        .then(() => {
-            console.log("Request to follow, successfully sent.");
+        .then((following) => { 
+
+
+            // if not following already user makes
+            if (!following[0]) {
+
+
+                knex('following')
+                .insert({
+                    following_id: request.params.id,
+                    userId: request.session.user_id
+                })
+                .then(() => {
+                    console.log("Request to follow, successfully sent.");
+                   
+                })
+                .catch((error) => {
+                    console.log(error);
+                    response.send(error);
+                })
+            
+            } else {
+
+                knex('following')
+                .where({
+                    following_id: request.params.id,
+                    userId: request.session.user_id
+                })
+                .del()
+                .then(() => { })
+                .catch((error) => {
+                    console.log(error);
+                    response.send(error + " this is the error");
+                })
+
+            }
+
             response.redirect('/')
-        })
-        .catch((error) => {
-            console.log(error);
-            response.send(error);
-        })
+   
+
 })
+.catch((error) => {})
+
+});
 
 
 

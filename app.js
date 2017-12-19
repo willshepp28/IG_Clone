@@ -16,7 +16,7 @@ const express = require('express'),
   profile = require('./routes/profile'),
   index = require('./routes/index'),
   Promise = require('bluebird'),
-  port = process.env.PORT || 3000;
+  port = process.env.PORT || 8000;
 application = express();
 
 
@@ -44,6 +44,8 @@ application.use(bodyParser.urlencoded({ extended: false }));
 application.use(bodyParser.json());
 
 application.use(expressValidator());
+
+
 
 
 application.use(session({

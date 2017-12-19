@@ -18,15 +18,44 @@
                     </div>
                     {{/user}}
                     <div class="col-md-6">
-                        {{#if follower}}
+                        {{#if user.follower}} {{!-- if user is already following user then the buton should say following, otherwise it should say follow
+                        --}} 
+                        
 
-                        <form action="/following/{{follower_id}}" method="post">
+                        {{!-- {{#user}} --}}
+                        {{#if user.isFollowing}}
+                        {{#user}}
+                        <form action="/following/{{id}}" method="post">
+                            <button type="submit" class="btn none">
+                                Following
+                            </button>
+                        </form>
+                        {{/user}}
+                        
+                        {{else if user.isPending}}
+                        {{#user}}
+                                 <form action="/following/{{id}}" method="post">
                             <button type="submit" class="btn btn-success">
+                                Pending
+                            </button>
+                        </form>
+                        {{/user}}
+                        {{else}}
+                        {{#user}}
+                                 <form action="/following/{{id}}" method="post">
+                            <button type="submit" class="btn followBtn">
                                 Follow
                             </button>
                         </form>
+                        {{/user}}
+                        {{/if}}
+                        {{!-- {{/user}} --}}
+                    
+                        
+                        {{else}} {{!-- check to see if following --}}
 
-                        {{else}}
+
+
 
 
 
@@ -39,12 +68,12 @@
                                     </button>
                                 </div>
 
-                                  <div class="col-md-6">
+                                <div class="col-md-6">
                                     <a href="/profilePic" class="btn btn-primary">
                                         Change Profile Picture
                                     </a>
                                 </div>
-                                
+
                             </div>
                         </div>
 

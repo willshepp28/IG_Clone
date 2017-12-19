@@ -1,4 +1,7 @@
 
+
+/* Global  */
+
 body {
     background-color: #fafafa;
 }
@@ -11,6 +14,8 @@ a { text-decoration: none;
 nav {
     background-color: #fff !important;
 }
+
+li { list-style-type: none; }
 .baby-blue {
     color: #3897f0 !important;
     font-weight: 600;
@@ -33,6 +38,8 @@ input[type="submit"] {
     font-family: FontAwesome;
 }
 
+.block { display: flex; width: 100%;}
+
 .card {
     
     margin: 0 auto;
@@ -50,6 +57,10 @@ input[type="submit"] {
 
 .lightgrey {
     color: #999;
+}
+
+.none {
+    background-color: none;
 }
 
 .grey_borderTop {
@@ -73,11 +84,19 @@ input[type="submit"] {
 .mgTp-15px { margin-top: 15px; }
 .mgTp-40px { margin-top: 20px; }
 .mgTp-50px { margin-top: 50px; }
-.mgTp-60px {
-    margin-top: 60px;
-}
+.mgTp-60px { margin-top: 60px; }
 .mgTp-100px { margin-top: 100px;}
+
+
 .mgRt-5px { margin-right: 5px; }
+.mgRt-100px { margin-right: 100px; }
+
+
+.mgLf-2px { margin-left: 2px; }
+.mgLf-5px { margin-left: 5px; }
+.mgLf-10px { margin-left: 10px; }
+.mgLf-100px { margin-left: 100px; }
+
 .mgBt-28px { margin-bottom: 28px; }
 
 .post_comments {
@@ -129,6 +148,8 @@ input[type="submit"] {
     width: 20vw;
 }
 
+.width20per { width: 30% !important;}
+.width100per { width: 100% !important; }
 .float_left {
     float: left;
 }
@@ -189,3 +210,58 @@ input[type="submit"] {
 }
 
 .ifError {color: #ed4956; font-size: 78%;}
+
+.iconNav { justify-content: end; width: 50%;}
+
+.dropdown-toggle::after { content: none;}
+
+.followBtn{
+    background: #3897f0 !important;
+    border-color: #3897f0 !important;
+    color: #fff !important;
+}
+
+
+
+/*==========  Mobile First Method  ==========*/
+
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+        
+      }
+  
+      /* Extra Small Devices, Phones */ 
+      @media only screen and (min-width : 480px) {
+     
+      }
+  
+  
+      @media only screen and (min-width: 650px) {
+  
+      
+      }
+  
+      /* Small Devices, Tablets */
+      @media only screen and (min-width : 768px) {
+      
+      }
+  
+      
+  
+      /* Medium Devices, Desktops */
+  
+      @media only screen and (min-width : 992px) {
+  
+  
+  
+      }
+
+
+  
+      /* Large Devices, Wide Screens */
+      @media only screen and (min-width : 1200px) {
+      
+  
+         
+  }
