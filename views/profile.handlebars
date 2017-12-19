@@ -1,23 +1,27 @@
 <div class="container mgTp-50px">
     <div class="row">
         <div class="col-md-3">
-            {{#user}} {{!--
-            <p>{{id}}</p> --}}
+        
+            {{#user}} 
 
-            <img src="{{profilePic}}" alt="" class="rounded-circle float_right img-fluid" style="height:152px">
+            <div class=" profilePic_Container">
+                <img src="{{profilePic}}" alt="" class="rounded-circle img-fluid border1pxef profilePicture" >
+            </div>
+            
 
         </div>
         <!-- Button trigger modal -->
 
-        <div class="col-md-9 mgTp-60px">
+        <div class="col-lg-8 profileInfo">
+            
 
-            <div class="container width3 float_left">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        <h1 class="h1font1">{{username}}</h1>
+                        <h1 class="profileUsername">{{username}}</h1>
                     </div>
                     {{/user}}
-                    <div class="col-md-6">
+                    <div class="col-md-8 col-sm-12">
                         {{#if user.follower}} {{!-- if user is already following user then the buton should say following, otherwise it should say follow
                         --}} 
                         
@@ -61,15 +65,15 @@
 
                         <div class="container">
 
-                            <div class="row">
-                                <div class="col-md-5 col-2 mgRt-10px">
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                            <div class="row profileOptions">
+                                <div class="col-md-5 col-sm-6 col-12">
+                                    <button type="button" class="btn btn-success mx-auto" data-toggle="modal" data-target="#exampleModal">
                                         Create a Post
                                     </button>
                                 </div>
 
-                                <div class="col-md-6 col-2">
-                                    <a href="/profilePic" class="btn btn-primary">
+                                <div class="col-md-5 col-sm-6 col-12">
+                                    <a href="/profilePic" class="btn btn-primary mx-auto">
                                         Change Profile Picture
                                     </a>
                                 </div>
@@ -83,13 +87,16 @@
                     </div>
                 </div>
 
-                <div class="row mgTp-40px">
-                    <div class="col-md-2 col-2">
-                        <strong>4</strong> posts</div>
-                    <div class="col-md-2 col-2">
-                        <strong>19</strong> followers</div>
-                    <div class="col-md-2 col-2">
-                        <strong>800</strong> following</div>
+                <div class="row mgTp-40px userStats">
+                    <div class="col-lg-2 col-md-3 col-4">
+                        <p><strong>4</strong> posts</p>
+                        </div>
+                    <div class="col-lg-2 col-md-3 col-4">
+                        <p> <strong>19</strong> followers</div></p>
+                       
+                    <div class="col-lg-2 col-md-3 col-4">
+                        <p><strong>800</strong> following</div></p>
+                        
                 </div>
             </div>
 
@@ -100,6 +107,12 @@
 
 
 <div class="container mgTp-100px">
+
+    <div class="row border_grey1 pblack-container ">
+        <div class="col-md-1 col-3 mx-auto">
+            <p class="text-center p-black border_black1 ">POSTS</p>
+        </div>
+    </div>
     <div class="row">
 
         {{#each user_posts}}

@@ -90,6 +90,7 @@ input[type="submit"] {
 
 .mgRt-5px { margin-right: 5px; }
 .mgRt-10px { margin-right: 10px; }
+.mgRt-20px { margin-right: 39px; }
 .mgRt-100px { margin-right: 100px; }
 
 
@@ -134,12 +135,6 @@ input[type="submit"] {
     max-width: 400px;
 }
 
-.h1font1 {
-    font-size: 32px;
-    line-height: 40px;
-    font-weight: 200;
-}
-
 
 .width32vw {
     width: 32vw;
@@ -150,6 +145,7 @@ input[type="submit"] {
 }
 
 .width20per { width: 30% !important;}
+.width80per { width: 90% !important;}
 .width100per { width: 100% !important; }
 .float_left {
     float: left;
@@ -227,6 +223,61 @@ input[type="submit"] {
 /*==========  Mobile First Method  ==========*/
 
 
+/* Profile page */
+
+.profilePic_Container { display: flex; justify-content: center; }
+
+.profilePicture { width: 45%;}
+
+.profileInfo { margin-top: 40px; text-align: center;}
+
+
+.profileOptions {
+    font-size: 20% !important;
+    margin: 0 auto;
+}
+
+
+/* .profileOptions button { margin-left: 10px;} */
+/* .profileOptions:first-child { margin-right: 20px} */
+
+.profileOptions button,
+.profileOptions a {
+    /* width: 60%; */
+    font-size: 10px;
+    width: 130px;
+   
+}
+
+
+.profileUsername {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 200;
+}
+
+
+.userStats {
+    font-size: 86%;
+}
+
+.border_grey1 {
+    border-top: 1px solid #efefef;
+}
+
+.border_black1 {
+    border-top: 1px solid #262626;
+    margin-top: -1px;
+}
+
+.pblack-container  {
+    margin-bottom: 20px;
+}
+.p-black { color: #262626; cursor: pointer;}
+
+
+
+
     /* Custom, iPhone Retina */ 
     @media only screen and (min-width : 320px) {
         
@@ -236,6 +287,16 @@ input[type="submit"] {
       @media only screen and (min-width : 480px) {
      
       }
+
+      @media only screen and (max-width: 574px) {
+      
+
+          .profileInfo a {
+             margin-top: 10px;
+          }
+
+
+      }
   
   
       @media only screen and (min-width: 650px) {
@@ -244,7 +305,18 @@ input[type="submit"] {
       }
   
       /* Small Devices, Tablets */
-      @media only screen and (min-width : 768px) {
+      @media only screen and (max-width : 766px) {
+          .profileOptions {
+            margin-top: 20px;
+            
+            margin-bottom: 20px;
+          }
+
+          .profileInfo form {
+            margin-top: 20px;
+            
+            margin-bottom: 20px;
+        }
       
       }
   
