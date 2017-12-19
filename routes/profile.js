@@ -90,10 +90,16 @@ router
         // only run this is the user is logged in
         if (request.session.isAuthenticated && request.session.follow < 2) {
 
-
-
             var followRequests = await getAllFollowRequests(request.session.user_id)
         }
+
+
+        var postCount = await knex.select()
+            .from('posts')
+            .where('user_id', request.params.id)
+            .count('id')
+            .then((userPosts) => { return userPosts})
+            .catch((error) => { console.log(error )});
 
         var user = await knex.select()
             .from('users')
@@ -145,10 +151,10 @@ router
                                 .catch((error) => { console.log(error) })
 
                                 console.log("profile____-________")
-                                console.log(user);
+                                console.log(postCount);
                                 console.log("profile____-________")
                                 
-
+                                
                                 
                               
                             response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follow: followRequests })
