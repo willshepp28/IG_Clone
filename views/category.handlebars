@@ -1,18 +1,35 @@
+<div class="container ">
 
+    <div class="row text-center tagName mgBt-20px">
+        <div class="col-md-12">
+            {{#categoryInfo}}
+            <h1>#{{name}}</h1>
+            
+        </div>
 
-<div class="container">
-    <div class="row">
-        {{#category}}
-        <h1 class="text-center">{{category_name}}</h1>
-        {{/category}}
     </div>
-</div>
-<div class="container">
+
+    <div class="row text-center mgBt-100px">
+        <div class="col-md-12">
+            <p><strong>{{postCount}}</strong> posts</p>
+        </div>
+    </div>
+    {{/categoryInfo}}
+
+
+
     <div class="row">
-        {{#each post}}
         <div class="col-md-4">
-            <img src="{{photo}}"> </div>
+            <p class="topPosts">Top Posts</p>
+        </div>
+    </div>
+     <div class="row">
+        {{#each category}}
+        <div class="col-md-4 col-4">
+            <a href="/post/{{postId}}"><img src="{{photo}}" class="img-fluid tagImg">  </a>
+            </div>
 
         {{/each}}
     </div>
+
 </div>

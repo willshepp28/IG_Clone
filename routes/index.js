@@ -4,7 +4,7 @@ const router = require('express').Router(),
     crypto = require('crypto'),
     { getAllFollowRequests } = require('../db/query'),
     AWS = require('aws-sdk'),
-multer = require('multer'),
+    multer = require('multer'),
     multerS3 = require('multer-S3'),
     knex = require('../db/knex');
 
@@ -73,7 +73,7 @@ router
             .orderBy('date_created', 'desc')
             .then((post) => {
 
-               
+
 
 
 
@@ -326,7 +326,7 @@ router
         // request.check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
         // request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').notEmpty().isLength({ min: 4 })
         request.check('password', 'Please enter a valid password').notEmpty().isLength({ min: 4 });
-    
+
 
 
         var errors = request.validationErrors();
@@ -350,16 +350,16 @@ router
                 .returning('id')
                 .then((id) => {
 
-            
+
                     // user is following theirself. Helps us with populating their own posts on newsfeed in '/' route
                     knex('following')
-                        insert({
-                            following_id: id[0],
-                            userId: id[0],
-                            acceptOrReject: 2
-                        })
-                        .then(() => {})
-                        .catch((error) => { console.log(error); response.redirect('/signup')})
+                    insert({
+                        following_id: id[0],
+                        userId: id[0],
+                        acceptOrReject: 2
+                    })
+                        .then(() => { })
+                        .catch((error) => { console.log(error); response.redirect('/signup') })
 
                     response.redirect('/')
                 })
@@ -482,26 +482,56 @@ router.post('/addPost', upload.any(), async (request, response) => {
             // checks to see if any hashtags in users caption
             if (hashMatch) {
 
-                knex('categories')
-                    .insert({
-                        category_name: hashMatch[0].replace('#', '') // removes the hash symbol from hashtag
-                    })
-                    .then(() => {
+                knex.select()
+                    .from('categories')
+                    .where('category_name', hashMatch[0].replace('#', ''))
+                    .then((category) => {
 
-                        knex.select()
-                            .from('categories')
-                            .where('category_name', hashMatch[0].replace('#', ''))
-                            .then((category) => {
-                                knex('posts_in_categories')
-                                    .insert({
-                                        post_id: post[0],
-                                        category_id: category[0].id
-                                    })
-                                    .then(() => { console.log('Getting matches') })
-                                    .catch((error) => { console.log(error) });
-                            })
+                        // if category doesnt already exist
+                        if (!category[0]) {
+
+                            knex('categories')
+                                .insert({
+                                    category_name: hashMatch[0].replace('#', '') // removes the hash symbol from hashtag
+                                })
+                                .then(() => {
+
+                                    knex.select()
+                                        .from('categories')
+                                        .where('category_name', hashMatch[0].replace('#', ''))
+                                        .then((category) => {
+                                            knex('posts_in_categories')
+                                                .insert({
+                                                    post_id: post[0],
+                                                    category_id: category[0].id
+                                                })
+                                                .then(() => { console.log('Getting matches') })
+                                                .catch((error) => { console.log(error) });
+                                        })
+                                })
+                                .catch((error) => { console.log(error) })
+
+                        } else {
+
+                            // else just add post_id and category_id in post_in_categories table
+
+                            knex.select()
+                                .from('categories')
+                                .where('category_name', hashMatch[0].replace('#', ''))
+                                .then((category) => {
+                                    knex('posts_in_categories')
+                                        .insert({
+                                            post_id: post[0],
+                                            category_id: category[0].id
+                                        })
+                                        .then(() => { console.log('Getting matches') })
+                                        .catch((error) => { console.log(error) });
+                                })
+
+                        }
                     })
-                    .catch((error) => { console.log(error) })
+
+
             }
 
 
@@ -534,7 +564,7 @@ router.post('/following/:id', (request, response) => {
             following_id: request.params.id,
             userId: request.session.user_id
         })
-        .then((following) => { 
+        .then((following) => {
 
 
             // if not following already user makes
@@ -542,84 +572,44 @@ router.post('/following/:id', (request, response) => {
 
 
                 knex('following')
-                .insert({
-                    following_id: request.params.id,
-                    userId: request.session.user_id
-                })
-                .then(() => {
-                    console.log("Request to follow, successfully sent.");
-                   
-                })
-                .catch((error) => {
-                    console.log(error);
-                    response.send(error);
-                })
-            
+                    .insert({
+                        following_id: request.params.id,
+                        userId: request.session.user_id
+                    })
+                    .then(() => {
+                        console.log("Request to follow, successfully sent.");
+
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        response.send(error);
+                    })
+
             } else {
 
                 knex('following')
-                .where({
-                    following_id: request.params.id,
-                    userId: request.session.user_id
-                })
-                .del()
-                .then(() => { })
-                .catch((error) => {
-                    console.log(error);
-                    response.send(error + " this is the error");
-                })
+                    .where({
+                        following_id: request.params.id,
+                        userId: request.session.user_id
+                    })
+                    .del()
+                    .then(() => { })
+                    .catch((error) => {
+                        console.log(error);
+                        response.send(error + " this is the error");
+                    })
 
             }
 
             response.redirect('/')
-   
 
-})
-.catch((error) => {})
+
+        })
+        .catch((error) => { })
 
 });
 
 
-
-
-
-/*
-|--------------------------------------------------------------------------
-|  /Tags:hastag Page
-|--------------------------------------------------------------------------
-*/
-router
-    .route('/tags/:id')
-    .get(async (request, response) => {
-
-        // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
-
-
-
-            var followRequests = await getAllFollowRequests(request.session.user_id)
-        }
-
-        // we need a regex to find all the # in 
-
-        var categories = await knex.select('categories.id', 'category_name', 'post_id', 'category_id AS anotherId')
-            .from('categories')
-            .where('category_name', request.params.id)
-            .innerJoin('posts_in_categories', 'categories.id', 'category_id')
-            .then((category) => {
-
-                knex.select()
-                    .from('posts')
-                    .where('posts.id', category[0].post_id)
-                    .then((post) => {
-                        response.render('category', { category, post, follow: followRequests });
-                    })
-                    .catch((error) => { console.log(error) });
-
-
-            })
-            .catch((error) => { console.log(error); response.send(error + " this is the reason") });
-    });
 
 
 
@@ -798,13 +788,13 @@ router
     .route('/discover')
     .get(checkAuthenticated, async (request, response) => {
 
-            // only run this is the user is logged in
-    if (request.session.isAuthenticated && request.session.follow < 2) {
-        
-        
-        
-                var followRequests = await getAllFollowRequests(request.session.user_id)
-            }
+        // only run this is the user is logged in
+        if (request.session.isAuthenticated && request.session.follow < 2) {
+
+
+
+            var followRequests = await getAllFollowRequests(request.session.user_id)
+        }
 
 
         // Get the users to show in discover people

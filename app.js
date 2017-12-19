@@ -13,6 +13,7 @@ const express = require('express'),
   bcrypt = require('bcrypt'),
   handlebars = require('express-handlebars'),
   // likes = require('./routes/likes'),
+  tags = require('./routes/tags')
   post = require('./routes/post'),
   profile = require('./routes/profile'),
   index = require('./routes/index'),
@@ -96,6 +97,7 @@ application.use(function (request, response, next) {
 */
 
 // application.use('/likes', likes);
+application.use('/tags', tags);
 application.use('/post', post);
 application.use('/profile', profile);
 application.use('/', index);

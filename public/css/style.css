@@ -99,7 +99,9 @@ input[type="submit"] {
 .mgLf-10px { margin-left: 10px; }
 .mgLf-100px { margin-left: 100px; }
 
+.mgBt-20px { margin-bottom: 20px; }
 .mgBt-28px { margin-bottom: 28px; }
+.mgBt-100px { margin-bottom: 100px;}
 
 .post_comments {
     font-size: 10px;
@@ -237,10 +239,6 @@ input[type="submit"] {
     margin: 0 auto;
 }
 
-
-/* .profileOptions button { margin-left: 10px;} */
-/* .profileOptions:first-child { margin-right: 20px} */
-
 .profileOptions button,
 .profileOptions a {
     /* width: 60%; */
@@ -275,6 +273,34 @@ input[type="submit"] {
 }
 .p-black { color: #262626; cursor: pointer;}
 
+
+
+
+
+
+/* /tags/:id page */
+.tagName {
+    margin-top: 100px;
+}
+
+
+
+.tagName h1 { font-weight: 300}
+
+.topPosts {
+    color: #999;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 16px;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+
+.tagImg {
+    height: 84%;
+}
 
 
 
