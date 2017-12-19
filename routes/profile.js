@@ -88,7 +88,7 @@ router
     .get(checkAuthenticated, async (request, response) => {
 
         // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
+        if (request.session.isAuthenticated ) {
 
             var followRequests = await getAllFollowRequests(request.session.user_id)
         }
