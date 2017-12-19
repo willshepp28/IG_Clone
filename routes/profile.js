@@ -94,17 +94,48 @@ router
         }
 
 
-        var postCount = await knex.select()
-            .from('posts')
-            .where('user_id', request.params.id)
-            .count('id')
-            .then((userPosts) => { return userPosts})
-            .catch((error) => { console.log(error )});
+
 
         var user = await knex.select()
             .from('users')
             .where('id', request.params.id)
             .then((user) => {
+
+
+                // gets a count of all the users posts
+                var postCount = knex.select()
+                    .from('posts')
+                    .where('user_id', request.params.id)
+                    .count('posts.id')
+                    .then((userPosts) => { user[0].postCount = userPosts[0].count })
+                    .catch((error) => { console.log(error) });
+
+
+                // gets a count fo all the users that that person is following
+                var followingCount = knex.select()
+                    .from('following')
+                    .where({
+                        following_id: request.session.user_id,
+                        userId: request.params.id
+                    })
+                    .count('following.id')
+                    .then((followingCounts) => { user[0].followingCount = followingCounts[0].count })
+                    .catch((error) => { console.log(error) });
+
+
+                // gets a count of the users followers
+                var followerCount = knex.select()
+                    .from('following')
+                    .where({
+                        following_id: request.params.id,
+                        userId: request.session.user_id
+                    })
+                    .count('following.id')
+                    .then((followerCounts) => { user[0].followerCount = followerCounts[0].count })
+                    .catch((error) => { console.log(error) });
+
+
+
 
                 user.follower = false;
                 knex.select()
@@ -128,35 +159,35 @@ router
                                 })
                                 .then((following) => {
 
-                                    
+
 
                                     if (!following[0]) {
                                         console.log("nothing here")
                                     } else if (following[0].acceptOrReject === 1) {
                                         console.log("pending");
-                                        
-                                       user.isPending = true;
-                                        
+
+                                        user.isPending = true;
+
                                     } else {
                                         console.log("following")
-                                        
-                                       user.isFollowing = true;
+
+                                        user.isFollowing = true;
                                     }
 
+                                    console.log("profile____-________")
+                                    console.log(user);
+                                    console.log("profile____-________")
 
 
-                                    
 
                                 })
                                 .catch((error) => { console.log(error) })
 
-                                console.log("profile____-________")
-                                console.log(postCount);
-                                console.log("profile____-________")
-                                
-                                
-                                
-                              
+
+
+
+
+
                             response.render('profile', { user, user_posts, isAuthenticated: request.session.user_id, follower_id: request.params.id, follow: followRequests })
                         }
 

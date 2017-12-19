@@ -89,14 +89,16 @@
 
                 <div class="row mgTp-40px userStats">
                     <div class="col-lg-2 col-md-3 col-4">
-                        <p><strong>4</strong> posts</p>
+                        {{#user}}
+                        <p><strong>{{postCount}}</strong> posts</p>
+                        
                         </div>
                     <div class="col-lg-2 col-md-3 col-4">
-                        <p> <strong>19</strong> followers</div></p>
+                        <p> <strong>{{followerCount}}</strong> followers</div></p>
                        
                     <div class="col-lg-2 col-md-3 col-4">
-                        <p><strong>800</strong> following</div></p>
-                        
+                        <p><strong>{{followingCount}}</strong> following</div></p>
+                        {{/user}}
                 </div>
             </div>
 
