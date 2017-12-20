@@ -434,7 +434,16 @@ background-position: -391px -130px;
 
 
 
+/* /discover page  */
 
+.discoverContainer img {
+    width: 50%;
+}
+
+.discoverContainer button,
+.discoverContainer p {
+    font-size: 80%;
+}
 
 
 /* /tags/:id page */
