@@ -274,11 +274,25 @@ input[type="submit"] {
     margin-top: -10px;
 }
 
+#heart2 {
+    background-position: -182px -357px;
+}
+
 #user {
 background-position: -391px -130px;
 }
 
 .heartIcon { margin-bottom: 11px;}
+
+
+#comments {
+    background-position: 0 -383px;
+}
+
+
+#save {
+    background-position: -312px -357px;
+}
 
 
 

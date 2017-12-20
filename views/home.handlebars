@@ -21,18 +21,20 @@
 
             <form action="/likes/{{id}}" method="post">
               <button type="submit" class="likePost">
-                <i class="fa fa-heart-o p-2 order-1" aria-hidden="true"></i>
+                <span class="ig_sprites navIcons" id="heart2"></span>
               </button>
             </form>
 
 
 
-            <i class="fa fa-comment-o p-2 order-2 commentBtn" aria-hidden="true"></i>
+            {{!-- <i class="fa fa-comment-o p-2 order-2 commentBtn" aria-hidden="true"></i> --}}
+            <span class="order-2 commentBtn ig_sprites navIcons" id="comments"></span>
 
 
 
 
-            <i class="fa fa-bookmark-o p-2 order-3 ml-auto" aria-hidden="true"></i>
+            {{!-- <i class="fa fa-bookmark-o p-2 order-3 ml-auto" aria-hidden="true"></i> --}}
+            <span class="order-3 ml-auto ig_sprites navIcons" id="save"></span>
 
           </div>
 
