@@ -12,6 +12,9 @@ const express = require('express'),
   morgan = require('morgan'),
   bcrypt = require('bcrypt'),
   handlebars = require('express-handlebars'),
+  acceotOrDeny = require('./routes/acceptOrDeny'),
+  addComment = require('./routes/addComment'),
+  addPost = require('./routes/addPost'),
   following = require('./routes/following'),
   likes = require('./routes/likes'),
   profilePic = require('./routes/profilePic'),
@@ -98,7 +101,9 @@ application.use(function (request, response, next) {
 | Routes
 |--------------------------------------------------------------------------
 */
-
+application.use('/acceptOrDeny', acceotOrDeny);
+application.use('/addComment', addComment);
+application.use('/addPost', addPost);
 application.use('/following', following);
 application.use('/likes', likes);
 application.use('/profilePic', profilePic);

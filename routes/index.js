@@ -6,34 +6,9 @@
 const router = require('express').Router(),
     crypto = require('crypto'),
     { getAllFollowRequests } = require('../db/query'),
-    AWS = require('aws-sdk'),
-    multer = require('multer'),
-    multerS3 = require('multer-S3'),
     knex = require('../db/knex');
 
 
-
-// var hashtag = '\S*#(?:\[[^\]]+\]|\S+)';           *** Dont worry about me for now
-
-AWS.config.loadFromPath('./config.json');
-AWS.config.update({ signatureVersion: 'v4' });
-var s3 = new AWS.S3();
-
-
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'ig-clone-v1',
-        acl: 'public-read',
-        contentType: multerS3.AUTO_CONTENT_TYPE,
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString() + '.jpg')
-        }
-    })
-})
 
 
 
@@ -53,13 +28,6 @@ router
 
             var followRequests = await getAllFollowRequests(request.session.user_id)
         }
-
-
-
-
-
-
-
 
 
 
@@ -84,11 +52,7 @@ router
 
                 // for each caption that has a hashtag push into hashArr
                 post.forEach((i) => {
-                    // var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
-                    // hashMatch[0].replace('#', '')
-
-
-                    // .replace(/#(\S*)/g,'<a href="localhost:3000/tags/">#$1</a>')
+                   
 
                     // if the captions have hastage
                     if (i.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/)) {
@@ -279,13 +243,6 @@ router
 
                         if (request.session.isAuthenticated) {
 
-                            // console.log("__________-");
-
-                            // console.log(request.session.follow);
-
-                            // console.log("__________-");
-
-                            // console.log(post);
                             response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
                         } else {
                             response.render('home', { post });
@@ -329,7 +286,6 @@ router
         // request.check("password", "Password should be combination of one uppercase , one lower case, one special char, one digit").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
         // request.check('password', 'Sorry, your password was incorrect. Please double-check your password.').notEmpty().isLength({ min: 4 })
         request.check('password', 'Please enter a valid password').notEmpty().isLength({ min: 4 });
-
 
 
         var errors = request.validationErrors();
@@ -432,271 +388,6 @@ router
 
 
 
-
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-|  /addPost Route  - Post method where users add posts
-|--------------------------------------------------------------------------
-*/
-router.post('/addPost', upload.any(), async (request, response) => {
-
-    // router
-    // .route('/profile/upload')
-    // .get((request, response) => {
-    //       response.render('upload')
-    // })
-    // .post(upload.any(),(request, response) => {
-
-    //       response.send(request.files);
-    //       console.log(request.files);
-    // })    
-
-    // regex express to check and see if our caption has a hastag inside of it
-    var hashMatch = request.body.caption.match(/\S*#(?:\[[^\]]+\]|\S+)/);
-
-
-
-    /* 
-   **** THIS HOW POSTS ARE CREATED *****
-
-   
-   This operation creates a post that users create
-
-   It also checks that caption the user writes to see if a hashtag is in the caption
-   Then creates a category if not is created, and adds that post to that specific category.
-*/
-
-    var addPost = knex('posts')
-        .insert({
-            photo: request.files[0].location,
-            caption: request.body.caption,
-            user_id: request.session.user_id
-        })
-        .returning('id')
-        .then((post) => {
-
-
-            // checks to see if any hashtags in users caption
-            if (hashMatch) {
-
-                knex.select()
-                    .from('categories')
-                    .where('category_name', hashMatch[0].replace('#', ''))
-                    .then((category) => {
-
-                        // if category doesnt already exist
-                        if (!category[0]) {
-
-                            knex('categories')
-                                .insert({
-                                    category_name: hashMatch[0].replace('#', '') // removes the hash symbol from hashtag
-                                })
-                                .then(() => {
-
-                                    knex.select()
-                                        .from('categories')
-                                        .where('category_name', hashMatch[0].replace('#', ''))
-                                        .then((category) => {
-                                            knex('posts_in_categories')
-                                                .insert({
-                                                    post_id: post[0],
-                                                    category_id: category[0].id
-                                                })
-                                                .then(() => { console.log('Getting matches') })
-                                                .catch((error) => { console.log(error) });
-                                        })
-                                })
-                                .catch((error) => { console.log(error) })
-
-                        } else {
-
-                            // else just add post_id and category_id in post_in_categories table
-
-                            knex.select()
-                                .from('categories')
-                                .where('category_name', hashMatch[0].replace('#', ''))
-                                .then((category) => {
-                                    knex('posts_in_categories')
-                                        .insert({
-                                            post_id: post[0],
-                                            category_id: category[0].id
-                                        })
-                                        .then(() => { console.log('Getting matches') })
-                                        .catch((error) => { console.log(error) });
-                                })
-
-                        }
-                    })
-
-
-            }
-
-
-            response.redirect('/profile');
-        })
-        .catch((error) => {
-            console.log(error);
-            response.redirect('/');
-        })
-
-});
-
-
-
-
-
-// /*
-// |--------------------------------------------------------------------------
-// |  /Following/:id Route - post method where users follow other users
-// |--------------------------------------------------------------------------
-// */
-// router.post('/following/:id', (request, response) => {
-
-
-//     console.log('following id is ' + request.params.id);
-
-//     var checkUser = knex.select()
-//         .from('following')
-//         .where({
-//             following_id: request.params.id,
-//             userId: request.session.user_id
-//         })
-//         .then((following) => {
-
-
-//             // if not following already user makes
-//             if (!following[0]) {
-
-
-//                 knex('following')
-//                     .insert({
-//                         following_id: request.params.id,
-//                         userId: request.session.user_id
-//                     })
-//                     .then(() => {
-//                         console.log("Request to follow, successfully sent.");
-
-//                     })
-//                     .catch((error) => {
-//                         console.log(error);
-//                         response.send(error);
-//                     })
-
-//             } else {
-
-//                 knex('following')
-//                     .where({
-//                         following_id: request.params.id,
-//                         userId: request.session.user_id
-//                     })
-//                     .del()
-//                     .then(() => { })
-//                     .catch((error) => {
-//                         console.log(error);
-//                         response.send(error + " this is the error");
-//                     })
-
-//             }
-
-//             response.redirect('/')
-
-
-//         })
-//         .catch((error) => { })
-
-// });
-
-
-
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-|  /addComment/:id - Post method where users add comments
-|--------------------------------------------------------------------------
-*/
-router.post('/addComment/:id', (request, response) => {
-
-    var comment = knex('comments')
-        .insert({
-            post_id: request.params.id,
-            user_id: request.session.user_id,
-            user_comment: request.body.user_comment
-        })
-        .then(() => {
-            console.log('post is successful')
-            response.redirect('/')
-        })
-        .catch(error => {
-            response.send(error + ' this is the error');
-        });
-});
-
-
-
-
-
-
-
-router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
-
-
-    /* 
-       **** THIS DETERMINES ACCEPTS/DENIES FOLLOW REQUEST *****
- 
-                   
-       This operation checks the request.params.choice to see whether user accepts or denys follower
-
-       1 = pending
-       2 = accept
-     
-        if acceptOrRequest isnt either 1 or 2 it means the user denies the follower so we delete the request out of the databsase
- 
-        If the user accepts, then we add a 1 to the following.acceptOrRequest 
-        if the user denies, then we delete the specific row out of the following table
-*/
-
-
-    // if user accepts follow request
-    if (request.params.choice === 'accept') {
-
-        knex('following')
-            .where({
-                following_id: request.session.user_id,
-                userId: request.params.userId
-            })
-            .update('acceptOrReject', 2)
-            .then(() => { response.redirect('/') })
-            .catch((error) => { console.log(error); response.send(error + " this is the error") });
-
-    } else {
-        // if user denys follow request
-        knex('following')
-            .where({
-                following_id: request.session.user_id,
-                userId: request.params.userId
-            })
-            .del()
-            .then(() => {
-
-
-                response.redirect('/')
-            })
-            .catch((error) => { console.log(error); response.send(error + " this is the error") });
-
-    }
-
-})
 
 
 
