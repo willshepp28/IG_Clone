@@ -259,6 +259,25 @@ input[type="submit"] {
     width: 176px;
 
 }
+
+.navIcons {
+    height: 24px;
+    width: 24px;
+}
+
+#compass {
+    background-position: -316px -315px;
+}
+
+#heart {
+    background-position: -52px -357px;
+    margin-top: -10px;
+}
+
+#user {
+background-position: -391px -130px;
+}
+
 .heartIcon { margin-bottom: 11px;}
 
 

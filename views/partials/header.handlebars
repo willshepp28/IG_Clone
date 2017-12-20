@@ -16,8 +16,8 @@
 
    <ul class="navbar-nav ml-auto d-inline">
         <li class="nav-item active">
-          <a class="nav-link" href="/discover">
-            <i class="fa fa-compass fa-2x" aria-hidden="true"></i>
+          <a class="nav-link ig_sprites navIcons" id="compass" href="/discover">
+            {{!-- <i class="fa fa-compass fa-2x" aria-hidden="true"></i> --}}
 
             <span class="sr-only">(current)</span>
           </a>
@@ -26,9 +26,9 @@
         {{!-- --}}
 
         <div class="dropdown noBorder d-inline">
-          <button class="btn btn-default dropdown-toggle noBorder heartIcon" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+          <button class="btn btn-default dropdown-toggle noBorder paddingNone" type="button" id="dropdownMenu1 " data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="true">
-            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+            <div class=" ig_sprites navIcons" id="heart"></div>
 
           </button>
           <ul class="dropdown-menu notification-dropdown " aria-labelledby="dropdownMenu1">
@@ -77,8 +77,8 @@
         {{!-- --}} {{!-- go to profile page --}}
         {{#isAuthenticated}}
         <li class="nav-item ">
-          <a class="nav-link" href="/profile">
-            <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
+          <a class="nav-link ig_sprites navIcons" id="user" href="/profile">
+            {{!-- <i class="fa fa-user-o fa-2x " aria-hidden="true"></i> --}}
 
           </a>
         </li>
