@@ -12,7 +12,8 @@ const express = require('express'),
   morgan = require('morgan'),
   bcrypt = require('bcrypt'),
   handlebars = require('express-handlebars'),
-  // likes = require('./routes/likes'),
+  following = require('./routes/following'),
+  likes = require('./routes/likes'),
   profilePic = require('./routes/profilePic'),
   discover = require('./routes/discover'),
   tags = require('./routes/tags')
@@ -98,7 +99,8 @@ application.use(function (request, response, next) {
 |--------------------------------------------------------------------------
 */
 
-// application.use('/likes', likes);
+application.use('/following', following);
+application.use('/likes', likes);
 application.use('/profilePic', profilePic);
 application.use('/discover', discover);
 application.use('/tags', tags);

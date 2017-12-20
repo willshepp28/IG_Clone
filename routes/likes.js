@@ -15,7 +15,7 @@ knex = require('../db/knex');
 |  /likes/:id - Post method where users like/dislike a post
 |--------------------------------------------------------------------------
 */
-router.post('/likes/:id', (request, response) => {
+router.post('/:id', (request, response) => {
     
     
     
