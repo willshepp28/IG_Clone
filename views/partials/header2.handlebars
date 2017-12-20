@@ -1,19 +1,27 @@
-<nav class="navbar bg-faded navbar-light borderBt-grey ">
-    <div class="container">
-        <div class="row insta_nav">
-            <div class="col-md-3 mr-auto">
-                
-                <a class="navbar-brand" href="/"><i class="fa fa-instagram fa-3x move-5px" aria-hidden="true"></i> | Instagram</a>
-            </div>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
 
-{{#if isAuthenticated}}
+  {{!-- flex container --}}
+  <div class="d-flex flex-row  my-flex-container" style="width: 100%;">
+    <i class="fa fa-instagram fa-3x move-5px" aria-hidden="true"></i>
+
+    <a class="navbar-brand" href="/"> | Instagram</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
+      {{!--
+      <form class="form-inline my-2 my-lg-0 m-auto">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form> --}} 
+      {{#if isAuthenticated}}
 
-            <div class="col-md-3 ml-auto nav-icons">
-
-   <ul class="navbar-nav ml-auto d-inline">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
           <a class="nav-link" href="/discover">
             <i class="fa fa-compass fa-2x" aria-hidden="true"></i>
@@ -24,13 +32,13 @@
 
         {{!-- --}}
 
-        <div class="dropdown noBorder d-inline">
-          <button class="btn btn-default dropdown-toggle noBorder heartIcon" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+        <div class="dropdown noBorder">
+          <button class="btn btn-default dropdown-toggle noBorder" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="true">
             <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
 
           </button>
-          <ul class="dropdown-menu width50per " aria-labelledby="dropdownMenu1">
+          <ul class="dropdown-menu width50per" aria-labelledby="dropdownMenu1">
 
             <h4>Follow Requests</h4>
 
@@ -75,7 +83,7 @@
 
         {{!-- --}} {{!-- go to profile page --}}
         {{#isAuthenticated}}
-        <li class="nav-item ">
+        <li class="nav-item">
           <a class="nav-link" href="/profile">
             <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
 
@@ -84,32 +92,33 @@
         {{/isAuthenticated}}
 
       </ul>
-</div>
+
+ 
+      {{else}}
 
 
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link baby-blue" href="/signup">Signup
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
 
+        <li class="nav-item">
+          <a class="nav-link baby-blue" href="/login">Log In</a>
+        </li>
 
+      </ul>
+      {{/if}}
 
-{{else}}
-            <div class="col-md-3 ml-auto">
-                <ul class="navbar-nav ml-auto d-inline">
-                    <li class="nav-item active ">
-                        <a class="nav-link baby-blue" href="/signup">Signup
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link baby-blue" href="/login">Log In</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-
-{{/if}}
-
-
+      
 
     </div>
+
+  </div>
+
+
+
+
 </nav>
+

@@ -225,6 +225,11 @@ input[type="submit"] {
 /*==========  Mobile First Method  ==========*/
 
 
+
+/* navbar */
+.heartIcon { margin-bottom: 11px;}
+
+
 /* Profile page */
 
 .profilePic_Container { display: flex; justify-content: center; }
@@ -261,6 +266,10 @@ input[type="submit"] {
 
 .border_grey1 {
     border-top: 1px solid #efefef;
+}
+
+.borderBt-grey {
+    border-bottom: 1px solid #efefef;
 }
 
 .border_black1 {
@@ -343,6 +352,16 @@ input[type="submit"] {
             
             margin-bottom: 20px;
         }
+
+        .insta_nav {
+            text-align: center;
+        }
+
+        .nav-icons {
+            
+                margin-top: 20px;
+            
+            }
       
       }
   
