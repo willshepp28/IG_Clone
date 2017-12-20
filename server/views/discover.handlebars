@@ -1,0 +1,45 @@
+<div class="container ">
+    <h4 class="lightgrey mgTp-100px">Discover People</h4>
+
+    <div class="row">
+        {{#each potentialFollowers}}
+        <div class="col-md-4 col-sm-4 col-6 mx-auto">
+            <div class="card text-center padding-20px">
+                <div class="card-body discoverContainer">
+                    <a href="/profile/{{id}}">
+                        <img src="{{profilePic}}" alt="" class="rounded-circle  img-fluid">
+                    </a>
+                    <a href="/profile/{{id}}">
+                        <p class="card-text">
+                            <strong>{{username}}</strong>
+                        </p>
+                    </a>
+
+                    <form action="/following/{{id}}" method="post">
+                        <button type="submit" class="btn btn-primary">
+                            Follow
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <h4 class="lightgrey mgTp-100px">Explore</h4>
+
+    <div class="row mgTp-50px">
+        {{#each discoverPosts}}
+        <div class="col-md-4 col-4 mgBt-28px">
+            <a href="/post/{{id}}"><img src="{{photo}}" alt="" class="height-293px img-fluid"></a>
+            
+        </div>
+        {{/each}}
+    </div>
+</div>

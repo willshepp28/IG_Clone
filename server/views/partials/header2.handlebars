@@ -1,0 +1,124 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  {{!-- flex container --}}
+  <div class="d-flex flex-row  my-flex-container" style="width: 100%;">
+    <i class="fa fa-instagram fa-3x move-5px" aria-hidden="true"></i>
+
+    <a class="navbar-brand" href="/"> | Instagram</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+      {{!--
+      <form class="form-inline my-2 my-lg-0 m-auto">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form> --}} 
+      {{#if isAuthenticated}}
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/discover">
+            <i class="fa fa-compass fa-2x" aria-hidden="true"></i>
+
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+
+        {{!-- --}}
+
+        <div class="dropdown noBorder">
+          <button class="btn btn-default dropdown-toggle noBorder" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="true">
+            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+
+          </button>
+          <ul class="dropdown-menu width50per" aria-labelledby="dropdownMenu1">
+
+            <h4>Follow Requests</h4>
+
+            {{#if follow}}
+             {{#each follow}}
+            <div class="container width50per mgTp-15px">
+
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="{{profilePic}}" alt="" style="height: 25px;"
+                    class="rounded-circle nocontent">
+                  <p>{{username}}</p>
+                </div>
+                <div class="col-md-4">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-4 mgRt-5px ">
+                        <form action="/acceptOrDeny/accept/{{userId}}" method="post">
+                          <button type="submit" class="btn btn-primary">Approve</button>
+                        </form>
+                      </div>
+
+                      <div class="col-md-4">
+                        <form action="/acceptOrDeny/deny/{{userId}}" method="post">
+                          <button type="submit" class="btn btn-default">Hide</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            {{/each}}
+            {{else}}
+            <p>No Notifications Yet!</p>
+            {{/if}}
+
+          </ul>
+        </div>
+
+        {{!-- --}} {{!-- go to profile page --}}
+        {{#isAuthenticated}}
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">
+            <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
+
+          </a>
+        </li>
+        {{/isAuthenticated}}
+
+      </ul>
+
+ 
+      {{else}}
+
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link baby-blue" href="/signup">Signup
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link baby-blue" href="/login">Log In</a>
+        </li>
+
+      </ul>
+      {{/if}}
+
+      
+
+    </div>
+
+  </div>
+
+
+
+
+</nav>
+

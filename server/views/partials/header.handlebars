@@ -1,0 +1,116 @@
+<nav class="navbar bg-faded navbar-light borderBt-grey ">
+    <div class="container">
+        <div class="row insta_nav">
+            <div class="col-md-3 mr-auto">
+                
+                {{!-- <a class="navbar-brand" href="/"><i class="fa fa-instagram fa-2x move-5px" aria-hidden="true"></i> | Instagram</a> --}}
+                 <a class="navbar-brand ig_sprites" id="ig_logo" href="/"></a>
+            </div>
+
+
+{{#if isAuthenticated}}
+
+
+
+            <div class="col-md-3 ml-auto nav-icons">
+
+   <ul class="navbar-nav ml-auto d-inline">
+        <li class="nav-item active">
+          <a class="nav-link ig_sprites navIcons" id="compass" href="/discover">
+            {{!-- <i class="fa fa-compass fa-2x" aria-hidden="true"></i> --}}
+
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+
+        {{!-- --}}
+
+        <div class="dropdown noBorder d-inline">
+          <button class="btn btn-default dropdown-toggle noBorder paddingNone" type="button" id="dropdownMenu1 " data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="true">
+            <div class=" ig_sprites navIcons" id="heart"></div>
+
+          </button>
+          <ul class="dropdown-menu notification-dropdown " aria-labelledby="dropdownMenu1">
+
+            <h4 class="mgTp-15px">Follow Requests</h4>
+
+            {{#if follow}}
+             {{#each follow}}
+            <div class="container-fluid mgTp-39px">
+
+              <div class="row notificationImg">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-3">
+                  <img src="{{profilePic}}" alt="" style="height: 25px;"
+                    class="rounded-circle nocontent">
+                  <p><strong>{{username}}</strong></p>
+                </div>
+                <div class="col-lg-5 col-md-4 col-sm-7 col-9">
+                  <div class="container">
+                    <div class="row notification-btn">
+                      <div class="col-lg-2 col-md-4 col-sm-4 col-5 mgRt-5px ">
+                        <form action="/acceptOrDeny/accept/{{userId}}" method="post">
+                          <button type="submit" class="btn btn-primary">Approve</button>
+                        </form>
+                      </div>
+
+                      <div class="col-lg-2 col-md-4 col-sm-4 col-5">
+                        <form action="/acceptOrDeny/deny/{{userId}}" method="post">
+                          <button type="submit" class="btn hide-btn">Hide</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            {{/each}}
+            {{else}}
+            <p>No Notifications Yet!</p>
+            {{/if}}
+
+          </ul>
+        </div>
+
+        {{!-- --}} {{!-- go to profile page --}}
+        {{#isAuthenticated}}
+        <li class="nav-item ">
+          <a class="nav-link ig_sprites navIcons" id="user" href="/profile">
+            {{!-- <i class="fa fa-user-o fa-2x " aria-hidden="true"></i> --}}
+
+          </a>
+        </li>
+        {{/isAuthenticated}}
+
+      </ul>
+</div>
+
+
+
+
+
+{{else}}
+            <div class="col-md-3 ml-auto">
+                <ul class="navbar-nav ml-auto d-inline">
+                    <li class="nav-item active mgRt-5px">
+                        <a class="nav-link baby-blue" href="/signup">Signup
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link baby-blue" href="/login">Log In</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+{{/if}}
+
+
+
+    </div>
+</nav>
