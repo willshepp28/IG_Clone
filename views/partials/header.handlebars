@@ -3,7 +3,7 @@
         <div class="row insta_nav">
             <div class="col-md-3 mr-auto">
                 
-                <a class="navbar-brand" href="/"><i class="fa fa-instagram fa-3x move-5px" aria-hidden="true"></i> | Instagram</a>
+                <a class="navbar-brand" href="/"><i class="fa fa-instagram fa-2x move-5px" aria-hidden="true"></i> | Instagram</a>
             </div>
 
 
@@ -30,32 +30,32 @@
             <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
 
           </button>
-          <ul class="dropdown-menu width50per " aria-labelledby="dropdownMenu1">
+          <ul class="dropdown-menu notification-dropdown " aria-labelledby="dropdownMenu1">
 
-            <h4>Follow Requests</h4>
+            <h4 class="mgTp-15px">Follow Requests</h4>
 
             {{#if follow}}
              {{#each follow}}
-            <div class="container width50per mgTp-15px">
+            <div class="container-fluid mgTp-39px">
 
-              <div class="row">
-                <div class="col-md-4">
+              <div class="row notificationImg">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-3">
                   <img src="{{profilePic}}" alt="" style="height: 25px;"
                     class="rounded-circle nocontent">
-                  <p>{{username}}</p>
+                  <p><strong>{{username}}</strong></p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-5 col-md-4 col-sm-7 col-9">
                   <div class="container">
-                    <div class="row">
-                      <div class="col-md-4 mgRt-5px ">
+                    <div class="row notification-btn">
+                      <div class="col-lg-2 col-md-4 col-sm-4 col-5 mgRt-5px ">
                         <form action="/acceptOrDeny/accept/{{userId}}" method="post">
                           <button type="submit" class="btn btn-primary">Approve</button>
                         </form>
                       </div>
 
-                      <div class="col-md-4">
+                      <div class="col-lg-2 col-md-4 col-sm-4 col-5">
                         <form action="/acceptOrDeny/deny/{{userId}}" method="post">
-                          <button type="submit" class="btn btn-default">Hide</button>
+                          <button type="submit" class="btn hide-btn">Hide</button>
                         </form>
                       </div>
                     </div>
@@ -93,7 +93,7 @@
 {{else}}
             <div class="col-md-3 ml-auto">
                 <ul class="navbar-nav ml-auto d-inline">
-                    <li class="nav-item active ">
+                    <li class="nav-item active mgRt-5px">
                         <a class="nav-link baby-blue" href="/signup">Signup
                             <span class="sr-only">(current)</span>
                         </a>
