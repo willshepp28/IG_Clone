@@ -1,0 +1,677 @@
+{
+    "mockup": {
+        "controls": {
+            "control": [
+                {
+                    "ID": "0",
+                    "typeID": "BrowserWindow",
+                    "zOrder": "0",
+                    "w": "1400",
+                    "h": "2364",
+                    "measuredW": "450",
+                    "measuredH": "400",
+                    "x": "152",
+                    "y": "122",
+                    "properties": {
+                        "text": "A Web Page\nhttp://instagram.com",
+                        "verticalScrollbar": "true"
+                    }
+                },
+                {
+                    "ID": "1",
+                    "typeID": "__group__",
+                    "zOrder": "1",
+                    "measuredW": "1385",
+                    "measuredH": "2265",
+                    "w": "1385",
+                    "h": "2265",
+                    "x": "149",
+                    "y": "201",
+                    "children": {
+                        "controls": {
+                            "control": [
+                                {
+                                    "ID": "45",
+                                    "typeID": "Canvas",
+                                    "zOrder": "0",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "0",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "46",
+                                    "typeID": "Canvas",
+                                    "zOrder": "1",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "89",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "47",
+                                    "typeID": "Canvas",
+                                    "zOrder": "2",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "176",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "48",
+                                    "typeID": "Canvas",
+                                    "zOrder": "3",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "265",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "49",
+                                    "typeID": "Canvas",
+                                    "zOrder": "4",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "353",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "50",
+                                    "typeID": "Canvas",
+                                    "zOrder": "5",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "441",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "51",
+                                    "typeID": "Canvas",
+                                    "zOrder": "6",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "530",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "52",
+                                    "typeID": "Canvas",
+                                    "zOrder": "7",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "618",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "53",
+                                    "typeID": "Canvas",
+                                    "zOrder": "8",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "707",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "54",
+                                    "typeID": "Canvas",
+                                    "zOrder": "9",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "794",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "55",
+                                    "typeID": "Canvas",
+                                    "zOrder": "10",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "883",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "56",
+                                    "typeID": "Canvas",
+                                    "zOrder": "11",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "972",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "57",
+                                    "typeID": "Canvas",
+                                    "zOrder": "12",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "1059",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "58",
+                                    "typeID": "Canvas",
+                                    "zOrder": "13",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "1148",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "59",
+                                    "typeID": "Canvas",
+                                    "zOrder": "14",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "1236",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "60",
+                                    "typeID": "Canvas",
+                                    "zOrder": "15",
+                                    "w": "61",
+                                    "h": "2265",
+                                    "measuredW": "100",
+                                    "measuredH": "70",
+                                    "x": "1324",
+                                    "y": "0",
+                                    "properties": {
+                                        "backgroundAlpha": "0.25",
+                                        "borderStyle": "none",
+                                        "color": "11776947"
+                                    }
+                                },
+                                {
+                                    "ID": "61",
+                                    "typeID": "SearchBox",
+                                    "zOrder": "16",
+                                    "w": "120",
+                                    "measuredW": "120",
+                                    "measuredH": "25",
+                                    "x": "382",
+                                    "y": "0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "ID": "2",
+                    "typeID": "Label",
+                    "zOrder": "2",
+                    "measuredW": "350",
+                    "measuredH": "36",
+                    "x": "433",
+                    "y": "42",
+                    "properties": {
+                        "align": "center",
+                        "size": "28",
+                        "text": "1200 Grid-16Column Layout"
+                    }
+                },
+                {
+                    "ID": "3",
+                    "typeID": "MenuBar",
+                    "zOrder": "3",
+                    "w": "1384",
+                    "h": "58",
+                    "measuredW": "187",
+                    "measuredH": "32",
+                    "x": "153",
+                    "y": "195",
+                    "locked": "true",
+                    "properties": {
+                        "text": "Instagram, ",
+                        "selectedIndex": "-1",
+                        "bold": "true",
+                        "size": "28"
+                    }
+                },
+                {
+                    "ID": "5",
+                    "typeID": "SearchBox",
+                    "zOrder": "4",
+                    "measuredW": "120",
+                    "measuredH": "25",
+                    "x": "771",
+                    "y": "212",
+                    "properties": {
+                        "shape": "rectangle",
+                        "microphoneIcon": "true"
+                    }
+                },
+                {
+                    "ID": "7",
+                    "typeID": "Icon",
+                    "zOrder": "5",
+                    "measuredW": "32",
+                    "measuredH": "32",
+                    "x": "1404",
+                    "y": "205",
+                    "properties": {
+                        "icon": {
+                            "ID": "heart-o",
+                            "size": "medium"
+                        }
+                    }
+                },
+                {
+                    "ID": "8",
+                    "typeID": "Icon",
+                    "zOrder": "6",
+                    "measuredW": "32",
+                    "measuredH": "32",
+                    "x": "1452",
+                    "y": "205",
+                    "properties": {
+                        "icon": {
+                            "ID": "user-o",
+                            "size": "medium"
+                        }
+                    }
+                },
+                {
+                    "ID": "10",
+                    "typeID": "Icon",
+                    "zOrder": "7",
+                    "measuredW": "32",
+                    "measuredH": "32",
+                    "x": "1348",
+                    "y": "205",
+                    "properties": {
+                        "icon": {
+                            "ID": "compass",
+                            "size": "medium"
+                        },
+                        "color": "0"
+                    }
+                },
+                {
+                    "ID": "38",
+                    "typeID": "Canvas",
+                    "zOrder": "8",
+                    "w": "1384",
+                    "h": "86",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "153",
+                    "y": "2370"
+                },
+                {
+                    "ID": "42",
+                    "typeID": "Icon",
+                    "zOrder": "9",
+                    "measuredW": "24",
+                    "measuredH": "24",
+                    "x": "706",
+                    "y": "2401",
+                    "properties": {
+                        "icon": {
+                            "ID": "copyright",
+                            "size": "small"
+                        }
+                    }
+                },
+                {
+                    "ID": "43",
+                    "typeID": "Label",
+                    "zOrder": "10",
+                    "measuredW": "127",
+                    "measuredH": "26",
+                    "x": "738",
+                    "y": "2401",
+                    "properties": {
+                        "text": "2017 Instagram",
+                        "size": "18"
+                    }
+                },
+                {
+                    "ID": "48",
+                    "typeID": "Label",
+                    "zOrder": "11",
+                    "measuredW": "272",
+                    "measuredH": "68",
+                    "x": "736",
+                    "y": "484",
+                    "properties": {
+                        "text": "Brittany12",
+                        "size": "60"
+                    }
+                },
+                {
+                    "ID": "51",
+                    "typeID": "Image",
+                    "zOrder": "12",
+                    "w": "350",
+                    "h": "350",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "293",
+                    "y": "449"
+                },
+                {
+                    "ID": "53",
+                    "typeID": "SubTitle",
+                    "zOrder": "13",
+                    "measuredW": "42",
+                    "measuredH": "44",
+                    "x": "737",
+                    "y": "622",
+                    "properties": {
+                        "text": "12",
+                        "bold": "true",
+                        "size": "40"
+                    }
+                },
+                {
+                    "ID": "54",
+                    "typeID": "SubTitle",
+                    "zOrder": "14",
+                    "measuredW": "101",
+                    "measuredH": "44",
+                    "x": "781",
+                    "y": "622",
+                    "properties": {
+                        "bold": "false",
+                        "size": "40",
+                        "text": "posts"
+                    }
+                },
+                {
+                    "ID": "55",
+                    "typeID": "SubTitle",
+                    "zOrder": "15",
+                    "measuredW": "67",
+                    "measuredH": "44",
+                    "x": "958",
+                    "y": "622",
+                    "properties": {
+                        "text": "120",
+                        "bold": "true",
+                        "size": "40"
+                    }
+                },
+                {
+                    "ID": "56",
+                    "typeID": "SubTitle",
+                    "zOrder": "16",
+                    "measuredW": "157",
+                    "measuredH": "44",
+                    "x": "1034",
+                    "y": "622",
+                    "properties": {
+                        "bold": "false",
+                        "size": "40",
+                        "text": "following"
+                    }
+                },
+                {
+                    "ID": "57",
+                    "typeID": "SubTitle",
+                    "zOrder": "17",
+                    "measuredW": "67",
+                    "measuredH": "44",
+                    "x": "1253",
+                    "y": "622",
+                    "properties": {
+                        "text": "120",
+                        "bold": "true",
+                        "size": "40"
+                    }
+                },
+                {
+                    "ID": "58",
+                    "typeID": "SubTitle",
+                    "zOrder": "18",
+                    "measuredW": "156",
+                    "measuredH": "44",
+                    "x": "1326",
+                    "y": "622",
+                    "properties": {
+                        "bold": "false",
+                        "size": "40",
+                        "text": "followers"
+                    }
+                },
+                {
+                    "ID": "60",
+                    "typeID": "Canvas",
+                    "zOrder": "19",
+                    "w": "210",
+                    "h": "57",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1058",
+                    "y": "489"
+                },
+                {
+                    "ID": "61",
+                    "typeID": "Label",
+                    "zOrder": "20",
+                    "measuredW": "157",
+                    "measuredH": "40",
+                    "x": "1084",
+                    "y": "498",
+                    "properties": {
+                        "text": "Edit Profile",
+                        "size": "32"
+                    }
+                },
+                {
+                    "ID": "62",
+                    "typeID": "Icon",
+                    "zOrder": "21",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "1298",
+                    "y": "494",
+                    "properties": {
+                        "icon": {
+                            "ID": "cog",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "63",
+                    "typeID": "Label",
+                    "zOrder": "22",
+                    "measuredW": "101",
+                    "measuredH": "48",
+                    "x": "791",
+                    "y": "1097",
+                    "properties": {
+                        "size": "40",
+                        "text": "Posts",
+                        "align": "center"
+                    }
+                },
+                {
+                    "ID": "65",
+                    "typeID": "Image",
+                    "zOrder": "23",
+                    "w": "300",
+                    "h": "300",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "249",
+                    "y": "1255"
+                },
+                {
+                    "ID": "66",
+                    "typeID": "Image",
+                    "zOrder": "24",
+                    "w": "300",
+                    "h": "300",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "682",
+                    "y": "1255"
+                },
+                {
+                    "ID": "67",
+                    "typeID": "Image",
+                    "zOrder": "25",
+                    "w": "300",
+                    "h": "300",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "1115",
+                    "y": "1255"
+                },
+                {
+                    "ID": "68",
+                    "typeID": "Image",
+                    "zOrder": "26",
+                    "w": "300",
+                    "h": "300",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "682",
+                    "y": "1688"
+                },
+                {
+                    "ID": "69",
+                    "typeID": "Image",
+                    "zOrder": "27",
+                    "w": "300",
+                    "h": "300",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "249",
+                    "y": "1688"
+                },
+                {
+                    "ID": "70",
+                    "typeID": "Image",
+                    "zOrder": "28",
+                    "w": "300",
+                    "h": "300",
+                    "measuredW": "77",
+                    "measuredH": "79",
+                    "x": "1140",
+                    "y": "1689"
+                },
+                {
+                    "ID": "71",
+                    "typeID": "HRule",
+                    "zOrder": "29",
+                    "measuredW": "100",
+                    "measuredH": "10",
+                    "x": "792",
+                    "y": "1076"
+                }
+            ]
+        },
+        "mockupH": "2444",
+        "mockupW": "1403",
+        "measuredW": "1552",
+        "measuredH": "2486",
+        "version": "1.0"
+    }
+}
