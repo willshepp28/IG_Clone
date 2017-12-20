@@ -1,3 +1,8 @@
+/*
+|--------------------------------------------------------------------------
+|  Dependencies
+|--------------------------------------------------------------------------
+*/
 const router = require('express').Router(),
 knex = require('../db/knex'),
 { getAllFollowRequests } = require('../db/query');
@@ -8,7 +13,7 @@ knex = require('../db/knex'),
 
 
 router
-.route('/discover')
+.route('/')
 .get(checkAuthenticated, async (request, response) => {
 
     // only run this is the user is logged in

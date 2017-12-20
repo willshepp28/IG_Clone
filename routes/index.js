@@ -1,5 +1,8 @@
-
-
+/*
+|--------------------------------------------------------------------------
+|  Dependencies
+|--------------------------------------------------------------------------
+*/
 const router = require('express').Router(),
     crypto = require('crypto'),
     { getAllFollowRequests } = require('../db/query'),
@@ -783,65 +786,6 @@ router.post('/acceptOrDeny/:choice/:userId', (request, response) => {
 })
 
 
-
-router
-    .route('/discover')
-    .get(checkAuthenticated, async (request, response) => {
-
-        // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
-
-
-
-            var followRequests = await getAllFollowRequests(request.session.user_id)
-        }
-
-
-        // Get the users to show in discover people
-        var potentialFollowers = await knex.select()
-            .from('users')
-            .limit(4)
-            .whereNot('id', request.session.user_id)
-            .then((user) => {
-
-
-                // check the database to see which users the current user is already trying to follow and exclude them
-                knex('following')
-                    .where('userId', request.session.user_id)
-                    .then((follow) => {
-
-                        for (let i = 0; i < user.length; i++) {
-
-                            for (let j = 0; j < follow.length; j++) {
-
-                                // if users.id matchs the following.following_id, then delete from array
-                                if (user[i].id === follow[j].following_id) {
-                                    remove(user, user[i]);
-                                }
-                            }
-                        }
-                    })
-                    .catch((error) => { console.log(error + " this is a error") })
-
-
-                return user;
-
-
-            })
-            .catch((error) => { console.log(error) });
-
-
-
-        // some posts
-        var discoverPosts = await knex.select()
-            .from('posts')
-            .limit(10)
-            .then((post) => { return post; })
-            .catch((error) => { console.log(error + " this is the error"); response.send(error + " this is a error") })
-
-
-        response.render('discover', { potentialFollowers, discoverPosts, isAuthenticated: request.session.isAuthenticated, follow: followRequests })
-    })
 
 
 // function remove(array, element) {

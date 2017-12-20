@@ -13,6 +13,7 @@ const express = require('express'),
   bcrypt = require('bcrypt'),
   handlebars = require('express-handlebars'),
   // likes = require('./routes/likes'),
+  profilePic = require('./routes/profilePic'),
   discover = require('./routes/discover'),
   tags = require('./routes/tags')
   post = require('./routes/post'),
@@ -98,6 +99,7 @@ application.use(function (request, response, next) {
 */
 
 // application.use('/likes', likes);
+application.use('/profilePic', profilePic);
 application.use('/discover', discover);
 application.use('/tags', tags);
 application.use('/post', post);

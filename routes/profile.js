@@ -1,3 +1,8 @@
+/*
+|--------------------------------------------------------------------------
+|  Dependencies
+|--------------------------------------------------------------------------
+*/
 const router = require('express').Router(),
     crypto = require('crypto'),
     AWS = require('aws-sdk'),
@@ -209,10 +214,10 @@ router
 */
 router
     .route('/profilePic')
-    .get(async (request, response) => {
+    .get(checkAuthenticated, async (request, response) => {
 
         // only run this is the user is logged in
-        if (request.session.isAuthenticated && request.session.follow < 2) {
+        if (request.session.isAuthenticated) {
 
 
 
