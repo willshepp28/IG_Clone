@@ -246,6 +246,19 @@ input[type="submit"] {
         }
 
 /* navbar */
+
+.ig_sprites {
+    background: url("/assets/img/sprites/ig_sprite.png");
+    display: inline-block;
+
+  }
+
+#ig_logo {
+    background-position: 0 -136px;
+    height: 35px;
+    width: 176px;
+
+}
 .heartIcon { margin-bottom: 11px;}
 
 
@@ -321,6 +334,16 @@ input[type="submit"] {
             color: #262626;
         }
 
+
+
+
+
+/*  Signup */
+#iglogo-signuplogin {
+    background-position: 0 0;
+    height: 52px;
+    width: 176px;
+}
 
 
 
