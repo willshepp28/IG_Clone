@@ -4,7 +4,11 @@ const crypto = require('crypto'),
 
 
 
-
+/*
+|--------------------------------------------------------------------------
+|  GET all follow requests
+|--------------------------------------------------------------------------
+*/
 async function getAllFollowRequests(userId) {
 
     return await knex.select('following.id', 'profilePic', 'username', 'userId', 'acceptOrReject')
@@ -30,6 +34,22 @@ async function getAllFollowRequests(userId) {
         })
         .catch(error => console.log(error));
 };
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+|  Dependencies
+|--------------------------------------------------------------------------
+*/
+
+
+
+
+
+
 
 
 
