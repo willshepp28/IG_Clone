@@ -15,7 +15,7 @@ router.get('/', (request, response) => {
     return knex.select()
             .from('users')
             .then((user) => {
-                response.json(user)
+                response.status(200).json(user)
             })
 
 

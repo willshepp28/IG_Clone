@@ -25,6 +25,7 @@ const express = require('express'),
   profile = require('./routes/profile'),
   index = require('./routes/index'),
   userApi = require('./api/userApi'),
+  postApi = require('./api/postApi'),
   Promise = require('bluebird'),
   port = process.env.PORT || 8000;
 application = express();
@@ -123,6 +124,7 @@ application.use('/', index);
 
 // Api
 application.use('/api/v1/user', userApi);
+application.use('/api/v1/post', postApi);
 
 
 
