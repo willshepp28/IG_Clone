@@ -21,3 +21,16 @@ $(() => {
             })
         })
 });
+
+
+$(() => {
+    $.get(API_URL)
+        .then((user) => {
+
+            const $user = $('#users');
+
+            user.forEach(user => {
+                $user.append(`<img src="${user.profilePic}"></img>`)
+            })
+        })
+})
