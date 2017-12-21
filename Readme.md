@@ -110,3 +110,4 @@ This is my own version of instagram.
 ```
 * Awesome knex js cheatsheet: https://devhints.io/knex
 * In express you can use multiple parameters in url - https://stackoverflow.com/questions/15128849/using-multiple-parameters-in-url-in-express
+* `npm install cors` module so our servers can talk to each other. Tells our express server to allow requests from other origins. 

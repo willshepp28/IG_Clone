@@ -7,6 +7,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
   expressValidator = require('express-validator'),
+  cors = require('cors'),
   flash = require('connect-flash'),
   path = require('path'),
   morgan = require('morgan'),
@@ -23,6 +24,7 @@ const express = require('express'),
   post = require('./routes/post'),
   profile = require('./routes/profile'),
   index = require('./routes/index'),
+  userApi = require('./api/userApi'),
   Promise = require('bluebird'),
   port = process.env.PORT || 8000;
 application = express();
@@ -63,6 +65,12 @@ application.use(session({
   cookie: { secure: false }
 }));
 
+// Express will allow requests from port 8080
+// 8080 needs access to our json data
+application.use(cors({
+  origin: 'http://localhost:8080',
+  optionsSuccessStatus: 200
+}));
 
 
 
@@ -112,6 +120,9 @@ application.use('/tags', tags);
 application.use('/post', post);
 application.use('/profile', profile);
 application.use('/', index);
+
+// Api
+application.use('/api/v1/user', userApi);
 
 
 
