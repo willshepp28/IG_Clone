@@ -18,7 +18,29 @@ const router = require('express').Router(),
 |--------------------------------------------------------------------------
 |  Home Page - the home page where you can see other users posts
 |--------------------------------------------------------------------------
+
 */
+
+// router.get('/', checkAuthenticated, async(request, response) => {
+
+//     // only show follow request if your is logged in
+//     if(request.session.isAuthenticated) {
+//         var followRequests = await getAllFollowRequests(request.session.user_id);
+//     }
+
+//     var post = await knex.select()
+//         .from('posts')
+//         .join('users', 'user_id', 'users.id')
+//         .join('likes', 'posts.id', 'post_id')
+//         // .count('likes.id')
+//         // .distinct()
+//         .then((user) => {
+//             response.json(user);
+//         });
+// })
+
+
+
 router
     .route('/')
     .get(checkAuthenticated, async (request, response) => {
@@ -243,7 +265,8 @@ router
 
                         if (request.session.isAuthenticated) {
 
-                            response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
+                            // response.render('home', { post, isAuthenticated: request.session.isAuthenticated, username: request.session.username, follow: followRequests });
+                            response.json(post);
                         } else {
                             response.render('home', { post });
                         }

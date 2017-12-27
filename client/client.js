@@ -11,20 +11,22 @@ const API_POST = 'http://localhost:8000/api/v1/post';
 
 
 
-
-
-
 // $(() => {
-//     $.get(API_URL)
-//         .then((user) => {
+//     $.get(API_POST)
+//         .then(post => {
 
+           
 //             const $user = $('#users');
+          
 
-//             user.forEach(user => {
-//                 $user.append(`<img src="${user.profilePic}"></img>`)
+//             post.forEach(posts => {
+//                 console.log(posts);
+//                console.log("___________");
 //             })
+
 //         })
-// });
+// })
+
 
 
 

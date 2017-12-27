@@ -13,19 +13,16 @@ knex = require('../db/knex.js');
 |--------------------------------------------------------------------------
 */
 
-// router.get('/', (request,response) => {
-    
-//     return knex.select()
-//         .from('posts')
-//         .then((post) => {
-//             response.json(post);
-//         });
-// })
 router
     .route('/')
     .get( async (request, response) => {
 
-     
+        // only run this is the user is logged in
+        if (request.session.isAuthenticated) {
+
+            var followRequests = await getAllFollowRequests(request.session.user_id)
+        }
+
 
 
 
@@ -35,7 +32,7 @@ router
             .join('users', 'user_id', 'users.id')
             .join('following', 'following_id', 'users.id')
             .where({
-                userId: 1,
+                userId:1 ,
                 acceptOrReject: 2
             })
             .orderBy('date_created', 'desc')
@@ -230,6 +227,22 @@ router
 
                         }
 
+                        // if user is logged in let them comment on posts
+                        if (request.session.isAuthenticated) {
+                            post.forEach(i => {
+
+                                i.userComment = true;
+                            });
+                        }
+
+                        if (request.session.isAuthenticated) {
+
+                            
+                            response.json(post);
+                        } else {
+                            
+                            response.json(post);
+                        }
 
                     })
                     .catch((error) => {
@@ -237,24 +250,28 @@ router
                         response.send(error);
                     })
 
-                    response.json(post)
+
 
             })
             .catch((error) => {
-                response.send(error + 'this is a error');
+                response.json(error + 'this is a error');
             });
 
     });
 
+ 
+    function checkAuthenticated(request, response, next) {
 
-    router.get('/post', (request, response) => {
-        return knex.select()
-            .distinct('username')
-            .from('posts')
-            .then((post) => {
-                response.json(post);
-            })
-    })
+    // do any checks you want to in here
+
+    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+    // you can do this however you want with whatever variables you set up
+    if (request.session.isAuthenticated)
+        return next();
+
+    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+    response.redirect('/login');
+}
 
 
 module.exports = router;
