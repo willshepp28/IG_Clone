@@ -479,7 +479,9 @@ background-position: -391px -130px;
 }
 
 
-
+.form-width form-group {
+    width: 100%;
+}
 
 
 
