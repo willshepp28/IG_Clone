@@ -1,0 +1,24 @@
+ANGULAR FILES
+
+
+
+
+e2e ( end to end )
+ is where we write end to end test on our application. These are basically automated test to simulate a real user.
+
+node_modules
+- third party libraries that our application may depend on.
+
+src
+- this is where we have the actual source code to our application
+
+assets
+- where you store the static assets of our application (text, font, image , icon file)
+
+
+
+
+
+
+FYI
+- every application has one module and one component
